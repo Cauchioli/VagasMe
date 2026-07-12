@@ -2083,14 +2083,15 @@
         <label>Endereço Físico Completo (Itapetininga - SP)</label>
         <input type="text" id="pub-endereco" placeholder="Ex: R. José de Almeida Carvalho, 1000 - Vila Leonor">
       </div>
-      <div class="row-inputs">
-        <div class="form-group">
-          <label>Latitude (Mapa)</label>
-          <input type="number" step="0.0001" id="pub-lat" value="-23.5937">
-        </div>
-        <div class="form-group">
-          <label>Longitude (Mapa)</label>
-          <input type="number" step="0.0001" id="pub-lng" value="-48.0645">
+      <!-- Seleção de Foto Local -->
+      <div class="form-group">
+        <label>Foto ou Logotipo do Estabelecimento</label>
+        <div style="display: flex; gap: 10px; align-items: center; margin-top: 5px;">
+          <input type="file" id="pub-image-file" accept="image/*" style="display: none;" onchange="handleJobImageUpload(event)">
+          <button type="button" class="btn-secondary" style="padding: 10px 18px; font-size: 13px; border-radius: 8px;" onclick="document.getElementById('pub-image-file').click()">
+            <i class="fa-solid fa-upload"></i> Escolher Foto Local
+          </button>
+          <span id="pub-image-status" style="font-size: 13px; color: var(--text-muted);">Nenhuma imagem selecionada</span>
         </div>
       </div>
       <div class="form-group">
@@ -2264,16 +2265,20 @@
       document.getElementById('landing-screen').classList.remove('active');
       document.getElementById('auth-screen').classList.remove('active');
       
-      // Update UI for active user profile
-      document.getElementById('profile-active-name').textContent = 
-        state.user.profileType === 'recrutador' ? 'Recrutador (CNPJ)' : 'Candidato (PF)';
-      
-      if (state.user.profileType === 'recrutador') {
+      if (state.user.isAdmin) {
+        document.getElementById('profile-active-name').textContent = 'Admin';
+        document.getElementById('btn-tab-candidato').style.display = 'flex';
+        document.getElementById('btn-tab-curriculo').style.display = 'flex';
+        document.getElementById('btn-tab-recrutador').style.display = 'flex';
+        switchView('candidato');
+      } else if (state.user.profileType === 'recrutador') {
+        document.getElementById('profile-active-name').textContent = 'Recrutador (CNPJ)';
         document.getElementById('btn-tab-candidato').style.display = 'none';
         document.getElementById('btn-tab-curriculo').style.display = 'none';
         document.getElementById('btn-tab-recrutador').style.display = 'flex';
         switchView('recrutador');
       } else {
+        document.getElementById('profile-active-name').textContent = 'Candidato (PF)';
         document.getElementById('btn-tab-candidato').style.display = 'flex';
         document.getElementById('btn-tab-curriculo').style.display = 'flex';
         document.getElementById('btn-tab-recrutador').style.display = 'none';
@@ -3526,30 +3531,99 @@
       }
     }
 
+    let tempJobImageBase64 = '';
+    function handleJobImageUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        if (file.size > 1.5 * 1024 * 1024) {
+          alert("Por favor, selecione uma imagem de até 1.5MB.");
+          event.target.value = '';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          tempJobImageBase64 = e.target.result;
+          document.getElementById('pub-image-status').textContent = 'Foto carregada (' + (file.size/1024).toFixed(0) + ' KB)';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
     async function submitNewJob() {
-      const empresa = document.getElementById('pub-empresa').value;
-      const ramo = document.getElementById('pub-ramo').value;
+      const empresa = document.getElementById('pub-empresa').value.trim();
+      const ramo = document.getElementById('pub-ramo').value.trim();
       const vagas = document.getElementById('pub-vagas').value.split(',').map(v => v.trim()).filter(v => v);
-      const salario = document.getElementById('pub-salario').value;
-      const turno = document.getElementById('pub-turno').value;
-      const endereco = document.getElementById('pub-endereco').value;
-      const lat = parseFloat(document.getElementById('pub-lat').value);
-      const lng = parseFloat(document.getElementById('pub-lng').value);
-      const beneficios = document.getElementById('pub-beneficios').value;
-      const contato = document.getElementById('pub-contato').value;
-      const descricao = document.getElementById('pub-descricao').value;
+      const salario = document.getElementById('pub-salario').value.trim();
+      const turno = document.getElementById('pub-turno').value.trim();
+      const endereco = document.getElementById('pub-endereco').value.trim();
+      const beneficios = document.getElementById('pub-beneficios').value.trim();
+      const contato = document.getElementById('pub-contato').value.trim();
+      const descricao = document.getElementById('pub-descricao').value.trim();
 
       if (!empresa || vagas.length === 0 || !endereco) {
         alert("Preencha os campos obrigatórios (Empresa, Vagas e Endereço).");
         return;
       }
 
+      // Change button state to loading
+      const pubBtn = document.querySelector("#publish-job-modal .apply-btn");
+      const originalBtnText = pubBtn.textContent;
+      pubBtn.disabled = true;
+      pubBtn.textContent = "Obtendo coordenadas do mapa...";
+
+      let latitude = -23.5916;
+      let longitude = -48.0531;
+
+      // Geocodificação automática via Nominatim (OpenStreetMap)
+      try {
+        const queryUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(endereco + ", Itapetininga, SP, Brasil")}`;
+        const geoRes = await fetch(queryUrl, {
+          headers: {
+            'Accept-Language': 'pt-BR,pt;q=0.9'
+          }
+        });
+        const geoData = await geoRes.json();
+        
+        if (geoData && geoData.length > 0) {
+          latitude = parseFloat(geoData[0].lat);
+          longitude = parseFloat(geoData[0].lon);
+          console.log(`Geocoding success for "${endereco}": ${latitude}, ${longitude}`);
+        } else {
+          console.warn("Address not found by Nominatim, scattering randomly in Itapetininga.");
+          latitude += (Math.random() - 0.5) * 0.015;
+          longitude += (Math.random() - 0.5) * 0.015;
+        }
+      } catch (err) {
+        console.error("Geocoding failed, using center fallback:", err);
+        latitude += (Math.random() - 0.5) * 0.015;
+        longitude += (Math.random() - 0.5) * 0.015;
+      }
+
+      // Escolher imagem: base64 customizada ou padrão com base no ramo
+      let finalImage = tempJobImageBase64;
+      if (!finalImage) {
+        const ramoLower = ramo.toLowerCase();
+        if (ramoLower.includes("supermercado") || ramoLower.includes("mercado")) {
+          finalImage = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&auto=format&fit=crop&q=60";
+        } else if (ramoLower.includes("roupa") || ramoLower.includes("boutique") || ramoLower.includes("moda")) {
+          finalImage = "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=500&auto=format&fit=crop&q=60";
+        } else if (ramoLower.includes("aliment") || ramoLower.includes("padaria") || ramoLower.includes("restaurante")) {
+          finalImage = "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop&q=60";
+        } else if (ramoLower.includes("joia") || ramoLower.includes("joalheria")) {
+          finalImage = "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&auto=format&fit=crop&q=60";
+        } else if (ramoLower.includes("constru") || ramoLower.includes("pedreiro") || ramoLower.includes("engenh")) {
+          finalImage = "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=500&auto=format&fit=crop&q=60";
+        } else {
+          finalImage = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&auto=format&fit=crop&q=60";
+        }
+      }
+
       const new_job = {
         id: 'job-' + Math.random().toString(36).substr(2, 9),
         empresa, ramo, vagas, salarios: salario, turnos: turno, endereco,
-        latitude: lat, longitude: lng, beneficios, contato, descricao,
+        latitude, longitude, beneficios, contato, descricao,
         patrocinado: false, estrela: false,
-        imagem: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&auto=format&fit=crop&q=60'
+        imagem: finalImage
       };
 
       // Add locally
@@ -3571,6 +3645,23 @@
           console.error("Supabase insert job error:", e);
         }
       }
+
+      // Reset modal fields & state
+      tempJobImageBase64 = '';
+      document.getElementById('pub-image-status').textContent = 'Nenhuma imagem selecionada';
+      document.getElementById('pub-image-file').value = '';
+      document.getElementById('pub-empresa').value = '';
+      document.getElementById('pub-ramo').value = '';
+      document.getElementById('pub-vagas').value = '';
+      document.getElementById('pub-salario').value = '';
+      document.getElementById('pub-turno').value = '';
+      document.getElementById('pub-endereco').value = '';
+      document.getElementById('pub-beneficios').value = '';
+      document.getElementById('pub-contato').value = '';
+      document.getElementById('pub-descricao').value = '';
+
+      pubBtn.disabled = false;
+      pubBtn.textContent = originalBtnText;
 
       closePublishJobModal();
       alert("Nova vaga publicada!");
