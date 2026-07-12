@@ -742,12 +742,24 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .custom-marker:hover, .custom-marker.active {
-      transform: scale(1.25) translateY(-5px) !important;
       z-index: 99999 !important;
+    }
+
+    /* Hover scale effects targeted on inner pin designs without shifting container boundaries to avoid flickering */
+    .custom-marker:hover .marker-pin-common,
+    .custom-marker.active .marker-pin-common {
+      transform: rotate(-45deg) scale(1.2);
+      border-color: #FFFFFF;
+      box-shadow: 0 6px 15px rgba(139, 38, 253, 0.5);
+    }
+
+    .custom-marker:hover .marker-pin-patrocinado,
+    .custom-marker.active .marker-pin-patrocinado {
+      transform: scale(1.2);
+      box-shadow: 0 6px 18px rgba(255, 159, 10, 0.6);
     }
 
     .marker-pin-common {
@@ -761,7 +773,7 @@
       align-items: center;
       justify-content: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: border-color 0.2s ease;
+      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .marker-pin-common img {
@@ -2310,8 +2322,21 @@
     // Auth Submission Logic (Supabase + LocalStorage Fallback)
     async function handleAuthSubmit(event) {
       event.preventDefault();
-      const email = document.getElementById('auth-email').value;
+      const email = document.getElementById('auth-email').value.trim();
       const password = document.getElementById('auth-password').value;
+
+      // Acesso Especial Admin
+      if (email === "admin@vagas.me" && password === "admin123") {
+        state.user = {
+          id: "admin-user",
+          email: "admin@vagas.me",
+          profileType: "recrutador",
+          isAdmin: true
+        };
+        localStorage.setItem('vagas_session', JSON.stringify(state.user));
+        showAppInterface();
+        return;
+      }
 
       if (state.supabase) {
         // Supabase Cloud Auth
@@ -2684,8 +2709,10 @@
             state.jobs = data;
           } else {
             console.log("Supabase vagas table is empty. Seeding default jobs...");
-            state.jobs = defaultJobs;
-            seedSupabaseJobs(defaultJobs);
+            const localJobs = JSON.parse(localStorage.getItem('vagas_local_jobs') || '[]');
+            const combined = [...defaultJobs, ...localJobs];
+            state.jobs = combined;
+            seedSupabaseJobs(combined);
           }
         } else {
           try {
@@ -2693,16 +2720,19 @@
             if (!res.ok) throw new Error("API Offline");
             state.jobs = await res.json();
             if (!state.jobs || state.jobs.length === 0) {
-              state.jobs = defaultJobs;
+              const localJobs = JSON.parse(localStorage.getItem('vagas_local_jobs') || '[]');
+              state.jobs = [...defaultJobs, ...localJobs];
             }
           } catch (e) {
             console.warn("Local API offline, using hardcoded jobs fallback.");
-            state.jobs = defaultJobs;
+            const localJobs = JSON.parse(localStorage.getItem('vagas_local_jobs') || '[]');
+            state.jobs = [...defaultJobs, ...localJobs];
           }
         }
       } catch (err) {
         console.error("Error fetching jobs, using hardcoded fallback:", err);
-        state.jobs = defaultJobs;
+        const localJobs = JSON.parse(localStorage.getItem('vagas_local_jobs') || '[]');
+        state.jobs = [...defaultJobs, ...localJobs];
       }
       renderJobCards();
       renderMapMarkers();
@@ -2720,6 +2750,8 @@
         return;
       }
 
+      const isPrivilegedUser = state.user && (state.user.isAdmin || state.user.profileType === 'recrutador');
+
       filtered.forEach(job => {
         const card = document.createElement('div');
         card.className = `job-card ${job.patrocinado ? 'patrocinado' : ''}`;
@@ -2729,15 +2761,24 @@
         card.addEventListener('mouseenter', () => highlightMarker(job.id, true));
         card.addEventListener('mouseleave', () => highlightMarker(job.id, false));
 
+        const deleteButtonHtml = isPrivilegedUser ? `
+          <button class="favorite-star" style="color: var(--text-muted); margin-left: 8px;" onclick="deleteJob('${job.id}', event)" title="Excluir vaga">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        ` : '';
+
         card.innerHTML = `
           <div class="card-header">
             <div>
               <div class="company-title">${job.empresa}</div>
               <div class="company-sub">${job.ramo}</div>
             </div>
-            <button class="favorite-star ${job.estrela ? 'active' : ''}" onclick="toggleFavorite('${job.id}', event)">
-              <i class="fa-solid fa-star"></i>
-            </button>
+            <div style="display: flex; align-items: center;">
+              <button class="favorite-star ${job.estrela ? 'active' : ''}" onclick="toggleFavorite('${job.id}', event)">
+                <i class="fa-solid fa-star"></i>
+              </button>
+              ${deleteButtonHtml}
+            </div>
           </div>
           <img src="${job.imagem}" class="company-banner" alt="Empresa">
           <div class="card-vagas-tags">
@@ -2805,7 +2846,6 @@
           const cardEl = document.getElementById(`sidebar-card-${job.id}`);
           if (cardEl) {
             cardEl.classList.add('highlighted');
-            cardEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           }
         });
         marker.on('mouseout', () => {
@@ -3496,6 +3536,12 @@
 
       // Add locally
       state.jobs.push(new_job);
+      
+      // Persist in localStorage
+      const localJobs = JSON.parse(localStorage.getItem('vagas_local_jobs') || '[]');
+      localJobs.push(new_job);
+      localStorage.setItem('vagas_local_jobs', JSON.stringify(localJobs));
+
       renderJobCards();
       renderMapMarkers();
 
@@ -3510,6 +3556,39 @@
 
       closePublishJobModal();
       alert("Nova vaga publicada!");
+    }
+
+    // Excluir vaga (Acesso Admin / Recrutador)
+    async function deleteJob(jobId, event) {
+      if (event) event.stopPropagation();
+      if (!confirm("Tem certeza que deseja excluir esta vaga do sistema?")) return;
+
+      // 1. Remover da memória
+      state.jobs = state.jobs.filter(j => j.id !== jobId);
+
+      // 2. Remover do localStorage
+      const localJobs = JSON.parse(localStorage.getItem('vagas_local_jobs') || '[]');
+      const updatedLocalJobs = localJobs.filter(j => j.id !== jobId);
+      localStorage.setItem('vagas_local_jobs', JSON.stringify(updatedLocalJobs));
+
+      // 3. Remover do Supabase
+      if (state.supabase) {
+        try {
+          const { error } = await state.supabase.from('vagas').delete().eq('id', jobId);
+          if (error) throw error;
+          alert("Vaga excluída com sucesso do banco de dados em nuvem!");
+        } catch (e) {
+          console.error("Erro ao excluir do Supabase:", e);
+          alert("Excluído localmente, mas ocorreu um erro na nuvem: " + e.message);
+        }
+      } else {
+        alert("Vaga excluída localmente!");
+      }
+
+      // Re-renderizar interface
+      renderJobCards();
+      renderMapMarkers();
+      closeDrawer();
     }
 
     // Supabase Configuration Management Modal
