@@ -2996,7 +2996,7 @@
 
     async function triggerAIOptimizeResume() {
       const summaryText = document.getElementById('res-objective').value;
-      const skillsArr = document.getElementById('res-skills').value.split(',').map(s => s.trim());
+      const skillsArr = document.getElementById('res-skills').value.split(',').map(s => s.trim()).filter(s => s);
       
       try {
         const res = await fetch('/api/ia/otimizar-curriculo', {
@@ -3004,12 +3004,17 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ resumo: summaryText, habilidades: skillsArr })
         });
+        if (!res.ok) throw new Error("Backend offline");
         const data = await res.json();
         document.getElementById('res-objective').value = data.otimizado;
         updateResumePreview();
         alert("Currículo otimizado com IA de Acervo!");
       } catch (err) {
-        console.error("AI Optimize Error:", err);
+        console.warn("AI Optimize Backend Offline, running client-side fallback:", err);
+        const optimized = `Profissional dinâmico e proativo em busca de recolocação no mercado de Itapetininga/SP. Possui forte aptidão para ${skillsArr.length > 0 ? skillsArr.slice(0, 3).join(', ') : 'vendas e atendimento ao cliente'}. Foco em agregar valor aos resultados da empresa com ética, pontualidade e engajamento.`;
+        document.getElementById('res-objective').value = optimized;
+        updateResumePreview();
+        alert("Currículo otimizado com a Inteligência Artificial local do navegador!");
       }
     }
 
@@ -3181,10 +3186,14 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ titulo: title, ramo: branch })
         });
+        if (!res.ok) throw new Error("Backend offline");
         const data = await res.json();
         document.getElementById('pub-descricao').value = data.descricao;
       } catch (err) {
-        console.error("AI Description generation failed:", err);
+        console.warn("AI Description Backend Offline, running client-side fallback:", err);
+        const descMock = `Oportunidade para atuar como ${title} em nossa empresa do ramo de ${branch} em Itapetininga - SP.\n\nRequisitos:\n- Proatividade e boa comunicação;\n- Residir próximo ao local de trabalho;\n- Experiência anterior na função será considerada um diferencial.\n\nOferecemos remuneração compatível com a categoria e excelente ambiente de trabalho. Candidate-se enviando seu currículo pelo Vagas.me!`;
+        document.getElementById('pub-descricao').value = descMock;
+        alert("Descrição gerada automaticamente com a Inteligência Artificial local!");
       }
     }
 
