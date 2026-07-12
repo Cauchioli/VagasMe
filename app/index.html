@@ -1708,11 +1708,15 @@
 
   <!-- SCREEN 3: CANDIDATE MAP VIEW -->
   <div id="candidato-screen" class="screen-view">
+    <!-- Inputs fantasmas para capturar auto-preenchimento incorreto do navegador (Chrome/Edge) -->
+    <input type="text" style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+    <input type="password" style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+
     <div class="sidebar">
       <div class="search-wrapper">
         <div class="search-container">
           <i class="fa-solid fa-magnifying-glass search-icon"></i>
-          <input type="text" class="search-input" id="search-vaga-input" placeholder="Encontrou sua vaga?" oninput="filterJobs()">
+          <input type="text" class="search-input" id="search-vaga-input" autocomplete="off" placeholder="Encontrou sua vaga?" oninput="filterJobs()">
         </div>
         <button class="filter-btn" onclick="toggleFilterModal()">
           <i class="fa-solid fa-sliders"></i> Filtrar
