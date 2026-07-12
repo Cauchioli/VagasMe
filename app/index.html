@@ -2185,12 +2185,14 @@
 
     // Load Supabase Client if configured
     function initSupabase() {
-      const url = localStorage.getItem('sb_url');
+      let url = localStorage.getItem('sb_url');
       const key = localStorage.getItem('sb_key');
       if (url && key && window.supabase) {
         try {
+          // Sanitizar a URL caso o usuário cole com a rota REST
+          url = url.trim().replace(/\/rest\/v1\/?$/, "").replace(/\/$/, "");
           state.supabase = window.supabase.createClient(url, key);
-          console.log("Supabase Cloud Connected successfully.");
+          console.log("Supabase Cloud Connected successfully to " + url);
         } catch (e) {
           console.error("Failed to connect to Supabase Client:", e);
         }
