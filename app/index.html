@@ -2211,9 +2211,27 @@
     }
 
     // Load Supabase Client if configured
-    function initSupabase() {
+    async function initSupabase() {
       let url = localStorage.getItem('sb_url');
-      const key = localStorage.getItem('sb_key');
+      let key = localStorage.getItem('sb_key');
+
+      // Tentar obter chaves automaticamente da API se não estiverem localmente salvas
+      if (!url || !key) {
+        try {
+          const res = await fetch('/api/supabase-config');
+          if (res.ok) {
+            const config = await res.json();
+            if (config.supabaseUrl && config.supabaseKey) {
+              url = config.supabaseUrl;
+              key = config.supabaseKey;
+              console.log("Supabase credentials loaded automatically from serverless configuration.");
+            }
+          }
+        } catch (e) {
+          console.warn("Could not fetch serverless Supabase configuration. Offline or local development.");
+        }
+      }
+
       if (url && key && window.supabase) {
         try {
           // Sanitizar a URL caso o usuário cole com a rota REST
@@ -2227,8 +2245,8 @@
     }
 
     // App Initialization
-    window.addEventListener('DOMContentLoaded', () => {
-      initSupabase();
+    window.addEventListener('DOMContentLoaded', async () => {
+      await initSupabase();
       
       // Setup dynamic form fields for resume builder
       renderResumeFormFields();
@@ -3711,7 +3729,7 @@
       document.getElementById('supabase-config-modal').classList.remove('open');
     }
 
-    function saveSupabaseConfig() {
+    async function saveSupabaseConfig() {
       const url = document.getElementById('sb-url').value.trim();
       const key = document.getElementById('sb-key').value.trim();
 
@@ -3725,7 +3743,7 @@
         alert("Conexão Supabase desativada. O aplicativo continuará rodando localmente.");
       }
       closeSupabaseConfig();
-      initSupabase();
+      await initSupabase();
       fetchJobs();
     }
   </script>
