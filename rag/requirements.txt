@@ -1,0 +1,6 @@
+sentence-transformers>=3.0
+lancedb>=0.10
+pdfplumber
+python-docx
+openpyxl
+torch

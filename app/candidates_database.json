@@ -1,0 +1,34 @@
+{
+  "candidates": [
+    {
+      "id": "cand-default",
+      "name": "João da Silva",
+      "email": "joao.silva@gmail.com",
+      "phone": "(15) 99876-5432",
+      "address": "Vila Aparecida, Itapetininga - SP",
+      "linkedin": "linkedin.com/in/joaosilva",
+      "objective": "Jovem proativo focado em recolocação de mercado nas áreas de comércio e logística em Itapetininga.",
+      "experiences": [
+        {
+          "company": "Mercado Central",
+          "role": "Auxiliar de Reposição",
+          "period": "2024 - 2025",
+          "desc": "Responsável pela organização das gôndolas e atendimento básico a clientes."
+        }
+      ],
+      "education": [
+        {
+          "school": "Escola Estadual Peixoto",
+          "degree": "Ensino Médio Completo",
+          "period": "2023"
+        }
+      ],
+      "skills": [
+        "Atendimento ao Cliente",
+        "Caixa",
+        "Reposição de Estoque",
+        "Informática Básica"
+      ]
+    }
+  ]
+}

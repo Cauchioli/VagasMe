@@ -1,0 +1,276 @@
+[
+  {
+    "id": "job-cofesa-1",
+    "empresa": "COFESA ITAPETININGA",
+    "ramo": "Supermercado",
+    "vagas": [
+      "JOVEM APRENDIZ",
+      "CAIXA"
+    ],
+    "beneficios": "Vale-Transporte, Vale-Alimentação/Refeição, Assistência Médica, Recreio Escolar, Seguro de Vida.",
+    "salarios": "R$ 1.800 até R$ 2.100",
+    "turnos": "Diurno e Noturno",
+    "endereco": "R. José de Almeida Carvalho, 1000 - Vila Leonor, Itapetininga - SP, 18210-145",
+    "latitude": -23.5937,
+    "longitude": -48.0645,
+    "imagem": "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": true,
+    "estrela": true,
+    "descricao": "Oportunidade para início imediato no Cofesa Itapetininga. Buscamos jovens e profissionais dedicados para atendimento ao cliente no caixa e reposição de mercadorias. Oferecemos plano de carreira e ótimo ambiente de trabalho.",
+    "contato": "Entregar currículo na recepção do supermercado"
+  },
+  {
+    "id": "job-serraria-2",
+    "empresa": "SERRARIA CENTRAL ITAPETININGA",
+    "ramo": "Madeireira e Construção",
+    "vagas": [
+      "SERRALHEIRO",
+      "AJUDANTE GERAL"
+    ],
+    "beneficios": "Vale-Transporte, Cesta Básica, Seguro de Vida, Adicional de Insalubridade.",
+    "salarios": "R$ 2.200 até R$ 2.800",
+    "turnos": "Diurno (07:00 às 17:00)",
+    "endereco": "Av. Padre Antônio Brunetti, 450 - Vila Rio Branco, Itapetininga - SP",
+    "latitude": -23.5855,
+    "longitude": -48.0495,
+    "imagem": "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": false,
+    "estrela": false,
+    "descricao": "Vaga de serralheiro com experiência em solda MIG/TIG e corte de estruturas metálicas. Desejável curso técnico na área. Ajudante geral para carga, descarga e organização do pátio.",
+    "contato": "Entregar currículo presencialmente no escritório da serraria"
+  },
+  {
+    "id": "job-padaria-3",
+    "empresa": "PADARIA REAL VILA APARECIDA",
+    "ramo": "Alimentação",
+    "vagas": [
+      "COPEIRO",
+      "ATENDENTE",
+      "SUSHIMAN"
+    ],
+    "beneficios": "Refeição no local, Vale-Transporte, Plano de Saúde Co-participativo.",
+    "salarios": "R$ 1.900 até R$ 2.500",
+    "turnos": "Tarde e Noite (Escala 6x1)",
+    "endereco": "R. Virgílio de Rezende, 1200 - Vila Aparecida, Itapetininga - SP",
+    "latitude": -23.5905,
+    "longitude": -48.0515,
+    "imagem": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": true,
+    "estrela": true,
+    "descricao": "Procura-se profissional para preparo de alimentos, higienização e suporte na copa. Vaga para Sushiman com habilidades técnicas na preparação de sushis, sashimis e pratos quentes da culinária japonesa.",
+    "contato": "Enviar e-mail para rh@padariareal.com.br com assunto Vagas Itapetininga"
+  },
+  {
+    "id": "job-boutique-4",
+    "empresa": "BOUTIQUE E MODAS ITAPÊ",
+    "ramo": "Comércio Varejista",
+    "vagas": [
+      "VENDEDOR",
+      "AUX. ADMINISTRATIVO"
+    ],
+    "beneficios": "Comissão de vendas, Vale-Transporte, Desconto em produtos.",
+    "salarios": "R$ 1.600 + Comissão (Média de R$ 2.400)",
+    "turnos": "Horário Comercial",
+    "endereco": "R. Saldanha Marinho, 320 - Centro, Itapetininga - SP",
+    "latitude": -23.5878,
+    "longitude": -48.0572,
+    "imagem": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": false,
+    "estrela": false,
+    "descricao": "Atendimento ao cliente, organização da loja física e auxílio no controle de estoque. Auxiliar administrativo para faturamento de notas, conciliação e suporte financeiro.",
+    "contato": "Entregar currículo na loja para gerente Aline"
+  },
+  {
+    "id": "job-surfway-5",
+    "empresa": "Surfway – Loja de Roupas",
+    "ramo": "Comércio Varejista",
+    "vagas": [
+      "VENDEDOR"
+    ],
+    "beneficios": "Oportunidade de crescimento, ambiente dinâmico e descontraído.",
+    "salarios": "A combinar",
+    "turnos": "Horário Comercial",
+    "endereco": "R. Dr. Campos Salles, 596 – Centro, Itapetininga - SP",
+    "latitude": -23.5898,
+    "longitude": -48.0552,
+    "imagem": "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": false,
+    "estrela": false,
+    "descricao": "Vaga de vendedor (masculino). Requisitos: Gostar de trabalhar com público, proatividade, oportunidade de crescimento, ambiente dinâmico e descontraído.",
+    "contato": "Enviar currículo via WhatsApp: (15) 98133-0154"
+  },
+  {
+    "id": "job-gestao5x-6",
+    "empresa": "Gestão5x – Consultoria e Gestão",
+    "ramo": "Consultoria",
+    "vagas": [
+      "ANALISTA DE CONTROLADORIA"
+    ],
+    "beneficios": "Plano de carreira, treinamento especializado em IA aplicada a finanças.",
+    "salarios": "A combinar",
+    "turnos": "Integral (CLT ou Estágio)",
+    "endereco": "R. Av. 5 de Novembro, 724 - Sala A – Vila Nastri, Itapetininga - SP",
+    "latitude": -23.5965,
+    "longitude": -48.0465,
+    "imagem": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": true,
+    "estrela": true,
+    "descricao": "Vaga CLT ou Estágio; cursando ou concluído formação em Administração, Ciências Contábeis, Finanças ou áreas relacionadas; experiência comprovada em rotinas financeiras ou controladoria; perfil consultivo; facilidade com tecnologia e ferramentas de análise de dados e Inteligência Artificial.",
+    "contato": "Enviar currículo via e-mail: rh@gestao5x.com.br"
+  },
+  {
+    "id": "job-imperiojoias-7",
+    "empresa": "Império Jóias – Joalheria",
+    "ramo": "Comércio Varejista",
+    "vagas": [
+      "VENDEDOR(A)"
+    ],
+    "beneficios": "Salário fixo comercial, premiações por metas, vale-transporte.",
+    "salarios": "A combinar",
+    "turnos": "Horário Comercial",
+    "endereco": "Rua Silva Jardim, 603 – Centro, Itapetininga - SP",
+    "latitude": -23.5867,
+    "longitude": -48.0543,
+    "imagem": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": false,
+    "estrela": false,
+    "descricao": "Vaga de vendedor(a). Requisitos: Com experiência na área de vendas; conhecimento em joias é um diferencial; ensino médio completo; boa comunicação; cordialidade e simpatia.",
+    "contato": "Levar currículo pessoalmente na loja e procurar por Consultora Líder Cíntia."
+  },
+  {
+    "id": "job-padariasaopedro-8",
+    "empresa": "Padaria São Pedro",
+    "ramo": "Alimentação",
+    "vagas": [
+      "ATENDENTE DE DELIVERY",
+      "AUXILIAR DE COZINHA"
+    ],
+    "beneficios": "Alimentação no local, vale-transporte.",
+    "salarios": "A combinar",
+    "turnos": "Disponibilidade de horário",
+    "endereco": "R. Monsenhor Soares, 300 - Centro, Itapetininga - SP",
+    "latitude": -23.5885,
+    "longitude": -48.0560,
+    "imagem": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": false,
+    "estrela": false,
+    "descricao": "Atendente: experiência com atendimento online, telefone e sistemas PDV. Auxiliar: experiência na cozinha é diferencial. Geral: ser maior de 18 anos, proativo e organizado.",
+    "contato": "Entregar currículo impresso diretamente no balcão da padaria"
+  },
+  {
+    "id": "job-passarinho-9",
+    "empresa": "Passarinho – Materiais para Construção",
+    "ramo": "Comércio Varejista",
+    "vagas": [
+      "OPERADORA DE CAIXA"
+    ],
+    "beneficios": "Salário acima do piso, cartão alimentação, Cartão de Todos e Totalpass, plano odontológico e seguro de vida.",
+    "salarios": "Acima do piso da categoria",
+    "turnos": "Horário Comercial",
+    "endereco": "R. Profa. Leonor Ayres de Camargo, 849 – Vila São José, Itapetininga - SP",
+    "latitude": -23.6022,
+    "longitude": -48.0440,
+    "imagem": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": true,
+    "estrela": false,
+    "descricao": "Requisitos: Experiência mínima de 6 meses como operadora de caixa; salário acima do piso; cartão alimentação; Cartão de Todos e Totalpass; plano odontológico e seguro de vida.",
+    "contato": "Enviar currículo para o e-mail: rhpassarinho@gmail.com"
+  },
+  {
+    "id": "job-fiscoprime-10",
+    "empresa": "Fisco Prime – Contabilidade",
+    "ramo": "Contabilidade",
+    "vagas": [
+      "ÁREA FISCAL / CONTÁBIL"
+    ],
+    "beneficios": "Vale-Refeição, Plano de Saúde, Convênios.",
+    "salarios": "A combinar",
+    "turnos": "Segunda a sexta, das 08h00 às 17h30 (Almoço: 11h30 às 13h00)",
+    "endereco": "R. Saldanha Marinho, 604 – Centro, Itapetininga - SP",
+    "latitude": -23.5890,
+    "longitude": -48.0578,
+    "imagem": "https://images.unsplash.com/photo-1450133064473-71024230f91b?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": false,
+    "estrela": false,
+    "descricao": "Requisitos: Com experiência na área fiscal e/ou contábil; conhecimento em lançamentos contábeis e rotinas fiscais; organização e atenção aos detalhes. Diferencial: conhecimento em sistemas contábeis.",
+    "contato": "Enviar currículo por e-mail: fabiane@fiscoprime.com.br ou via WhatsApp: (15) 99715-3415"
+  },
+  {
+    "id": "job-veritas-vendas-11",
+    "empresa": "Veritas Solar – Economia e Sustentabilidade",
+    "ramo": "Energia Solar",
+    "vagas": [
+      "CONSULTOR(A) DE VENDAS INTERNO"
+    ],
+    "beneficios": "Vale-Transporte, comissão por vendas, plano de saúde.",
+    "salarios": "A combinar",
+    "turnos": "Segunda a sexta, das 08h00 às 18h00",
+    "endereco": "R. José de Almeida Carvalho, 1200 – Vila Leonor, Itapetininga - SP",
+    "latitude": -23.5945,
+    "longitude": -48.0655,
+    "imagem": "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": true,
+    "estrela": true,
+    "descricao": "Requisitos: Realizar atendimentos via telefone, e-mail e WhatsApp apresentando soluções em energia solar; identificar necessidades dos clientes e acompanhar oportunidades de vendas; registrar informações de atendimentos e manter o CRM atualizado; trabalhar em conjunto com o comercial.",
+    "contato": "Enviar currículo por e-mail: rhveritassolar@gmail.com"
+  },
+  {
+    "id": "job-veritas-financeiro-12",
+    "empresa": "Veritas Solar – Economia e Sustentabilidade",
+    "ramo": "Energia Solar",
+    "vagas": [
+      "ANALISTA FINANCEIRO PLENO"
+    ],
+    "beneficios": "Vale-Refeição, Plano de Saúde, VT.",
+    "salarios": "A combinar",
+    "turnos": "Segunda a sexta, das 07h00 às 17h00",
+    "endereco": "R. José de Almeida Carvalho, 1200 – Vila Leonor, Itapetininga - SP",
+    "latitude": -23.5945,
+    "longitude": -48.0655,
+    "imagem": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": false,
+    "estrela": false,
+    "descricao": "Requisitos: Elaborar e acompanhar fluxo de caixa projetado; realizar conciliações bancárias e validações financeiras; executar fechamento financeiro mensal; analisar variações entre realizado vs. orçado; elaborar análises de margem por projeto e segmento; desenvolver e acompanhar DRE por projeto; gerenciar informações e rotinas no ERP Conta Azul; construir e manter KPIs financeiros.",
+    "contato": "Enviar currículo por e-mail: rhveritassolar@gmail.com"
+  },
+  {
+    "id": "job-proluk-13",
+    "empresa": "Proluk – Serviços de Engenharia",
+    "ramo": "Construção Civil",
+    "vagas": [
+      "PEDREIRO INDUSTRIAL",
+      "PINTOR",
+      "AUXILIAR DE PEDREIRO"
+    ],
+    "beneficios": "Totalpass, vale transporte e refeição no local.",
+    "salarios": "A combinar",
+    "turnos": "Horário de Obra (Integral)",
+    "endereco": "Itapetininga - SP e Região",
+    "latitude": -23.5780,
+    "longitude": -48.0350,
+    "imagem": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": false,
+    "estrela": false,
+    "descricao": "Vagas disponíveis: 2 para Pedreiro Industrial, 2 para Pintor e 2 para Auxiliar de Pedreiro. Requisitos: Com experiência; atuação em obras industriais; salário a combinar.",
+    "contato": "Enviar currículo via WhatsApp: (15) 99791-6500"
+  },
+  {
+    "id": "job-sinergia-14",
+    "empresa": "Sinergia Soluções",
+    "ramo": "Recursos Humanos",
+    "vagas": [
+      "ANALISTA DE DEPARTAMENTO PESSOAL"
+    ],
+    "beneficios": "Vale-Alimentação, plano odontológico, plano de carreira.",
+    "salarios": "A combinar",
+    "turnos": "Comercial",
+    "endereco": "R. Cel. Pedro Dias Batista, 1444 – Centro, Itapetininga - SP",
+    "latitude": -23.5910,
+    "longitude": -48.0592,
+    "imagem": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&auto=format&fit=crop&q=60",
+    "patrocinado": false,
+    "estrela": false,
+    "descricao": "Requisitos: Com experiência; atenção aos detalhes; organização e gestão de tempo; comunicação eficaz; perfil analítico; visão estratégica e adaptabilidade.",
+    "contato": "Enviar currículo por e-mail: rafael@sinergiaitape.com"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "applications": [
+    {
+      "id": "app-a9dc38e3",
+      "candidate_id": "cand-default",
+      "job_id": "job-boutique-4",
+      "stage": "entrevista",
+      "match_score": 74,
+      "date_applied": "2026-07-07T21:50:45.914400"
+    }
+  ]
+}

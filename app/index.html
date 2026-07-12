@@ -1,0 +1,3265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vagas.me — O seu trabalho perto de você</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* Styling variables */
+    :root {
+      --bg-main: #0D0E12;
+      --bg-card: #15161E;
+      --bg-input: #1F202B;
+      --primary: #8B26FD;
+      --primary-hover: #731BD4;
+      --accent-patrocinado: #FF9F0A;
+      --accent-emerald: #10B981;
+      --text-main: #FFFFFF;
+      --text-muted: #A0AEC0;
+      --text-dark: #0F172A;
+      --border-color: #2D2E3E;
+      --radius-large: 16px;
+      --radius-pill: 50px;
+      --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      overflow-x: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-main);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary);
+    }
+
+    /* Header Navigation */
+    header {
+      height: 70px;
+      background-color: var(--bg-main);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1000;
+      flex-shrink: 0;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-vagas {
+      font-weight: 800;
+      font-size: 26px;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+      position: relative;
+    }
+
+    .logo-vagas span {
+      background-color: var(--bg-main);
+      border: 2px solid var(--text-main);
+      padding: 2px 6px;
+      font-size: 14px;
+      font-weight: 800;
+      border-radius: 4px;
+      margin-left: 2px;
+    }
+
+    .logo-symbol {
+      width: 32px;
+      height: 32px;
+      background-color: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #FFFFFF;
+      font-size: 20px;
+      box-shadow: 0 4px 10px rgba(139, 38, 253, 0.4);
+    }
+
+    nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: var(--radius-pill);
+      transition: var(--transition-smooth);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-main);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-btn.active {
+      color: var(--text-main);
+      background-color: var(--primary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .plus-badge {
+      background: linear-gradient(135deg, #FF9F0A 0%, #E65C00 100%);
+      color: #000000;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .plus-badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 159, 10, 0.3);
+    }
+
+    .plus-badge.active {
+      background: linear-gradient(135deg, var(--accent-emerald) 0%, #059669 100%);
+      color: #FFFFFF;
+    }
+
+    .profile-switch {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logout-btn {
+      background: none;
+      border: 1px dashed var(--border-color);
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      transition: var(--transition-smooth);
+    }
+
+    .logout-btn:hover {
+      color: #EF4444;
+      border-color: #EF4444;
+    }
+
+    /* Screen Views */
+    .screen-view {
+      display: none;
+      flex-grow: 1;
+      height: calc(100vh - 70px);
+      position: relative;
+    }
+
+    .screen-view.active {
+      display: flex;
+    }
+
+    /* ========================================== */
+    /* TELAS 1: LANDING PAGE                      */
+    /* ========================================== */
+    #landing-screen {
+      background: radial-gradient(circle at top right, rgba(139, 38, 253, 0.1), transparent 50%), var(--bg-main);
+      flex-direction: column;
+      overflow-y: auto;
+      align-items: center;
+      padding: 60px 24px;
+    }
+
+    .hero-container {
+      max-width: 800px;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .hero-title {
+      font-size: 52px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1.5px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(to right, var(--primary), #D846FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 20px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #FFFFFF;
+      border: none;
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: var(--transition-smooth);
+      box-shadow: 0 4px 15px rgba(139, 38, 253, 0.4);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: #FFFFFF;
+      border: 1px solid var(--border-color);
+      padding: 14px 28px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-color: #FFFFFF;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1000px;
+      width: 100%;
+      margin-top: 40px;
+    }
+
+    .feature-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-large);
+      padding: 24px;
+      transition: var(--transition-smooth);
+    }
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background-color: rgba(139, 38, 253, 0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .feature-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ========================================== */
+    /* TELAS 2: LOGIN / CADASTRO SCREEN           */
+    /* ========================================== */
+    #auth-screen {
+      background: radial-gradient(circle at bottom left, rgba(139, 38, 253, 0.15), transparent 50%), var(--bg-main);
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .auth-card {
+      background-color: rgba(21, 22, 30, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-large);
+      width: 100%;
+      max-width: 420px;
+      padding: 32px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .auth-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .auth-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .auth-type-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background-color: var(--bg-input);
+      border-radius: var(--radius-pill);
+      padding: 4px;
+      margin-bottom: 20px;
+    }
+
+    .type-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .type-btn.active {
+      background-color: var(--primary);
+      color: #FFFFFF;
+    }
+
+    .auth-toggle-link {
+      text-align: center;
+      font-size: 13px;
+      margin-top: 16px;
+      color: var(--text-muted);
+    }
+
+    .auth-toggle-link a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .auth-toggle-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Supabase Credentials Config Modal Button */
+    .config-supabase-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .config-supabase-btn:hover {
+      color: #FFFFFF;
+      border-color: #FFFFFF;
+    }
+
+    /* ========================================== */
+    /* TELAS 3: INTERFACES DO APP                 */
+    /* ========================================== */
+    #candidato-view {
+      display: none;
+      position: relative;
+    }
+
+    #candidato-view.active {
+      display: flex;
+    }
+
+    .sidebar {
+      width: 420px;
+      min-width: 420px;
+      height: 100%;
+      background-color: var(--bg-main);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 10;
+    }
+
+    .search-wrapper {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .search-container {
+      position: relative;
+      flex-grow: 1;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 46px;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-pill);
+      padding: 0 20px 0 45px;
+      color: var(--text-main);
+      font-size: 15px;
+      font-family: inherit;
+      transition: border-color 0.2s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    .filter-btn {
+      width: 90px;
+      height: 46px;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      border: none;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .tags-container {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 20px;
+      padding-bottom: 4px;
+    }
+
+    .tag-pill {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tag-pill:hover {
+      border-color: var(--primary);
+    }
+
+    .tag-pill.active {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: #FFFFFF;
+    }
+
+    .results-header {
+      margin-bottom: 16px;
+    }
+
+    .results-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .results-title i {
+      color: var(--primary);
+    }
+
+    .vagas-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex-grow: 1;
+    }
+
+    /* Job Card visual alignment */
+    .job-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-large);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+
+    .job-card.highlighted {
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 15px rgba(139, 38, 253, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .job-card.patrocinado {
+      border-color: var(--accent-patrocinado);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .company-title {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+
+    .company-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .favorite-star {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 16px;
+      transition: color 0.2s ease;
+    }
+
+    .favorite-star.active {
+      color: var(--primary);
+    }
+
+    .job-card.patrocinado .favorite-star.active {
+      color: var(--accent-patrocinado);
+    }
+
+    .company-banner {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .card-vagas-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .card-vaga-pill {
+      background-color: var(--primary);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .card-info-item {
+      font-size: 13px;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .card-info-item strong {
+      color: var(--text-main);
+    }
+
+    .card-info-item span {
+      color: var(--text-muted);
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .card-address {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 240px;
+    }
+
+    .saber-mais-btn {
+      background-color: var(--primary);
+      color: #FFFFFF;
+      border: none;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .saber-mais-btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    /* Map Area */
+    .map-container {
+      flex-grow: 1;
+      height: 100%;
+      position: relative;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Custom Leaflet Map styling (dark mode pins & hover animations) */
+    .custom-marker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .custom-marker:hover, .custom-marker.active {
+      transform: scale(1.25) translateY(-5px) !important;
+      z-index: 99999 !important;
+    }
+
+    .marker-pin-common {
+      width: 32px;
+      height: 32px;
+      background-color: #FFFFFF;
+      border: 3px solid var(--primary);
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: border-color 0.2s ease;
+    }
+
+    .marker-pin-common img {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      transform: rotate(45deg);
+      object-fit: cover;
+    }
+
+    .marker-pin-patrocinado {
+      width: 46px;
+      height: 46px;
+      background: linear-gradient(135deg, #FF9F0A 0%, #E65C00 100%);
+      border: 2px solid #FFFFFF;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(255, 159, 10, 0.4);
+      position: relative;
+    }
+
+    .marker-pin-patrocinado::after {
+      content: 'V';
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 24px;
+      color: #FFFFFF;
+    }
+
+    .marker-pin-patrocinado .patroc-badge {
+      position: absolute;
+      top: -12px;
+      background-color: #FF9F0A;
+      color: #000000;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 1px 4px;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Side Drawer for Job Details */
+    .drawer {
+      position: absolute;
+      right: -450px;
+      top: 0;
+      width: 450px;
+      height: 100%;
+      background-color: var(--bg-card);
+      border-left: 1px solid var(--border-color);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+      z-index: 2000;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .drawer.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      padding: 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .drawer-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .drawer-close:hover {
+      color: #FFFFFF;
+    }
+
+    .drawer-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    .drawer-company-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: var(--radius-large);
+      margin-bottom: 20px;
+    }
+
+    .drawer-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .drawer-company {
+      font-size: 16px;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .drawer-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+      background-color: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-color);
+      padding: 16px;
+      border-radius: 12px;
+    }
+
+    .meta-box-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .meta-box-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .drawer-section {
+      margin-bottom: 24px;
+    }
+
+    .drawer-section-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #FFFFFF;
+      border-left: 3px solid var(--primary);
+      padding-left: 8px;
+    }
+
+    .drawer-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .ia-match-indicator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background-color: rgba(16, 185, 129, 0.08);
+      border: 1px dashed var(--accent-emerald);
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .ia-match-indicator i {
+      font-size: 20px;
+      color: var(--accent-emerald);
+    }
+
+    .ia-match-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .ia-match-text strong {
+      color: var(--accent-emerald);
+      font-size: 15px;
+    }
+
+    .drawer-footer {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .apply-btn {
+      width: 100%;
+      height: 48px;
+      background-color: var(--primary);
+      color: #FFFFFF;
+      border: none;
+      border-radius: var(--radius-pill);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .apply-btn:hover {
+      background-color: var(--primary-hover);
+      box-shadow: 0 4px 15px rgba(139, 38, 253, 0.3);
+    }
+
+    .apply-btn.applied {
+      background-color: var(--accent-emerald);
+      cursor: default;
+    }
+
+    /* Resume Generator View */
+    #curriculo-view {
+      padding: 30px;
+      display: none;
+      overflow-y: auto;
+      height: calc(100vh - 70px);
+    }
+
+    #curriculo-view.active {
+      display: flex;
+      gap: 30px;
+    }
+
+    .resume-form {
+      flex: 1;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-large);
+      padding: 24px;
+      overflow-y: auto;
+      max-height: 100%;
+    }
+
+    .resume-preview-panel {
+      flex: 1;
+      background-color: #1F202B;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-large);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      max-height: 100%;
+    }
+
+    .form-section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text-muted);
+    }
+
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #FFFFFF;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .row-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .list-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .list-input-item {
+      display: flex;
+      gap: 10px;
+    }
+
+    .list-input-item input {
+      flex-grow: 1;
+    }
+
+    .remove-item-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0 10px;
+    }
+
+    .remove-item-btn:hover {
+      color: #EF4444;
+    }
+
+    .add-item-btn {
+      background: none;
+      border: 1px dashed var(--border-color);
+      color: var(--text-muted);
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .add-item-btn:hover {
+      border-color: var(--primary);
+      color: #FFFFFF;
+    }
+
+    /* Resume Paper Styling */
+    .resume-paper {
+      background-color: #FFFFFF;
+      color: var(--text-dark);
+      padding: 40px;
+      width: 100%;
+      max-width: 595px;
+      margin: 0 auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      border-radius: 4px;
+      flex-grow: 1;
+      overflow-y: auto;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+    }
+
+    .paper-header {
+      border-bottom: 2px solid var(--text-dark);
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+
+    .paper-name {
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .paper-contacts {
+      font-size: 12px;
+      color: #475569;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .paper-section {
+      margin-bottom: 20px;
+    }
+
+    .paper-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-bottom: 1px solid #CBD5E1;
+      padding-bottom: 4px;
+      margin-bottom: 10px;
+      color: #1E293B;
+      letter-spacing: 0.5px;
+    }
+
+    .paper-item {
+      margin-bottom: 12px;
+    }
+
+    .paper-item-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+
+    .paper-item-sub {
+      font-style: italic;
+      color: #475569;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .paper-item-description {
+      font-size: 11px;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    .paper-skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .paper-skill-item {
+      background-color: #F1F5F9;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 500;
+      color: #334155;
+    }
+
+    .paper-watermark {
+      border-top: 1px solid #E2E8F0;
+      margin-top: 30px;
+      padding-top: 10px;
+      text-align: center;
+      font-size: 9px;
+      color: #94A3B8;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .paper-watermark i {
+      color: var(--primary);
+    }
+
+    /* Recrutador View */
+    #recrutador-view {
+      padding: 24px;
+      display: none;
+      flex-direction: column;
+      height: calc(100vh - 70px);
+      overflow-y: auto;
+    }
+
+    #recrutador-view.active {
+      display: flex;
+    }
+
+    .recrutador-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .recrutador-title {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .publish-job-btn {
+      background-color: var(--primary);
+      color: #FFFFFF;
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Kanban ATS Board */
+    .kanban-board {
+      display: flex;
+      gap: 16px;
+      flex-grow: 1;
+      overflow-x: auto;
+      padding-bottom: 16px;
+    }
+
+    .kanban-column {
+      flex: 1;
+      min-width: 250px;
+      max-width: 320px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-large);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .column-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+    }
+
+    .column-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .column-count {
+      background-color: var(--bg-input);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .column-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-grow: 1;
+      overflow-y: auto;
+      min-height: 200px;
+    }
+
+    /* Candidate Card in Kanban */
+    .candidate-card {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px;
+      cursor: grab;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .candidate-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .cand-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cand-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .cand-meta {
+      flex-grow: 1;
+      overflow: hidden;
+    }
+
+    .cand-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #FFFFFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cand-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .cand-match-badge {
+      align-self: flex-start;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .match-high {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+    }
+
+    .match-medium {
+      background-color: rgba(255, 159, 10, 0.15);
+      color: var(--accent-patrocinado);
+    }
+
+    .cand-card-vaga {
+      font-size: 11px;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Modal / Pop-ups */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 5000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-large);
+      width: 90%;
+      max-width: 500px;
+      padding: 24px;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* Ads Video Simulation Overlay */
+    #ad-overlay {
+      background-color: #000000;
+      color: #FFFFFF;
+      flex-direction: column;
+      z-index: 9999;
+      display: none;
+    }
+
+    #ad-overlay.open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ad-video-container {
+      width: 80%;
+      max-width: 640px;
+      aspect-ratio: 16/9;
+      background-color: #111;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      border: 1px solid #333;
+    }
+
+    .ad-video-mock {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(45deg, #1e1b4b, #311042);
+      gap: 15px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .ad-logo {
+      font-size: 40px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -1px;
+    }
+
+    .ad-logo i {
+      color: var(--primary);
+    }
+
+    .ad-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background-color: rgba(0,0,0,0.6);
+      color: #94A3B8;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .ad-skip-container {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+    }
+
+    .ad-skip-btn {
+      background-color: rgba(0,0,0,0.8);
+      border: 1px solid #444;
+      color: #FFFFFF;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 4px;
+      cursor: not-allowed;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ad-skip-btn.ready {
+      background-color: #FFFFFF;
+      color: #000000;
+      cursor: pointer;
+    }
+
+    .banner-ad {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 15px;
+    }
+
+    .banner-ad-badge {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    .banner-ad-title {
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+
+    /* Print settings */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      .resume-paper, .resume-paper * {
+        visibility: visible;
+      }
+      .resume-paper {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none;
+        padding: 0;
+        color: #000000 !important;
+      }
+      header, .sidebar, .map-container, nav, .resume-form, .resume-preview-panel h3, .resume-preview-panel button {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header (Hidden when on Landing Screen or Auth Screen) -->
+  <header id="app-header" style="display: none;">
+    <a href="#" class="logo-container" onclick="goToHome(event)">
+      <div class="logo-symbol">V</div>
+      <div class="logo-vagas">Vagas<span>.me</span></div>
+    </a>
+    
+    <nav>
+      <button class="nav-btn active" id="btn-tab-candidato" onclick="switchView('candidato')">
+        <i class="fa-solid fa-map-location-dot"></i> Ver Vagas
+      </button>
+      <button class="nav-btn" id="btn-tab-curriculo" onclick="switchView('curriculo')">
+        <i class="fa-solid fa-file-invoice"></i> Gerar Currículo
+      </button>
+      <button class="nav-btn" id="btn-tab-recrutador" onclick="switchView('recrutador')">
+        <i class="fa-solid fa-briefcase"></i> Painel da Empresa
+      </button>
+    </nav>
+
+    <div class="header-actions">
+      <button id="plus-badge-btn" class="plus-badge" onclick="openPlusModal()">
+        <i class="fa-solid fa-crown"></i> <span id="plus-badge-text">Ativar Plus</span>
+      </button>
+      
+      <div class="profile-switch">
+        <i class="fa-solid fa-circle-user"></i>
+        <span id="profile-active-name">Candidato (PF)</span>
+      </div>
+
+      <button class="logout-btn" onclick="handleLogout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Sair
+      </button>
+    </div>
+  </header>
+
+  <!-- SCREEN 1: LANDING PAGE -->
+  <div id="landing-screen" class="screen-view active">
+    <div style="width: 100%; max-width: 1000px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 80px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="logo-symbol">V</div>
+        <div class="logo-vagas" style="font-size: 28px;">Vagas<span>.me</span></div>
+      </div>
+      <button class="btn-secondary" style="padding: 10px 24px; font-size: 14px;" onclick="goToAuth('login', 'candidato')">Fazer Login</button>
+    </div>
+
+    <div class="hero-container">
+      <h1 class="hero-title">O seu trabalho <span>perto de você</span>.</h1>
+      <p class="hero-subtitle">Esqueça os feeds confusos. Encontre vagas de emprego CLT na sua rua, bairro ou região através de um mapa interativo simples e direto.</p>
+      
+      <div class="cta-row">
+        <button class="btn-primary" onclick="goToAuth('cadastro', 'candidato')">
+          <i class="fa-solid fa-map-pin"></i> Procurar Vagas Próximas
+        </button>
+        <button class="btn-secondary" onclick="goToAuth('cadastro', 'recrutador')">
+          Quero Contratar (CNPJ)
+        </button>
+      </div>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-location-crosshairs"></i></div>
+        <h3 class="feature-title">Geolocalização de Vagas</h3>
+        <p class="feature-desc">Visualize as oportunidades dispostas em um mapa interativo. Veja a distância física e o tempo de transporte até o trabalho.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-file-pdf"></i></div>
+        <h3 class="feature-title">Gerador de Currículo Grátis</h3>
+        <p class="feature-desc">Crie um currículo estruturado no padrão do mercado em PDF. Exporte ou imprima instantaneamente de forma gratuita.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <h3 class="feature-title">Match com Inteligência Artificial</h3>
+        <p class="feature-desc">Nossa IA calcula o alinhamento semântico do seu currículo com os requisitos da vaga, mostrando seu Match Score.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: AUTHENTICATION (LOGIN / REGISTER) -->
+  <div id="auth-screen" class="screen-view">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-title" id="auth-card-title">Criar Conta Gratuita</div>
+        <div class="auth-subtitle" id="auth-card-subtitle">Entre para a rede de vagas de Itapetininga</div>
+      </div>
+
+      <!-- Profile Selector (Candidato vs Recrutador) -->
+      <div class="auth-type-switch" id="auth-profile-toggle">
+        <button class="type-btn active" id="auth-btn-pf" onclick="setAuthProfile('candidato')">Sou Candidato (PF)</button>
+        <button class="type-btn" id="auth-btn-pj" onclick="setAuthProfile('recrutador')">Sou Recrutador (CNPJ)</button>
+      </div>
+
+      <form id="auth-form" onsubmit="handleAuthSubmit(event)">
+        <div class="form-group">
+          <label for="auth-email">E-mail</label>
+          <input type="email" id="auth-email" required placeholder="seuemail@exemplo.com">
+        </div>
+        <div class="form-group">
+          <label for="auth-password">Senha</label>
+          <input type="password" id="auth-password" required placeholder="Digite sua senha (mínimo 6 caracteres)">
+        </div>
+        
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;" id="auth-submit-btn">
+          Confirmar Cadastro
+        </button>
+      </form>
+
+      <div class="auth-toggle-link" id="auth-toggle-container">
+        Já tem uma conta? <a href="#" onclick="toggleAuthMode(event, 'login')">Fazer Login</a>
+      </div>
+    </div>
+
+    <!-- Hidden Supabase Config Trigger (For local development linking) -->
+    <button class="config-supabase-btn" onclick="openSupabaseConfig()">
+      <i class="fa-solid fa-database"></i> Conectar Supabase
+    </button>
+  </div>
+
+  <!-- SCREEN 3: CANDIDATE MAP VIEW -->
+  <div id="candidato-screen" class="screen-view">
+    <div class="sidebar">
+      <div class="search-wrapper">
+        <div class="search-container">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" class="search-input" id="search-vaga-input" placeholder="Encontrou sua vaga?" oninput="filterJobs()">
+        </div>
+        <button class="filter-btn" onclick="toggleFilterModal()">
+          <i class="fa-solid fa-sliders"></i> Filtrar
+        </button>
+      </div>
+
+      <!-- Tag Filters -->
+      <div class="tags-container" id="tags-carousel">
+        <span class="tag-pill active" onclick="filterByTag('todos', this)">Todos</span>
+        <span class="tag-pill" onclick="filterByTag('vendedor', this)">Vendedor</span>
+        <span class="tag-pill" onclick="filterByTag('caixa', this)">Caixa</span>
+        <span class="tag-pill" onclick="filterByTag('analista', this)">Analista</span>
+        <span class="tag-pill" onclick="filterByTag('auxiliar', this)">Auxiliar / Pedreiro</span>
+        <span class="tag-pill" onclick="filterByTag('atendente', this)">Atendente</span>
+        <span class="tag-pill" onclick="filterByTag('fiscal', this)">Área Fiscal</span>
+      </div>
+
+      <div class="results-header">
+        <div class="results-title">
+          <i class="fa-solid fa-location-dot"></i> Vagas em Itapetininga
+        </div>
+      </div>
+
+      <!-- Job List -->
+      <div class="vagas-list" id="job-cards-list">
+        <!-- Rendered Dynamically -->
+      </div>
+
+      <!-- Simulated Ad Banner -->
+      <div class="banner-ad" id="sidebar-banner-ad">
+        <div>
+          <span class="banner-ad-badge">Anúncio</span>
+          <span class="banner-ad-title">Universidade Itapetininga</span>
+        </div>
+        <span>Matrículas abertas para o curso de TI!</span>
+      </div>
+    </div>
+
+    <!-- Map Container -->
+    <div class="map-container">
+      <div id="map"></div>
+      
+      <!-- Side Drawer Detail View -->
+      <div class="drawer" id="job-drawer">
+        <div class="drawer-header">
+          <div class="company-title" id="drawer-company-upper">NOME DA EMPRESA</div>
+          <button class="drawer-close" onclick="closeDrawer()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="drawer-body">
+          <img src="" class="drawer-company-image" id="drawer-image">
+          <h2 class="drawer-title" id="drawer-job-title">Título do Cargo</h2>
+          <div class="drawer-company" id="drawer-company-name">Empresa Responsável</div>
+
+          <!-- IA Match Status Indicator -->
+          <div class="ia-match-indicator">
+            <i class="fa-solid fa-brain"></i>
+            <div class="ia-match-text">
+              Match Inteligente Vagas.me: <strong id="drawer-match-score">95%</strong>
+            </div>
+          </div>
+
+          <div class="drawer-meta-grid">
+            <div>
+              <div class="meta-box-label">Salário Médio</div>
+              <div class="meta-box-value" id="drawer-salary">R$ 1.800 até R$ 2.100</div>
+            </div>
+            <div>
+              <div class="meta-box-label">Turno</div>
+              <div class="meta-box-value" id="drawer-shift">Diurno</div>
+            </div>
+            <div>
+              <div class="meta-box-label">Regime</div>
+              <div class="meta-box-value">CLT Presencial</div>
+            </div>
+            <div>
+              <div class="meta-box-label">Localização</div>
+              <div class="meta-box-value" style="font-size: 11px; white-space: normal; line-height: 1.2;" id="drawer-address-small">Endereço</div>
+            </div>
+          </div>
+
+          <div class="drawer-section" id="drawer-section-contato">
+            <div class="drawer-section-title" style="color: var(--accent-patrocinado); border-left-color: var(--accent-patrocinado);">Como se Candidatar</div>
+            <div class="drawer-text" style="font-weight: 700; color: #FFFFFF;" id="drawer-contato-info">
+              Informação de Contato
+            </div>
+          </div>
+
+          <div class="drawer-section">
+            <div class="drawer-section-title">Descrição da Vaga & Requisitos</div>
+            <div class="drawer-text" id="drawer-description">
+              Descrição detalhada dos requisitos, responsabilidades...
+            </div>
+          </div>
+
+          <div class="drawer-section">
+            <div class="drawer-section-title">Benefícios Oferecidos</div>
+            <div class="drawer-text" id="drawer-benefits">
+              Vale-transporte, refeitório, seguro...
+            </div>
+          </div>
+        </div>
+        <div class="drawer-footer">
+          <button class="apply-btn" id="drawer-apply-btn" onclick="handleApply()">
+            <i class="fa-solid fa-paper-plane"></i> Candidatar-se no Vagas.me
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: RESUME GENERATOR VIEW -->
+  <div id="curriculo-screen" class="screen-view">
+    <div id="curriculo-view" class="view-content active" style="width: 100%;">
+      <!-- Left form pane -->
+      <div class="resume-form">
+        <h3 class="form-section-title"><i class="fa-solid fa-user"></i> Dados Pessoais</h3>
+        <div class="form-group">
+          <label for="res-name">Nome Completo</label>
+          <input type="text" id="res-name" placeholder="Ex: João da Silva" oninput="updateResumePreview()">
+        </div>
+        <div class="row-inputs">
+          <div class="form-group">
+            <label for="res-email">E-mail</label>
+            <input type="email" id="res-email" placeholder="Ex: joao@gmail.com" oninput="updateResumePreview()">
+          </div>
+          <div class="form-group">
+            <label for="res-phone">Telefone / WhatsApp</label>
+            <input type="text" id="res-phone" placeholder="Ex: (15) 99876-5432" oninput="updateResumePreview()">
+          </div>
+        </div>
+        <div class="row-inputs">
+          <div class="form-group">
+            <label for="res-address">Endereço / Cidade</label>
+            <input type="text" id="res-address" placeholder="Ex: Vila Aparecida, Itapetininga - SP" oninput="updateResumePreview()">
+          </div>
+          <div class="form-group">
+            <label for="res-linkedin">LinkedIn (opcional)</label>
+            <input type="text" id="res-linkedin" placeholder="Ex: linkedin.com/in/joao" oninput="updateResumePreview()">
+          </div>
+        </div>
+
+        <h3 class="form-section-title"><i class="fa-solid fa-bullseye"></i> Objetivo Profissional</h3>
+        <div class="form-group">
+          <label for="res-objective">Objetivo</label>
+          <textarea id="res-objective" rows="2" placeholder="Ex: Atuar na área administrativa de supermercado..." oninput="updateResumePreview()"></textarea>
+        </div>
+
+        <h3 class="form-section-title"><i class="fa-solid fa-briefcase"></i> Experiência Profissional</h3>
+        <div class="list-inputs" id="form-experiences-list">
+          <!-- Dyn Experience Fields -->
+        </div>
+        <button class="add-item-btn" onclick="addExperienceField()"><i class="fa-solid fa-plus"></i> Adicionar Experiência</button>
+
+        <h3 class="form-section-title" style="margin-top: 20px;"><i class="fa-solid fa-graduation-cap"></i> Educação / Formação</h3>
+        <div class="list-inputs" id="form-education-list">
+          <!-- Dyn Education Fields -->
+        </div>
+        <button class="add-item-btn" onclick="addEducationField()"><i class="fa-solid fa-plus"></i> Adicionar Formação</button>
+
+        <h3 class="form-section-title" style="margin-top: 20px;"><i class="fa-solid fa-star"></i> Habilidades / Competências</h3>
+        <div class="form-group">
+          <label>Competências (separe por vírgula)</label>
+          <input type="text" id="res-skills" placeholder="Ex: Atendimento ao Cliente, Caixa, Excel, Organização" oninput="updateResumePreview()">
+        </div>
+        
+        <button class="filter-btn" style="width: 100%; height: 40px; margin-top: 10px; background-color: var(--primary);" onclick="triggerAIOptimizeResume()">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Otimizar Resumo e Habilidades com I.A.
+        </button>
+      </div>
+
+      <!-- Right preview pane -->
+      <div class="resume-preview-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <h3 style="font-size: 16px; font-weight: 700;">Pré-visualização do PDF</h3>
+          <button class="filter-btn" style="width: 140px; height: 38px; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="window.print()">
+            <i class="fa-solid fa-print"></i> Imprimir / PDF
+          </button>
+        </div>
+
+        <div class="resume-paper" id="resume-paper-container">
+          <div class="paper-header">
+            <div class="paper-name" id="paper-name-preview">NOME COMPLETO</div>
+            <div class="paper-contacts" id="paper-contacts-preview">
+              <span><i class="fa-solid fa-envelope"></i> email@example.com</span>
+              <span><i class="fa-solid fa-phone"></i> (15) 99999-9999</span>
+              <span><i class="fa-solid fa-map-marker-alt"></i> Cidade - UF</span>
+            </div>
+          </div>
+
+          <div class="paper-section">
+            <div class="paper-section-title">Objetivo Profissional</div>
+            <div class="paper-item-description" id="paper-objective-preview">
+              Descreva seu objetivo profissional.
+            </div>
+          </div>
+
+          <div class="paper-section" id="paper-exp-section">
+            <div class="paper-section-title">Experiência Profissional</div>
+            <div id="paper-experiences-preview"></div>
+          </div>
+
+          <div class="paper-section" id="paper-edu-section">
+            <div class="paper-section-title">Formação Acadêmica</div>
+            <div id="paper-education-preview"></div>
+          </div>
+
+          <div class="paper-section" id="paper-skills-section">
+            <div class="paper-section-title">Habilidades e Competências</div>
+            <div class="paper-skills-list" id="paper-skills-preview"></div>
+          </div>
+
+          <div class="paper-watermark">
+            <i class="fa-solid fa-check-circle"></i> Currículo gerado gratuitamente via <strong>Vagas.me</strong> — O seu trabalho perto de você.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 5: RECRUITER ATS BOARD VIEW -->
+  <div id="recrutador-screen" class="screen-view">
+    <div id="recrutador-view" class="view-content active" style="width: 100%;">
+      <div class="recrutador-header">
+        <div class="recrutador-title">
+          <i class="fa-solid fa-building-user"></i> Painel de Controle de Contratação (CNPJ)
+        </div>
+        <button class="publish-job-btn" onclick="openPublishJobModal()">
+          <i class="fa-solid fa-plus"></i> Publicar Nova Vaga
+        </button>
+      </div>
+
+      <!-- Kanban ATS Board -->
+      <div class="kanban-board">
+        <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'applied')">
+          <div class="column-header">
+            <span class="column-title">Candidatos (Novos)</span>
+            <span class="column-count" id="count-applied">0</span>
+          </div>
+          <div class="column-cards" id="col-applied"></div>
+        </div>
+
+        <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'triagem')">
+          <div class="column-header">
+            <span class="column-title">Triagem Semântica</span>
+            <span class="column-count" id="count-triagem">0</span>
+          </div>
+          <div class="column-cards" id="col-triagem"></div>
+        </div>
+
+        <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'entrevista')">
+          <div class="column-header">
+            <span class="column-title">Entrevistas</span>
+            <span class="column-count" id="count-entrevista">0</span>
+          </div>
+          <div class="column-cards" id="col-entrevista"></div>
+        </div>
+
+        <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'proposta')">
+          <div class="column-header">
+            <span class="column-title">Proposta Feita</span>
+            <span class="column-count" id="count-proposta">0</span>
+          </div>
+          <div class="column-cards" id="col-proposta"></div>
+        </div>
+
+        <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'rejeitado')">
+          <div class="column-header">
+            <span class="column-title">Finalizados / Recusados</span>
+            <span class="column-count" id="count-rejeitado">0</span>
+          </div>
+          <div class="column-cards" id="col-rejeitado"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALS & OVERLAYS -->
+  
+  <!-- Supabase Credentials Config Modal -->
+  <div class="modal-overlay" id="supabase-config-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"><i class="fa-solid fa-database"></i> Configurar Supabase Cloud</div>
+        <button class="modal-close" onclick="closeSupabaseConfig()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4;">
+        Para salvar os dados na nuvem da sua conta Supabase, insira a URL do projeto e a chave anônima (Anon Key) obtidas nas configurações de API do console do Supabase. Se deixados em branco, o app usará o armazenamento offline local.
+      </div>
+      <div class="form-group">
+        <label>Supabase Project URL</label>
+        <input type="text" id="sb-url" placeholder="https://xxxx.supabase.co">
+      </div>
+      <div class="form-group">
+        <label>Supabase Anon API Key</label>
+        <input type="password" id="sb-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+      </div>
+      <button class="apply-btn" style="margin-top: 10px;" onclick="saveSupabaseConfig()">
+        Conectar Supabase
+      </button>
+    </div>
+  </div>
+
+  <!-- Plus Activation Modal -->
+  <div class="modal-overlay" id="plus-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" style="color: #FF9F0A;"><i class="fa-solid fa-crown"></i> Seja Vagas.me Plus</div>
+        <button class="modal-close" onclick="closePlusModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div style="font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px;">
+        Acelere sua entrada no mercado CLT por um preço simbólico.
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+        <div style="display: flex; align-items: center; gap: 10px; font-size: 14px;">
+          <i class="fa-solid fa-circle-check" style="color: var(--accent-emerald);"></i>
+          <span><strong>Zero Anúncios:</strong> Remova as propagandas.</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; font-size: 14px;">
+          <i class="fa-solid fa-circle-check" style="color: var(--accent-emerald);"></i>
+          <span><strong>Circulação Inteligente:</strong> Destaque automático para recrutadores.</span>
+        </div>
+      </div>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 28px; font-weight: 800; color: #FFFFFF;">R$ 7,90 <span style="font-size: 14px; font-weight: 500; color: var(--text-muted);">/ mensal</span></div>
+      </div>
+      <button class="apply-btn" id="plus-subscribe-action" style="background: linear-gradient(135deg, #FF9F0A 0%, #E65C00 100%); color: #000000; font-weight: 800;" onclick="togglePlusSubscription()">
+        Ativar Assinatura Plus Agora
+      </button>
+    </div>
+  </div>
+
+  <!-- Publish Job Modal -->
+  <div class="modal-overlay" id="publish-job-modal">
+    <div class="modal-content" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+      <div class="modal-header">
+        <div class="modal-title">Cadastrar Oportunidade (CNPJ)</div>
+        <button class="modal-close" onclick="closePublishJobModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="form-group">
+        <label>Nome da Empresa</label>
+        <input type="text" id="pub-empresa" placeholder="Ex: Supermercado Cofesa">
+      </div>
+      <div class="row-inputs">
+        <div class="form-group">
+          <label>Ramo de Atuação</label>
+          <input type="text" id="pub-ramo" placeholder="Ex: Supermercado">
+        </div>
+        <div class="form-group">
+          <label>Cargos Disponíveis (separe por vírgula)</label>
+          <input type="text" id="pub-vagas" placeholder="Ex: Caixa, Repositor">
+        </div>
+      </div>
+      <div class="row-inputs">
+        <div class="form-group">
+          <label>Faixa Salarial</label>
+          <input type="text" id="pub-salario" placeholder="Ex: R$ 1.800 até R$ 2.100">
+        </div>
+        <div class="form-group">
+          <label>Turno</label>
+          <input type="text" id="pub-turno" placeholder="Ex: Diurno e Noturno">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Endereço Físico Completo (Itapetininga - SP)</label>
+        <input type="text" id="pub-endereco" placeholder="Ex: R. José de Almeida Carvalho, 1000 - Vila Leonor">
+      </div>
+      <div class="row-inputs">
+        <div class="form-group">
+          <label>Latitude (Mapa)</label>
+          <input type="number" step="0.0001" id="pub-lat" value="-23.5937">
+        </div>
+        <div class="form-group">
+          <label>Longitude (Mapa)</label>
+          <input type="number" step="0.0001" id="pub-lng" value="-48.0645">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Benefícios</label>
+        <input type="text" id="pub-beneficios" placeholder="Ex: VT, VR, Assistência Médica">
+      </div>
+      <div class="form-group">
+        <label>Contato da Vaga (E-mail/WhatsApp/Instrução)</label>
+        <input type="text" id="pub-contato" placeholder="Ex: WhatsApp: (15) 99999-9999 ou rh@empresa.com">
+      </div>
+      <div class="form-group">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <label style="margin-bottom: 0;">Descrição da Vaga</label>
+          <button class="filter-btn" style="width: 140px; height: 26px; font-size: 11px; padding: 0;" onclick="triggerAIDescription()">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Ajudante de I.A.
+          </button>
+        </div>
+        <textarea id="pub-descricao" rows="4" placeholder="Descreva os detalhes da oportunidade..."></textarea>
+      </div>
+      <button class="apply-btn" style="margin-top: 10px;" onclick="submitNewJob()">Publicar Vaga no Mapa</button>
+    </div>
+  </div>
+
+  <!-- Job Filters Modal -->
+  <div class="modal-overlay" id="filter-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"><i class="fa-solid fa-sliders"></i> Filtrar Oportunidades</div>
+        <button class="modal-close" onclick="toggleFilterModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="form-group">
+        <label>Faixa Salarial Mínima</label>
+        <input type="text" id="filter-salary" placeholder="Ex: R$ 1.800">
+      </div>
+      <div class="form-group">
+        <label>Regime de Contratação</label>
+        <select id="filter-regime">
+          <option value="todos">Todos os Regimes</option>
+          <option value="clt">CLT Presencial</option>
+          <option value="patrocinado">Vagas Patrocinadas</option>
+        </select>
+      </div>
+      <button class="apply-btn" onclick="applyAdvancedFilters()">Aplicar Filtros</button>
+    </div>
+  </div>
+
+  <!-- Video Ad Pop-up Simulation -->
+  <div class="modal-overlay" id="ad-overlay">
+    <div class="ad-video-container">
+      <div class="ad-badge">Publicidade</div>
+      <div class="ad-video-mock">
+        <div class="ad-logo"><i class="fa-solid fa-crown"></i> Vagas.me Plus</div>
+        <div style="font-size: 16px; font-weight: 700;">Cansado de ver anúncios toda vez que se candidata?</div>
+        <div style="font-size: 13px; color: #94A3B8; max-width: 380px;">Assine o Plano Plus por apenas R$ 7,90 mensais e faça candidaturas ilimitadas sem interrupções!</div>
+      </div>
+      <div class="ad-skip-container">
+        <button class="ad-skip-btn" id="ad-skip-action-btn" onclick="skipAdAndApply()">
+          Pular anúncio em <span id="ad-timer">5</span>s
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase CDN Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <script>
+    // System State
+    const state = {
+      jobs: [],
+      candidates: [],
+      currentCandidate: {
+        id: "cand-default",
+        name: "João da Silva",
+        email: "joao.silva@gmail.com",
+        phone: "(15) 99876-5432",
+        address: "Vila Aparecida, Itapetininga - SP",
+        linkedin: "linkedin.com/in/joao",
+        objective: "Jovem proativo focado em recolocação de mercado nas áreas de comércio e logística em Itapetininga.",
+        experiences: [
+          { company: "Mercado Central", role: "Auxiliar de Reposição", period: "2024 - 2025", desc: "Responsável pela organização das gôndolas e atendimento básico a clientes." }
+        ],
+        education: [
+          { school: "Escola Estadual Peixoto", degree: "Ensino Médio Completo", period: "2023" }
+        ],
+        skills: ["Atendimento ao Cliente", "Caixa", "Reposição de Estoque", "Informática Básica"]
+      },
+      plusActive: false,
+      activeView: 'candidato',
+      map: null,
+      markers: {},
+      selectedJobId: null,
+      tagFilter: 'todos',
+      salaryFilter: '',
+      regimeFilter: 'todos',
+      
+      // Auth State
+      user: null, // Logged in user details {email, id, profileType}
+      authMode: 'cadastro', // cadastro or login
+      authProfile: 'candidato', // candidato or recrutador
+      
+      // Supabase connection
+      supabase: null
+    };
+
+    // Load Supabase Client if configured
+    function initSupabase() {
+      const url = localStorage.getItem('sb_url');
+      const key = localStorage.getItem('sb_key');
+      if (url && key && window.supabase) {
+        try {
+          state.supabase = window.supabase.createClient(url, key);
+          console.log("Supabase Cloud Connected successfully.");
+        } catch (e) {
+          console.error("Failed to connect to Supabase Client:", e);
+        }
+      }
+    }
+
+    // App Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      initSupabase();
+      
+      // Setup dynamic form fields for resume builder
+      renderResumeFormFields();
+      
+      // Check for active local session
+      checkSession();
+
+      // Load jobs
+      fetchJobs();
+    });
+
+    // Navigation and Routing
+    function checkSession() {
+      const session = localStorage.getItem('vagas_session');
+      if (session) {
+        state.user = JSON.parse(session);
+        showAppInterface();
+      } else {
+        showLandingInterface();
+      }
+    }
+
+    function showLandingInterface() {
+      document.getElementById('app-header').style.display = 'none';
+      document.getElementById('landing-screen').classList.add('active');
+      document.getElementById('auth-screen').classList.remove('active');
+      document.getElementById('candidato-screen').classList.remove('active');
+      document.getElementById('curriculo-screen').classList.remove('active');
+      document.getElementById('recrutador-screen').classList.remove('active');
+    }
+
+    function showAppInterface() {
+      document.getElementById('app-header').style.display = 'flex';
+      document.getElementById('landing-screen').classList.remove('active');
+      document.getElementById('auth-screen').classList.remove('active');
+      
+      // Update UI for active user profile
+      document.getElementById('profile-active-name').textContent = 
+        state.user.profileType === 'recrutador' ? 'Recrutador (CNPJ)' : 'Candidato (PF)';
+      
+      if (state.user.profileType === 'recrutador') {
+        document.getElementById('btn-tab-candidato').style.display = 'none';
+        document.getElementById('btn-tab-curriculo').style.display = 'none';
+        document.getElementById('btn-tab-recrutador').style.display = 'flex';
+        switchView('recrutador');
+      } else {
+        document.getElementById('btn-tab-candidato').style.display = 'flex';
+        document.getElementById('btn-tab-curriculo').style.display = 'flex';
+        document.getElementById('btn-tab-recrutador').style.display = 'none';
+        switchView('candidato');
+      }
+    }
+
+    function goToHome(e) {
+      if (e) e.preventDefault();
+      if (state.user) {
+        showAppInterface();
+      } else {
+        showLandingInterface();
+      }
+    }
+
+    function goToAuth(mode, profile) {
+      state.authMode = mode;
+      state.authProfile = profile;
+      
+      updateAuthUI();
+      
+      document.getElementById('landing-screen').classList.remove('active');
+      document.getElementById('auth-screen').classList.add('active');
+    }
+
+    function setAuthProfile(profile) {
+      state.authProfile = profile;
+      document.getElementById('auth-btn-pf').className = profile === 'candidato' ? 'type-btn active' : 'type-btn';
+      document.getElementById('auth-btn-pj').className = profile === 'recrutador' ? 'type-btn active' : 'type-btn';
+    }
+
+    function toggleAuthMode(e, mode) {
+      if (e) e.preventDefault();
+      state.authMode = mode;
+      updateAuthUI();
+    }
+
+    function updateAuthUI() {
+      const title = document.getElementById('auth-card-title');
+      const subtitle = document.getElementById('auth-card-subtitle');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const toggleContainer = document.getElementById('auth-toggle-container');
+
+      setAuthProfile(state.authProfile);
+
+      if (state.authMode === 'login') {
+        title.textContent = 'Acessar Conta';
+        subtitle.textContent = 'Entre com seus dados para continuar';
+        submitBtn.textContent = 'Entrar na Plataforma';
+        toggleContainer.innerHTML = 'Não tem uma conta? <a href="#" onclick="toggleAuthMode(event, \'cadastro\')">Criar Conta</a>';
+      } else {
+        title.textContent = 'Criar Conta Gratuita';
+        subtitle.textContent = 'Entre para a rede de vagas de Itapetininga';
+        submitBtn.textContent = 'Confirmar Cadastro';
+        toggleContainer.innerHTML = 'Já tem uma conta? <a href="#" onclick="toggleAuthMode(event, \'login\')">Fazer Login</a>';
+      }
+    }
+
+    // Auth Submission Logic (Supabase + LocalStorage Fallback)
+    async function handleAuthSubmit(event) {
+      event.preventDefault();
+      const email = document.getElementById('auth-email').value;
+      const password = document.getElementById('auth-password').value;
+
+      if (state.supabase) {
+        // Supabase Cloud Auth
+        try {
+          if (state.authMode === 'cadastro') {
+            const { data, error } = await state.supabase.auth.signUp({
+              email, password,
+              options: { data: { profile_type: state.authProfile } }
+            });
+            if (error) throw error;
+            alert("Cadastro realizado! Verifique seu e-mail para confirmação.");
+            toggleAuthMode(null, 'login');
+          } else {
+            const { data, error } = await state.supabase.auth.signInWithPassword({ email, password });
+            if (error) throw error;
+            
+            state.user = {
+              email: data.user.email,
+              id: data.user.id,
+              profileType: data.user.user_metadata.profile_type || 'candidato'
+            };
+            localStorage.setItem('vagas_session', JSON.stringify(state.user));
+            showAppInterface();
+          }
+        } catch (e) {
+          alert("Erro de autenticação Supabase: " + e.message);
+        }
+      } else {
+        // Offline Local Mock Auth
+        const users = JSON.parse(localStorage.getItem('vagas_users') || '[]');
+        if (state.authMode === 'cadastro') {
+          if (users.find(u => u.email === email)) {
+            alert("Este e-mail já está cadastrado.");
+            return;
+          }
+          const newUser = { id: 'u-' + Math.random().toString(36).substr(2, 9), email, password, profileType: state.authProfile };
+          users.push(newUser);
+          localStorage.setItem('vagas_users', JSON.stringify(users));
+          alert("Conta criada com sucesso! Faça o login.");
+          toggleAuthMode(null, 'login');
+        } else {
+          const user = users.find(u => u.email === email && u.password === password);
+          if (!user) {
+            alert("E-mail ou senha incorretos.");
+            return;
+          }
+          state.user = user;
+          localStorage.setItem('vagas_session', JSON.stringify(state.user));
+          showAppInterface();
+        }
+      }
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('vagas_session');
+      state.user = null;
+      if (state.supabase) {
+        state.supabase.auth.signOut();
+      }
+      showLandingInterface();
+    }
+
+    // View Tabs Router
+    function switchView(viewName) {
+      state.activeView = viewName;
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.screen-view').forEach(view => view.classList.remove('active'));
+      
+      const activeBtn = document.getElementById(`btn-tab-${viewName}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      
+      const viewEl = document.getElementById(`${viewName}-screen`);
+      if (viewEl) viewEl.classList.add('active');
+
+      if (viewName === 'candidato') {
+        setTimeout(() => {
+          if (state.map) {
+            state.map.invalidateSize();
+          } else {
+            initMap();
+          }
+        }, 100);
+      } else if (viewName === 'recrutador') {
+        fetchCandidates();
+      } else if (viewName === 'curriculo') {
+        updateResumePreview();
+      }
+    }
+
+    // Map Setup
+    function initMap() {
+      if (state.map) return;
+      
+      state.map = L.map('map', {
+        zoomControl: false
+      }).setView([-23.5916, -48.0531], 14);
+
+      L.control.zoom({ position: 'bottomleft' }).addTo(state.map);
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; CartoDB &copy; OpenStreetMap contributors',
+        subdomains: 'abcd',
+        maxZoom: 20
+      }).addTo(state.map);
+
+      // Render markers once map is loaded
+      renderMapMarkers();
+    }
+
+    // Fetching Jobs Database
+    async function fetchJobs() {
+      try {
+        if (state.supabase) {
+          const { data, error } = await state.supabase.from('vagas').select('*');
+          if (error) throw error;
+          state.jobs = data;
+        } else {
+          const res = await fetch('/api/vagas');
+          state.jobs = await res.json();
+        }
+        renderJobCards();
+        renderMapMarkers();
+      } catch (err) {
+        console.error("Error fetching jobs:", err);
+      }
+    }
+
+    // Render cards list in Sidebar
+    function renderJobCards() {
+      const container = document.getElementById('job-cards-list');
+      container.innerHTML = '';
+      
+      const filtered = getFilteredJobs();
+      
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); font-size:14px; text-align:center; padding: 20px;">Nenhuma vaga encontrada.</div>';
+        return;
+      }
+
+      filtered.forEach(job => {
+        const card = document.createElement('div');
+        card.className = `job-card ${job.patrocinado ? 'patrocinado' : ''}`;
+        card.id = `sidebar-card-${job.id}`;
+        
+        // Marker linkage hover effect
+        card.addEventListener('mouseenter', () => highlightMarker(job.id, true));
+        card.addEventListener('mouseleave', () => highlightMarker(job.id, false));
+
+        card.innerHTML = `
+          <div class="card-header">
+            <div>
+              <div class="company-title">${job.empresa}</div>
+              <div class="company-sub">${job.ramo}</div>
+            </div>
+            <button class="favorite-star ${job.estrela ? 'active' : ''}" onclick="toggleFavorite('${job.id}', event)">
+              <i class="fa-solid fa-star"></i>
+            </button>
+          </div>
+          <img src="${job.imagem}" class="company-banner" alt="Empresa">
+          <div class="card-vagas-tags">
+            ${job.vagas.map(v => `<span class="card-vaga-pill">${v}</span>`).join('')}
+          </div>
+          <div class="card-info-item"><strong>Salários:</strong> <span>${job.salarios}</span></div>
+          <div class="card-info-item"><strong>Turnos:</strong> <span>${job.turnos}</span></div>
+          <div class="card-footer">
+            <span class="card-address" title="${job.endereco}"><i class="fa-solid fa-location-dot" style="color:var(--primary); margin-right:4px;"></i> ${job.endereco}</span>
+            <button class="saber-mais-btn" onclick="openJobDetails('${job.id}')">saber mais</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Render map pins (White common vs Golden patrocinado)
+    function renderMapMarkers() {
+      if (!state.map) return;
+
+      // Clear old markers
+      for (let id in state.markers) {
+        state.map.removeLayer(state.markers[id]);
+      }
+      state.markers = {};
+
+      const filtered = getFilteredJobs();
+
+      filtered.forEach(job => {
+        let iconHtml = '';
+        if (job.patrocinado) {
+          iconHtml = `<div class="marker-pin-patrocinado"><div class="patroc-badge">Patrocinado</div></div>`;
+        } else {
+          iconHtml = `
+            <div class="marker-pin-common">
+              <img src="${job.imagem}" alt="Logo">
+            </div>
+          `;
+        }
+
+        const customIcon = L.divIcon({
+          className: `custom-marker marker-id-${job.id}`,
+          html: iconHtml,
+          iconSize: job.patrocinado ? [46, 46] : [32, 32],
+          iconAnchor: job.patrocinado ? [23, 23] : [16, 32]
+        });
+
+        const marker = L.marker([job.latitude, job.longitude], { icon: customIcon }).addTo(state.map);
+        
+        marker.bindPopup(`
+          <div style="color: #000; font-family: sans-serif; padding: 4px; max-width: 200px;">
+            <strong style="color: var(--primary); text-transform: uppercase; font-size:12px;">${job.empresa}</strong><br>
+            <span style="font-size:11px; font-weight:600;">${job.vagas.join(', ')}</span><br>
+            <span style="font-size:10px; color:#555;">${job.salarios}</span><br>
+            <button onclick="openJobDetails('${job.id}')" style="background-color:#8B26FD; color:#FFF; border:none; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:700; cursor:pointer; margin-top:6px; width:100%;">Ver detalhes</button>
+          </div>
+        `);
+
+        marker.on('click', () => {
+          openJobDetails(job.id);
+        });
+
+        // Sync hover pin to highlight sidebar card
+        marker.on('mouseover', () => {
+          const cardEl = document.getElementById(`sidebar-card-${job.id}`);
+          if (cardEl) {
+            cardEl.classList.add('highlighted');
+            cardEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        });
+        marker.on('mouseout', () => {
+          const cardEl = document.getElementById(`sidebar-card-${job.id}`);
+          if (cardEl) cardEl.classList.remove('highlighted');
+        });
+
+        state.markers[job.id] = marker;
+      });
+    }
+
+    // Markers and Cards interactive highlights
+    function highlightMarker(jobId, shouldHighlight) {
+      const marker = state.markers[jobId];
+      if (marker && marker._icon) {
+        const markerDiv = marker._icon.querySelector('.custom-marker') || marker._icon;
+        if (shouldHighlight) {
+          markerDiv.classList.add('active');
+        } else {
+          markerDiv.classList.remove('active');
+        }
+      }
+    }
+
+    function getFilteredJobs() {
+      return state.jobs.filter(job => {
+        // Tag filter
+        if (state.tagFilter !== 'todos') {
+          const hasTag = job.vagas.some(v => v.toLowerCase().includes(state.tagFilter.toLowerCase()));
+          if (!hasTag) return false;
+        }
+        
+        // Search text
+        const searchInput = document.getElementById('search-vaga-input').value.toLowerCase();
+        if (searchInput) {
+          const matchesTitle = job.vagas.some(v => v.toLowerCase().includes(searchInput));
+          const matchesCompany = job.empresa.toLowerCase().includes(searchInput);
+          const matchesDesc = job.descricao.toLowerCase().includes(searchInput);
+          if (!matchesTitle && !matchesCompany && !matchesDesc) return false;
+        }
+
+        // Salary Filter
+        if (state.salaryFilter) {
+          const salaryVal = parseFloat(state.salaryFilter.replace(/[^\d]/g, ''));
+          if (salaryVal) {
+            const salariesNum = job.salarios.match(/\d+/g);
+            if (salariesNum) {
+              const maxJobSalary = Math.max(...salariesNum.map(Number)) * (job.salarios.includes('k') ? 1000 : 1);
+              if (maxJobSalary < salaryVal) return false;
+            }
+          }
+        }
+
+        // Regime Filter
+        if (state.regimeFilter === 'patrocinado' && !job.patrocinado) return false;
+
+        return true;
+      });
+    }
+
+    function filterJobs() {
+      renderJobCards();
+      renderMapMarkers();
+    }
+
+    function filterByTag(tagValue, element) {
+      state.tagFilter = tagValue;
+      document.querySelectorAll('#tags-carousel .tag-pill').forEach(pill => pill.classList.remove('active'));
+      element.classList.add('active');
+      filterJobs();
+    }
+
+    function toggleFavorite(jobId, event) {
+      event.stopPropagation();
+      const job = state.jobs.find(j => j.id === jobId);
+      if (job) {
+        job.estrela = !job.estrela;
+        renderJobCards();
+      }
+    }
+
+    function toggleFilterModal() {
+      document.getElementById('filter-modal').classList.toggle('open');
+    }
+
+    function applyAdvancedFilters() {
+      state.salaryFilter = document.getElementById('filter-salary').value;
+      state.regimeFilter = document.getElementById('filter-regime').value;
+      toggleFilterModal();
+      filterJobs();
+    }
+
+    // Side Drawer details pane
+    function openJobDetails(jobId) {
+      const job = state.jobs.find(j => j.id === jobId);
+      if (!job) return;
+
+      state.selectedJobId = jobId;
+      
+      document.getElementById('drawer-company-upper').textContent = job.empresa;
+      document.getElementById('drawer-image').src = job.imagem;
+      document.getElementById('drawer-job-title').textContent = job.vagas.join(' e ');
+      document.getElementById('drawer-company-name').textContent = `${job.empresa} • ${job.ramo}`;
+      document.getElementById('drawer-salary').textContent = job.salarios;
+      document.getElementById('drawer-shift').textContent = job.turnos;
+      document.getElementById('drawer-address-small').textContent = job.endereco;
+      document.getElementById('drawer-description').textContent = job.descricao;
+      document.getElementById('drawer-benefits').textContent = job.beneficios;
+      
+      // Load contact information
+      if (job.contato) {
+        document.getElementById('drawer-section-contato').style.display = 'block';
+        document.getElementById('drawer-contato-info').textContent = job.contato;
+      } else {
+        document.getElementById('drawer-section-contato').style.display = 'none';
+      }
+
+      // Mock AI Match Score
+      const score = Math.floor(Math.random() * (98 - 75) + 75);
+      document.getElementById('drawer-match-score').textContent = `${score}%`;
+
+      const applyBtn = document.getElementById('drawer-apply-btn');
+      applyBtn.className = 'apply-btn';
+      applyBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Candidatar-se no Vagas.me';
+      applyBtn.disabled = false;
+
+      // Smooth camera transition (flyTo) to coordinate
+      if (state.map) {
+        state.map.flyTo([job.latitude, job.longitude], 15, {
+          animate: true,
+          duration: 1.5
+        });
+      }
+
+      document.getElementById('job-drawer').classList.add('open');
+    }
+
+    function closeDrawer() {
+      document.getElementById('job-drawer').classList.remove('open');
+    }
+
+    // Application submission
+    function handleApply() {
+      if (!state.selectedJobId) return;
+
+      if (state.plusActive) {
+        executeCandidacy();
+      } else {
+        openAdOverlay();
+      }
+    }
+
+    let adInterval = null;
+    function openAdOverlay() {
+      const adModal = document.getElementById('ad-overlay');
+      const adBtn = document.getElementById('ad-skip-action-btn');
+      const timerSpan = document.getElementById('ad-timer');
+      
+      adBtn.className = 'ad-skip-btn';
+      adBtn.disabled = true;
+      timerSpan.textContent = '5';
+      
+      adModal.classList.add('open');
+
+      let timerVal = 5;
+      adInterval = setInterval(() => {
+        timerVal--;
+        timerSpan.textContent = timerVal;
+        if (timerVal <= 0) {
+          clearInterval(adInterval);
+          adBtn.className = 'ad-skip-btn ready';
+          adBtn.disabled = false;
+          adBtn.innerHTML = 'Pular Anúncio <i class="fa-solid fa-forward"></i>';
+        }
+      }, 1000);
+    }
+
+    function skipAdAndApply() {
+      clearInterval(adInterval);
+      document.getElementById('ad-overlay').classList.remove('open');
+      executeCandidacy();
+    }
+
+    async function executeCandidacy() {
+      // Offline local application
+      const crm_leads = JSON.parse(localStorage.getItem('vagas_candidaturas') || '[]');
+      const existing = crm_leads.find(c => c.candidate_id === state.user.id && c.job_id === state.selectedJobId);
+      
+      if (!existing) {
+        const new_candidatura = {
+          candidate_id: state.user.id,
+          job_id: state.selectedJobId,
+          stage: 'applied',
+          match_score: Math.floor(Math.random() * (98 - 75) + 75)
+        };
+        crm_leads.push(new_candidatura);
+        localStorage.setItem('vagas_candidaturas', JSON.stringify(crm_leads));
+      }
+
+      // Supabase Online application
+      if (state.supabase) {
+        try {
+          await state.supabase.from('candidaturas').insert({
+            id: 'app-' + Math.random().toString(36).substr(2, 9),
+            candidate_id: state.user.id,
+            job_id: state.selectedJobId,
+            stage: 'applied',
+            match_score: Math.floor(Math.random() * (98 - 75) + 75)
+          });
+        } catch (e) {
+          console.error("Supabase apply error:", e);
+        }
+      }
+
+      const applyBtn = document.getElementById('drawer-apply-btn');
+      applyBtn.className = 'apply-btn applied';
+      applyBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Candidatura Enviada!';
+      applyBtn.disabled = true;
+
+      alert("Candidatura enviada com sucesso!");
+    }
+
+    // Plus Subscription settings
+    function openPlusModal() {
+      document.getElementById('plus-modal').classList.add('open');
+    }
+
+    function closePlusModal() {
+      document.getElementById('plus-modal').classList.remove('open');
+    }
+
+    function togglePlusSubscription() {
+      state.plusActive = !state.plusActive;
+      updatePlusBadgeUI();
+      closePlusModal();
+      
+      if (state.plusActive) {
+        alert("Sua assinatura Plus foi ativada com sucesso!");
+      } else {
+        alert("Assinatura Plus desativada.");
+      }
+    }
+
+    function updatePlusBadgeUI() {
+      const badge = document.getElementById('plus-badge-btn');
+      const text = document.getElementById('plus-badge-text');
+      const actionBtn = document.getElementById('plus-subscribe-action');
+
+      if (state.plusActive) {
+        badge.className = 'plus-badge active';
+        text.innerHTML = 'Plus Ativo <i class="fa-solid fa-circle-check"></i>';
+        actionBtn.textContent = 'Cancelar Assinatura Plus';
+        actionBtn.style.background = '#EF4444';
+        actionBtn.style.color = '#FFFFFF';
+        document.getElementById('sidebar-banner-ad').style.display = 'none';
+      } else {
+        badge.className = 'plus-badge';
+        text.textContent = 'Ativar Plus';
+        actionBtn.textContent = 'Ativar Assinatura Plus Agora';
+        actionBtn.style.background = 'linear-gradient(135deg, #FF9F0A 0%, #E65C00 100%)';
+        actionBtn.style.color = '#000000';
+        document.getElementById('sidebar-banner-ad').style.display = 'flex';
+      }
+    }
+
+    // Resume Generator settings
+    function renderResumeFormFields() {
+      document.getElementById('res-name').value = state.currentCandidate.name;
+      document.getElementById('res-email').value = state.currentCandidate.email;
+      document.getElementById('res-phone').value = state.currentCandidate.phone;
+      document.getElementById('res-address').value = state.currentCandidate.address;
+      document.getElementById('res-linkedin').value = state.currentCandidate.linkedin;
+      document.getElementById('res-objective').value = state.currentCandidate.objective;
+      document.getElementById('res-skills').value = state.currentCandidate.skills.join(', ');
+
+      const expContainer = document.getElementById('form-experiences-list');
+      expContainer.innerHTML = '';
+      state.currentCandidate.experiences.forEach((exp, idx) => {
+        expContainer.appendChild(createExperienceFormItem(exp, idx));
+      });
+
+      const eduContainer = document.getElementById('form-education-list');
+      eduContainer.innerHTML = '';
+      state.currentCandidate.education.forEach((edu, idx) => {
+        eduContainer.appendChild(createEducationFormItem(edu, idx));
+      });
+    }
+
+    function createExperienceFormItem(exp, idx) {
+      const item = document.createElement('div');
+      item.className = 'list-input-item';
+      item.style.flexDirection = 'column';
+      item.style.border = '1px solid var(--border-color)';
+      item.style.padding = '12px';
+      item.style.borderRadius = '8px';
+      item.style.marginBottom = '10px';
+      item.style.position = 'relative';
+      item.innerHTML = `
+        <button class="remove-item-btn" style="position:absolute; right:10px; top:10px;" onclick="removeExperienceField(${idx})"><i class="fa-solid fa-trash"></i></button>
+        <div class="row-inputs">
+          <div class="form-group" style="margin-bottom:8px;">
+            <label>Empresa</label>
+            <input type="text" value="${exp.company}" oninput="updateExperienceValue(${idx}, 'company', this.value)">
+          </div>
+          <div class="form-group" style="margin-bottom:8px;">
+            <label>Cargo</label>
+            <input type="text" value="${exp.role}" oninput="updateExperienceValue(${idx}, 'role', this.value)">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:8px;">
+          <label>Período / Ano</label>
+          <input type="text" value="${exp.period}" placeholder="Ex: 2023 - 2025" oninput="updateExperienceValue(${idx}, 'period', this.value)">
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label>Descrição das Atividades</label>
+          <textarea rows="2" oninput="updateExperienceValue(${idx}, 'desc', this.value)">${exp.desc}</textarea>
+        </div>
+      `;
+      return item;
+    }
+
+    function createEducationFormItem(edu, idx) {
+      const item = document.createElement('div');
+      item.className = 'list-input-item';
+      item.style.flexDirection = 'column';
+      item.style.border = '1px solid var(--border-color)';
+      item.style.padding = '12px';
+      item.style.borderRadius = '8px';
+      item.style.marginBottom = '10px';
+      item.style.position = 'relative';
+      item.innerHTML = `
+        <button class="remove-item-btn" style="position:absolute; right:10px; top:10px;" onclick="removeEducationField(${idx})"><i class="fa-solid fa-trash"></i></button>
+        <div class="row-inputs">
+          <div class="form-group" style="margin-bottom:8px;">
+            <label>Instituição</label>
+            <input type="text" value="${edu.school}" oninput="updateEducationValue(${idx}, 'school', this.value)">
+          </div>
+          <div class="form-group" style="margin-bottom:8px;">
+            <label>Curso / Grau</label>
+            <input type="text" value="${edu.degree}" oninput="updateEducationValue(${idx}, 'degree', this.value)">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label>Período / Ano de Conclusão</label>
+          <input type="text" value="${edu.period}" placeholder="Ex: Conclusão em 2023" oninput="updateEducationValue(${idx}, 'period', this.value)">
+        </div>
+      `;
+      return item;
+    }
+
+    function addExperienceField() {
+      state.currentCandidate.experiences.push({ company: '', role: '', period: '', desc: '' });
+      renderResumeFormFields();
+      updateResumePreview();
+    }
+
+    function removeExperienceField(idx) {
+      state.currentCandidate.experiences.splice(idx, 1);
+      renderResumeFormFields();
+      updateResumePreview();
+    }
+
+    function updateExperienceValue(idx, field, value) {
+      state.currentCandidate.experiences[idx][field] = value;
+      updateResumePreview();
+    }
+
+    function addEducationField() {
+      state.currentCandidate.education.push({ school: '', degree: '', period: '' });
+      renderResumeFormFields();
+      updateResumePreview();
+    }
+
+    function removeEducationField(idx) {
+      state.currentCandidate.education.splice(idx, 1);
+      renderResumeFormFields();
+      updateResumePreview();
+    }
+
+    function updateEducationValue(idx, field, value) {
+      state.currentCandidate.education[idx][field] = value;
+      updateResumePreview();
+    }
+
+    function updateResumePreview() {
+      state.currentCandidate.name = document.getElementById('res-name').value;
+      state.currentCandidate.email = document.getElementById('res-email').value;
+      state.currentCandidate.phone = document.getElementById('res-phone').value;
+      state.currentCandidate.address = document.getElementById('res-address').value;
+      state.currentCandidate.linkedin = document.getElementById('res-linkedin').value;
+      state.currentCandidate.objective = document.getElementById('res-objective').value;
+      state.currentCandidate.skills = document.getElementById('res-skills').value.split(',').map(s => s.trim()).filter(s => s);
+
+      document.getElementById('paper-name-preview').textContent = state.currentCandidate.name || 'NOME COMPLETO';
+      
+      let contactsHtml = '';
+      if (state.currentCandidate.email) contactsHtml += `<span><i class="fa-solid fa-envelope"></i> ${state.currentCandidate.email}</span>`;
+      if (state.currentCandidate.phone) contactsHtml += `<span><i class="fa-solid fa-phone"></i> ${state.currentCandidate.phone}</span>`;
+      if (state.currentCandidate.address) contactsHtml += `<span><i class="fa-solid fa-map-marker-alt"></i> ${state.currentCandidate.address}</span>`;
+      if (state.currentCandidate.linkedin) contactsHtml += `<span><i class="fa-brands fa-linkedin"></i> ${state.currentCandidate.linkedin}</span>`;
+      document.getElementById('paper-contacts-preview').innerHTML = contactsHtml || '<span>Insira seus contatos</span>';
+
+      document.getElementById('paper-objective-preview').textContent = state.currentCandidate.objective || 'Seu objetivo profissional aparecerá aqui.';
+
+      const expPrev = document.getElementById('paper-experiences-preview');
+      expPrev.innerHTML = '';
+      if (state.currentCandidate.experiences.length === 0 || !state.currentCandidate.experiences[0].company) {
+        expPrev.innerHTML = '<div class="paper-item-description">Nenhuma experiência adicionada.</div>';
+      } else {
+        state.currentCandidate.experiences.forEach(exp => {
+          if (!exp.company) return;
+          const div = document.createElement('div');
+          div.className = 'paper-item';
+          div.innerHTML = `
+            <div class="paper-item-header">
+              <span>${exp.company}</span>
+              <span>${exp.period}</span>
+            </div>
+            <div class="paper-item-sub">${exp.role}</div>
+            <div class="paper-item-description">${exp.desc}</div>
+          `;
+          expPrev.appendChild(div);
+        });
+      }
+
+      const eduPrev = document.getElementById('paper-education-preview');
+      eduPrev.innerHTML = '';
+      if (state.currentCandidate.education.length === 0 || !state.currentCandidate.education[0].school) {
+        eduPrev.innerHTML = '<div class="paper-item-description">Nenhuma formação cadastrada.</div>';
+      } else {
+        state.currentCandidate.education.forEach(edu => {
+          if (!edu.school) return;
+          const div = document.createElement('div');
+          div.className = 'paper-item';
+          div.innerHTML = `
+            <div class="paper-item-header">
+              <span>${edu.school}</span>
+              <span>${edu.period}</span>
+            </div>
+            <div class="paper-item-sub">${edu.degree}</div>
+          `;
+          eduPrev.appendChild(div);
+        });
+      }
+
+      const skillsPrev = document.getElementById('paper-skills-preview');
+      skillsPrev.innerHTML = '';
+      if (state.currentCandidate.skills.length === 0) {
+        skillsPrev.innerHTML = '<span class="paper-skill-item">Nenhuma habilidade informada</span>';
+      } else {
+        state.currentCandidate.skills.forEach(skill => {
+          const span = document.createElement('span');
+          span.className = 'paper-skill-item';
+          span.textContent = skill;
+          skillsPrev.appendChild(span);
+        });
+      }
+    }
+
+    async function triggerAIOptimizeResume() {
+      const summaryText = document.getElementById('res-objective').value;
+      const skillsArr = document.getElementById('res-skills').value.split(',').map(s => s.trim());
+      
+      try {
+        const res = await fetch('/api/ia/otimizar-curriculo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ resumo: summaryText, habilidades: skillsArr })
+        });
+        const data = await res.json();
+        document.getElementById('res-objective').value = data.otimizado;
+        updateResumePreview();
+        alert("Currículo otimizado com IA de Acervo!");
+      } catch (err) {
+        console.error("AI Optimize Error:", err);
+      }
+    }
+
+    // Recruiter Kanban Dashboard
+    async function fetchCandidates() {
+      // Mock list of candidates with applications
+      const candidatesList = [
+        { id: 'cand-1', name: 'Ana Oliveira', phone: '(15) 99765-4321', email: 'ana@gmail.com', skills: ['Vendas', 'Caixa', 'Atendimento'], objective: 'Recolocação em vendas' },
+        { id: 'cand-2', name: 'Marcos Souza', phone: '(15) 99123-4567', email: 'marcos@gmail.com', skills: ['Controladoria', 'Finanças', 'Excel'], objective: 'Atuar em controladoria' },
+        { id: 'cand-3', name: 'Lucas Lima', phone: '(15) 99876-0000', email: 'lucas@gmail.com', skills: ['Pedreiro', 'Pintura', 'Ajudante'], objective: 'Atuar em obras' }
+      ];
+
+      // Retrieve applications from localStorage/Supabase
+      let apps = JSON.parse(localStorage.getItem('vagas_candidaturas') || '[]');
+
+      if (state.supabase) {
+        try {
+          const { data, error } = await state.supabase.from('candidaturas').select('*');
+          if (!error && data) apps = data;
+        } catch (e) {
+          console.error("Supabase fetch apps error:", e);
+        }
+      }
+
+      // If no apps exist, prefill with a couple of mock apps to show data
+      if (apps.length === 0) {
+        apps = [
+          { candidate_id: 'cand-1', job_id: 'job-surfway-5', stage: 'applied', match_score: 94 },
+          { candidate_id: 'cand-2', job_id: 'job-gestao5x-6', stage: 'triagem', match_score: 88 },
+          { candidate_id: 'cand-3', job_id: 'job-proluk-13', stage: 'entrevista', match_score: 92 }
+        ];
+        localStorage.setItem('vagas_candidaturas', JSON.stringify(apps));
+      }
+
+      // Enrich candidates with application metrics
+      state.candidates = [];
+      const jobsMap = {};
+      state.jobs.forEach(j => { jobsMap[j.id] = j; });
+
+      candidatesList.forEach(cand => {
+        const candApps = apps.filter(a => a.candidate_id === cand.id);
+        const enriched = { ...cand, candidaturas: [] };
+        candApps.forEach(app => {
+          const job = jobsMap[app.job_id];
+          if (job) {
+            enriched.candidaturas.push({
+              job_id: job.id,
+              job_title: job.vagas.join(', '),
+              empresa: job.empresa,
+              stage: app.stage,
+              match_score: app.match_score
+            });
+          }
+        });
+        if (enriched.candidaturas.length > 0) {
+          state.candidates.push(enriched);
+        }
+      });
+
+      renderKanbanBoard();
+    }
+
+    function renderKanbanBoard() {
+      const stages = ['applied', 'triagem', 'entrevista', 'proposta', 'rejeitado'];
+      stages.forEach(st => {
+        document.getElementById(`col-${st}`).innerHTML = '';
+        document.getElementById(`count-${st}`).textContent = '0';
+      });
+
+      let counts = { applied: 0, triagem: 0, entrevista: 0, proposta: 0, rejeitado: 0 };
+      
+      state.candidates.forEach(cand => {
+        cand.candidaturas.forEach(app => {
+          const colEl = document.getElementById(`col-${app.stage}`);
+          if (!colEl) return;
+          
+          counts[app.stage]++;
+          
+          const card = document.createElement('div');
+          card.className = 'candidate-card';
+          card.draggable = true;
+          card.setAttribute('ondragstart', `drag(event, '${cand.id}', '${app.job_id}')`);
+          card.id = `card-${cand.id}-${app.job_id}`;
+          
+          const scoreClass = app.match_score >= 90 ? 'match-high' : 'match-medium';
+          const mockAvatar = `https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80`;
+
+          card.innerHTML = `
+            <div class="cand-header">
+              <img src="${mockAvatar}" class="cand-avatar" alt="Avatar">
+              <div class="cand-meta">
+                <div class="cand-name" title="${cand.name}">${cand.name}</div>
+                <div class="cand-role">${cand.phone}</div>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="cand-card-vaga">${app.job_title}</span>
+              <span class="cand-match-badge ${scoreClass}">IA Match: ${app.match_score}%</span>
+            </div>
+          `;
+          
+          colEl.appendChild(card);
+        });
+      });
+
+      stages.forEach(st => {
+        document.getElementById(`count-${st}`).textContent = counts[st];
+      });
+    }
+
+    let draggedCandId = null;
+    let draggedJobId = null;
+
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drag(ev, candidateId, jobId) {
+      draggedCandId = candidateId;
+      draggedJobId = jobId;
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    async function drop(ev, stage) {
+      ev.preventDefault();
+      if (!draggedCandId || !draggedJobId) return;
+
+      // Local storage update
+      const apps = JSON.parse(localStorage.getItem('vagas_candidaturas') || '[]');
+      const app = apps.find(a => a.candidate_id === draggedCandId && a.job_id === draggedJobId);
+      if (app) {
+        app.stage = stage;
+        localStorage.setItem('vagas_candidaturas', JSON.stringify(apps));
+      }
+
+      // Supabase update
+      if (state.supabase) {
+        try {
+          await state.supabase.from('candidaturas')
+            .update({ stage: stage })
+            .match({ candidate_id: draggedCandId, job_id: draggedJobId });
+        } catch (e) {
+          console.error("Supabase update app stage error:", e);
+        }
+      }
+
+      fetchCandidates();
+      
+      draggedCandId = null;
+      draggedJobId = null;
+    }
+
+    // Publish New Job
+    function openPublishJobModal() {
+      document.getElementById('publish-job-modal').classList.add('open');
+    }
+
+    function closePublishJobModal() {
+      document.getElementById('publish-job-modal').classList.remove('open');
+    }
+
+    async function triggerAIDescription() {
+      const title = document.getElementById('pub-vagas').value.split(',')[0].trim() || 'Auxiliar Geral';
+      const branch = document.getElementById('pub-ramo').value || 'Comércio';
+
+      try {
+        const res = await fetch('/api/ia/descricao', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ titulo: title, ramo: branch })
+        });
+        const data = await res.json();
+        document.getElementById('pub-descricao').value = data.descricao;
+      } catch (err) {
+        console.error("AI Description generation failed:", err);
+      }
+    }
+
+    async function submitNewJob() {
+      const empresa = document.getElementById('pub-empresa').value;
+      const ramo = document.getElementById('pub-ramo').value;
+      const vagas = document.getElementById('pub-vagas').value.split(',').map(v => v.trim()).filter(v => v);
+      const salario = document.getElementById('pub-salario').value;
+      const turno = document.getElementById('pub-turno').value;
+      const endereco = document.getElementById('pub-endereco').value;
+      const lat = parseFloat(document.getElementById('pub-lat').value);
+      const lng = parseFloat(document.getElementById('pub-lng').value);
+      const beneficios = document.getElementById('pub-beneficios').value;
+      const contato = document.getElementById('pub-contato').value;
+      const descricao = document.getElementById('pub-descricao').value;
+
+      if (!empresa || vagas.length === 0 || !endereco) {
+        alert("Preencha os campos obrigatórios (Empresa, Vagas e Endereço).");
+        return;
+      }
+
+      const new_job = {
+        id: 'job-' + Math.random().toString(36).substr(2, 9),
+        empresa, ramo, vagas, salarios: salario, turnos: turno, endereco,
+        latitude: lat, longitude: lng, beneficios, contato, descricao,
+        patrocinado: false, estrela: false,
+        imagem: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&auto=format&fit=crop&q=60'
+      };
+
+      // Add locally
+      state.jobs.push(new_job);
+      renderJobCards();
+      renderMapMarkers();
+
+      // Add to Supabase
+      if (state.supabase) {
+        try {
+          await state.supabase.from('vagas').insert(new_job);
+        } catch (e) {
+          console.error("Supabase insert job error:", e);
+        }
+      }
+
+      closePublishJobModal();
+      alert("Nova vaga publicada!");
+    }
+
+    // Supabase Configuration Management Modal
+    function openSupabaseConfig() {
+      document.getElementById('sb-url').value = localStorage.getItem('sb_url') || '';
+      document.getElementById('sb-key').value = localStorage.getItem('sb_key') || '';
+      document.getElementById('supabase-config-modal').classList.add('open');
+    }
+
+    function closeSupabaseConfig() {
+      document.getElementById('supabase-config-modal').classList.remove('open');
+    }
+
+    function saveSupabaseConfig() {
+      const url = document.getElementById('sb-url').value.trim();
+      const key = document.getElementById('sb-key').value.trim();
+
+      if (url && key) {
+        localStorage.setItem('sb_url', url);
+        localStorage.setItem('sb_key', key);
+        alert("Configurações do Supabase salvas. O aplicativo tentará se conectar.");
+      } else {
+        localStorage.removeItem('sb_url');
+        localStorage.removeItem('sb_key');
+        alert("Conexão Supabase desativada. O aplicativo continuará rodando localmente.");
+      }
+      closeSupabaseConfig();
+      initSupabase();
+      fetchJobs();
+    }
+  </script>
+</body>
+</html>
