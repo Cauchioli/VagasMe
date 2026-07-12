@@ -2195,6 +2195,16 @@
       supabase: null
     };
 
+    // Helper function to safely parse and return vacancies as array
+    function getVagasArray(job) {
+      if (!job || !job.vagas) return [];
+      if (Array.isArray(job.vagas)) return job.vagas;
+      if (typeof job.vagas === 'string') {
+        return job.vagas.replace(/[\{\}\"]/g, '').split(',').map(v => v.trim()).filter(v => v);
+      }
+      return [];
+    }
+
     // Load Supabase Client if configured
     function initSupabase() {
       let url = localStorage.getItem('sb_url');
@@ -2782,7 +2792,7 @@
           </div>
           <img src="${job.imagem}" class="company-banner" alt="Empresa">
           <div class="card-vagas-tags">
-            ${job.vagas.map(v => `<span class="card-vaga-pill">${v}</span>`).join('')}
+            ${getVagasArray(job).map(v => `<span class="card-vaga-pill">${v}</span>`).join('')}
           </div>
           <div class="card-info-item"><strong>Salários:</strong> <span>${job.salarios}</span></div>
           <div class="card-info-item"><strong>Turnos:</strong> <span>${job.turnos}</span></div>
@@ -2831,7 +2841,7 @@
         marker.bindPopup(`
           <div style="color: #000; font-family: sans-serif; padding: 4px; max-width: 200px;">
             <strong style="color: var(--primary); text-transform: uppercase; font-size:12px;">${job.empresa}</strong><br>
-            <span style="font-size:11px; font-weight:600;">${job.vagas.join(', ')}</span><br>
+            <span style="font-size:11px; font-weight:600;">${getVagasArray(job).join(', ')}</span><br>
             <span style="font-size:10px; color:#555;">${job.salarios}</span><br>
             <button onclick="openJobDetails('${job.id}')" style="background-color:#8B26FD; color:#FFF; border:none; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:700; cursor:pointer; margin-top:6px; width:100%;">Ver detalhes</button>
           </div>
@@ -2874,14 +2884,14 @@
       return state.jobs.filter(job => {
         // Tag filter
         if (state.tagFilter !== 'todos') {
-          const hasTag = job.vagas.some(v => v.toLowerCase().includes(state.tagFilter.toLowerCase()));
+          const hasTag = getVagasArray(job).some(v => v.toLowerCase().includes(state.tagFilter.toLowerCase()));
           if (!hasTag) return false;
         }
         
         // Search text
         const searchInput = document.getElementById('search-vaga-input').value.toLowerCase();
         if (searchInput) {
-          const matchesTitle = job.vagas.some(v => v.toLowerCase().includes(searchInput));
+          const matchesTitle = getVagasArray(job).some(v => v.toLowerCase().includes(searchInput));
           const matchesCompany = job.empresa.toLowerCase().includes(searchInput);
           const matchesDesc = job.descricao.toLowerCase().includes(searchInput);
           if (!matchesTitle && !matchesCompany && !matchesDesc) return false;
@@ -2947,7 +2957,7 @@
       
       document.getElementById('drawer-company-upper').textContent = job.empresa;
       document.getElementById('drawer-image').src = job.imagem;
-      document.getElementById('drawer-job-title').textContent = job.vagas.join(' e ');
+      document.getElementById('drawer-job-title').textContent = getVagasArray(job).join(' e ');
       document.getElementById('drawer-company-name').textContent = `${job.empresa} • ${job.ramo}`;
       document.getElementById('drawer-salary').textContent = job.salarios;
       document.getElementById('drawer-shift').textContent = job.turnos;
@@ -2972,12 +2982,16 @@
       applyBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Candidatar-se no Vagas.me';
       applyBtn.disabled = false;
 
-      // Smooth camera transition (flyTo) to coordinate
-      if (state.map) {
-        state.map.flyTo([job.latitude, job.longitude], 15, {
-          animate: true,
-          duration: 1.5
-        });
+      // Smooth camera transition (flyTo) to coordinate with strict number check to prevent crashes
+      if (state.map && job.latitude && job.longitude && !isNaN(parseFloat(job.latitude)) && !isNaN(parseFloat(job.longitude))) {
+        try {
+          state.map.flyTo([parseFloat(job.latitude), parseFloat(job.longitude)], 15, {
+            animate: true,
+            duration: 1.5
+          });
+        } catch (e) {
+          console.error("Leaflet flyTo error:", e);
+        }
       }
 
       document.getElementById('job-drawer').classList.add('open');
