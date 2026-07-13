@@ -234,6 +234,8 @@
       overflow-y: auto;
       align-items: center;
       padding: 60px 24px;
+      height: auto;
+      min-height: calc(100vh - 70px);
     }
 
     .hero-container {
@@ -1627,9 +1629,8 @@
   </header>
 
   <!-- SCREEN 1: LANDING PAGE -->
-  <div id="landing-screen" class="screen-view active">
-    <!-- Header -->
-    <div style="width: 100%; max-width: 1000px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 80px;">
+  <div id="landing-screen" class="screen-view activ    <!-- Header -->
+    <div style="width: 100%; max-width: 1000px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 80px; flex-shrink: 0;">
       <div style="display: flex; align-items: center; gap: 10px;">
         <div class="logo-symbol">V</div>
         <div class="logo-vagas" style="font-size: 28px;">Vagas<span>.me</span></div>
@@ -1638,7 +1639,7 @@
     </div>
 
     <!-- Hero Section -->
-    <div class="hero-container" style="margin-bottom: 80px;">
+    <div class="hero-container" style="margin-bottom: 80px; flex-shrink: 0;">
       <h1 class="hero-title" style="font-size: 56px; line-height: 1.1; margin-bottom: 24px;">Trabalhar perto de casa não deveria ser sorte. <br><span>Deveria ser a regra</span>.</h1>
       <p class="hero-subtitle" style="font-size: 18px; max-width: 720px; margin: 0 auto 36px auto; line-height: 1.6;">
         Encontre oportunidades de emprego CLT dispostas diretamente no mapa de Itapetininga. Esqueça feeds poluídos e processos de contratação às escuras. O seu trabalho perto de você.
@@ -1654,7 +1655,7 @@
     </div>
 
     <!-- SEÇÃO: O PROBLEMA VS A SOLUÇÃO (CRÍTICA DE MERCADO) -->
-    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;">
+    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; flex-shrink: 0;">
       
       <!-- O Problema -->
       <div style="background-color: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255,255,255,0.05); border-radius: var(--radius-large); padding: 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;">
@@ -1696,10 +1697,194 @@
 
     </div>
 
+    <!-- SEÇÃO: CONHEÇA POR DENTRO (MOCKUP DO MAPA CANDIDATO) -->
+    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; flex-shrink: 0;">
+      <h2 style="font-size: 32px; font-weight: 800; color: #FFFFFF; text-align: center; margin-bottom: 12px; font-family: 'Plus Jakarta Sans', sans-serif;">
+        O aplicativo por dentro
+      </h2>
+      <p style="color: var(--text-muted); font-size: 16px; text-align: center; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Uma interface de alta fidelidade desenhada para dar agilidade total na busca por oportunidades.
+      </p>
+
+      <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: center;">
+        <!-- Text details -->
+        <div style="flex: 1; min-width: 280px; display: flex; flex-direction: column; gap: 24px;">
+          <div style="display: flex; gap: 16px; align-items: start;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: rgba(139, 38, 253, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0;">1</div>
+            <div>
+              <h4 style="font-size: 16px; font-weight: 700; color: #FFFFFF; margin-bottom: 6px;">Visualização por Proximidade</h4>
+              <p style="color: var(--text-muted); font-size: 13px; line-height: 1.5;">O mapa exibe os locais exatos onde as contratações ocorrem. Saiba se a vaga fica no quarteirão ao lado ou no centro antes mesmo de se candidatar.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px; align-items: start;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: rgba(139, 38, 253, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0;">2</div>
+            <div>
+              <h4 style="font-size: 16px; font-weight: 700; color: #FFFFFF; margin-bottom: 6px;">Cards de Acesso Rápido</h4>
+              <p style="color: var(--text-muted); font-size: 13px; line-height: 1.5;">Clique nos pins do mapa para abrir detalhes da vaga, salário ofertado, turnos e benefícios da oportunidade de forma imediata.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px; align-items: start;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background-color: rgba(139, 38, 253, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0;">3</div>
+            <div>
+              <h4 style="font-size: 16px; font-weight: 700; color: #FFFFFF; margin-bottom: 6px;">Painel de Vagas em Feed</h4>
+              <p style="color: var(--text-muted); font-size: 13px; line-height: 1.5;">Prefere visualizar em lista? Mude para o feed com um clique e navegue nos cards completos integrados às coordenadas geográficas.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- HTML Mockup of Candidate View -->
+        <div style="flex: 1.2; min-width: 320px; background-color: #15161E; border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); position: relative; overflow: hidden; height: 340px;">
+          <!-- Top bar mockup -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px;">
+            <div style="display: flex; gap: 6px;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #FF5F56;"></span>
+              <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #FFBD2E;"></span>
+              <span style="width: 8px; height: 8px; border-radius: 50%; background-color: #27C93F;"></span>
+            </div>
+            <div style="background-color: #1F202B; font-size: 10px; padding: 4px 20px; border-radius: 4px; color: var(--text-muted); width: 60%; text-align: center; border: 1px solid rgba(255,255,255,0.03);">vagas.me/app</div>
+            <div style="width: 24px;"></div>
+          </div>
+
+          <!-- App Mock Layout -->
+          <div style="display: flex; height: 260px; gap: 12px;">
+            <!-- Sidebar list mockup -->
+            <div style="width: 35%; border-right: 1px solid var(--border-color); padding-right: 10px; display: flex; flex-direction: column; gap: 8px;">
+              <div style="background-color: #1F202B; padding: 6px; border-radius: 4px; display: flex; align-items: center; gap: 4px;">
+                <i class="fa-solid fa-magnifying-glass" style="font-size: 9px; color: var(--text-muted);"></i>
+                <div style="font-size: 8px; color: var(--text-muted);">Buscar vaga...</div>
+              </div>
+              <div style="background-color: var(--primary); padding: 8px; border-radius: 6px; display: flex; flex-direction: column; gap: 3px;">
+                <div style="font-size: 9px; font-weight: 800; color: #FFFFFF;">COFESA ITAPETININGA</div>
+                <div style="font-size: 7px; color: rgba(255,255,255,0.8);">Caixa, Repositor</div>
+              </div>
+              <div style="background-color: rgba(255,255,255,0.02); padding: 8px; border-radius: 6px; display: flex; flex-direction: column; gap: 3px; border: 1px solid var(--border-color);">
+                <div style="font-size: 9px; font-weight: 800; color: #FFFFFF;">SERRARIA CENTRAL</div>
+                <div style="font-size: 7px; color: var(--text-muted);">Serralheiro, Ajudante</div>
+              </div>
+            </div>
+            <!-- Map mockup -->
+            <div style="width: 65%; background-color: #0D0E12; border-radius: 8px; position: relative; overflow: hidden; background-image: radial-gradient(circle, #22222b 1px, transparent 1px); background-size: 16px 16px;">
+              <!-- Simulated map pin -->
+              <div style="position: absolute; top: 80px; left: 60px; display: flex; flex-direction: column; align-items: center;">
+                <i class="fa-solid fa-map-pin" style="color: var(--primary); font-size: 18px; filter: drop-shadow(0 2px 5px rgba(139,38,253,0.8));"></i>
+              </div>
+              
+              <!-- Map pin active -->
+              <div style="position: absolute; top: 40px; left: 110px; display: flex; flex-direction: column; align-items: center; z-index: 10;">
+                <i class="fa-solid fa-location-pin" style="color: var(--accent-patrocinado); font-size: 20px;"></i>
+                <div style="background-color: #15161E; border: 1px solid var(--border-color); padding: 6px 10px; border-radius: 6px; font-size: 8px; width: 100px; margin-top: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+                  <div style="font-weight: 800; color: #FFFFFF;">Supermercado Cofesa</div>
+                  <div style="color: var(--accent-patrocinado); font-weight: 700; margin-top: 2px;">Vagas: 2</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO LIGHT/OFF-WHITE: CRM INTEGRADO E BANCO DE TALENTOS IA (CNPJ) -->
+    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; background-color: #F8F9FA; border: 1px solid #E2E8F0; border-radius: var(--radius-large); padding: 50px; box-sizing: border-box; color: #0F172A; position: relative; overflow: hidden; flex-shrink: 0; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+      <div style="position: absolute; width: 250px; height: 250px; background-color: rgba(139, 38, 253, 0.03); border-radius: 50%; top: -100px; left: -100px; pointer-events: none;"></div>
+      
+      <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: center;">
+        
+        <!-- CRM Kanban Mockup -->
+        <div style="flex: 1.2; min-width: 320px; background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); height: 320px; display: flex; flex-direction: column;">
+          <!-- Top Mock info -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px; margin-bottom: 12px;">
+            <div style="font-size: 11px; font-weight: 800; color: #1E293B; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-briefcase" style="color: var(--primary);"></i> Painel de Triagem CNPJ
+            </div>
+            <div style="font-size: 9px; background-color: rgba(139,38,253,0.08); color: var(--primary); padding: 2px 8px; border-radius: 4px; font-weight: 700;">Supermercado Cofesa</div>
+          </div>
+          
+          <!-- Columns -->
+          <div style="display: flex; gap: 8px; flex: 1;">
+            <!-- Column 1 -->
+            <div style="flex: 1; background-color: #F1F5F9; border-radius: 6px; padding: 6px; display: flex; flex-direction: column; gap: 6px;">
+              <div style="font-size: 8px; font-weight: 800; color: #475569; display: flex; justify-content: space-between;">
+                <span>Triagem (Novos)</span>
+                <span>1</span>
+              </div>
+              <div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; padding: 6px; border-radius: 4px; display: flex; flex-direction: column; gap: 3px;">
+                <div style="font-size: 8px; font-weight: 800; color: #1E293B;">Carla Peixoto</div>
+                <div style="font-size: 6px; color: #64748B;">Caixa - Itapetininga</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                  <span style="font-size: 6px; padding: 1px 4px; border-radius: 2px; background-color: #E2E8F0; color: #475569;">Apenas começou</span>
+                </div>
+              </div>
+            </div>
+            <!-- Column 2 (Quente) -->
+            <div style="flex: 1; background-color: #ECFDF5; border-radius: 6px; padding: 6px; display: flex; flex-direction: column; gap: 6px; border: 1px solid rgba(16,185,129,0.2);">
+              <div style="font-size: 8px; font-weight: 800; color: #047857; display: flex; justify-content: space-between;">
+                <span>Perfil Quente 🔥</span>
+                <span>1</span>
+              </div>
+              <div style="background-color: #FFFFFF; border: 1px solid rgba(16,185,129,0.1); padding: 6px; border-radius: 4px; display: flex; flex-direction: column; gap: 3px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+                <div style="font-size: 8px; font-weight: 800; color: #1E293B; display: flex; justify-content: space-between;">
+                  <span>João da Silva</span>
+                  <span style="color: #10B981; font-weight: 900;">94%</span>
+                </div>
+                <div style="font-size: 6px; color: #64748B;">Caixa - 1.2km de distância</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                  <span style="font-size: 6px; padding: 1px 4px; border-radius: 2px; background-color: #D1FAE5; color: #065F46; font-weight: 700;">Quente</span>
+                  <span style="font-size: 6px; color: #94A3B8;"><i class="fa-solid fa-star" style="color: #FF9F0A;"></i> Cursos (3)</span>
+                </div>
+              </div>
+            </div>
+            <!-- Column 3 (Morno) -->
+            <div style="flex: 1; background-color: #FFFBEB; border-radius: 6px; padding: 6px; display: flex; flex-direction: column; gap: 6px; border: 1px solid rgba(251,191,36,0.2);">
+              <div style="font-size: 8px; font-weight: 800; color: #B45309; display: flex; justify-content: space-between;">
+                <span>Perfil Morno</span>
+                <span>1</span>
+              </div>
+              <div style="background-color: #FFFFFF; border: 1px solid rgba(251,191,36,0.1); padding: 6px; border-radius: 4px; display: flex; flex-direction: column; gap: 3px;">
+                <div style="font-size: 8px; font-weight: 800; color: #1E293B; display: flex; justify-content: space-between;">
+                  <span>Ana Souza</span>
+                  <span style="color: #F59E0B; font-weight: 800;">78%</span>
+                </div>
+                <div style="font-size: 6px; color: #64748B;">Caixa - 4.5km de distância</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                  <span style="font-size: 6px; padding: 1px 4px; border-radius: 2px; background-color: #FEF3C7; color: #92400E; font-weight: 700;">Morno</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text details -->
+        <div style="flex: 1; min-width: 280px; display: flex; flex-direction: column; gap: 20px;">
+          <div style="font-size: 11px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px;">Painel da Empresa</div>
+          <h2 style="font-size: 28px; font-weight: 800; color: #0F172A; line-height: 1.2; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.5px;">CRM Integrado & Triagem IA em Tempo Real</h2>
+          
+          <p style="color: #475569; font-size: 14px; line-height: 1.6;">
+            Gerencie candidatos em um pipeline Kanban profissional e prático. Nossa IA avalia a aderência semântica e a proximidade física de cada profissional com os requisitos da vaga.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 14px; font-size: 13px;">
+            <div style="display: flex; align-items: start; gap: 10px; color: #334155;">
+              <i class="fa-solid fa-circle-check" style="color: var(--primary); margin-top: 3px;"></i>
+              <span><strong>Triagem Inteligente (Quente, Morno, Frio):</strong> A IA classifica instantaneamente quem tem o melhor perfil técnico e reside perto da empresa.</span>
+            </div>
+            <div style="display: flex; align-items: start; gap: 10px; color: #334155;">
+              <i class="fa-solid fa-circle-check" style="color: var(--primary); margin-top: 3px;"></i>
+              <span><strong>Atualização Dinâmica do Banco:</strong> Quando o candidato conclui ou atualiza um curso no perfil dele, a IA recalcula a compatibilidade e sobe o perfil dele no ranking do recrutador sozinho.</span>
+            </div>
+            <div style="display: flex; align-items: start; gap: 10px; color: #334155;">
+              <i class="fa-solid fa-circle-check" style="color: var(--primary); margin-top: 3px;"></i>
+              <span><strong>Disparos Automáticos de Status:</strong> Comunique cada avanço ou descarte de currículo via notificações automáticas por e-mail, reduzindo a ansiedade do profissional.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- SEÇÃO: COMO FUNCIONA O APLICATIVO (FUNCIONALIDADES) -->
-    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px;">
+    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; flex-shrink: 0;">
       <h2 style="font-size: 32px; font-weight: 800; color: #FFFFFF; text-align: center; margin-bottom: 48px; font-family: 'Plus Jakarta Sans', sans-serif;">
-        Como funciona o <span style="color: var(--primary);">Vagas.me</span>
+        O que oferecemos de diferente
       </h2>
       
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
@@ -1707,29 +1892,29 @@
         <div class="feature-card" style="display: flex; flex-direction: column; justify-content: space-between;">
           <div>
             <div class="feature-icon"><i class="fa-solid fa-map-location-dot"></i></div>
-            <h3 class="feature-title">1. Mapa e Feed de Vagas</h3>
+            <h3 class="feature-title">Geolocalização de Vagas</h3>
             <p class="feature-desc" style="line-height: 1.6;">
-              Navegue de forma fluida. Alterne entre o mapa interativo de Itapetininga para ver a proximidade física e a lista expandida tradicional de feed para comparar cargos e pretensões salariais.
+              Visualize as oportunidades dispostas em um mapa interativo. Veja a distância física e o tempo de transporte até o trabalho.
             </p>
           </div>
         </div>
 
         <div class="feature-card" style="display: flex; flex-direction: column; justify-content: space-between;">
           <div>
-            <div class="feature-icon"><i class="fa-solid fa-circle-user"></i></div>
-            <h3 class="feature-title">2. Perfil & Cursos em Destaque</h3>
+            <div class="feature-icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <h3 class="feature-title">Gerador de Currículo Grátis</h3>
             <p class="feature-desc" style="line-height: 1.6;">
-              Monte seu perfil profissional completo com foto, escolaridade e cursos técnicos realizados. Marque seus cursos principais com estrela para colocá-los no topo visual da triagem do recrutador.
+              Crie um currículo estruturado no padrão do mercado em PDF. Exporte ou imprima instantaneamente de forma gratuita.
             </p>
           </div>
         </div>
 
         <div class="feature-card" style="display: flex; flex-direction: column; justify-content: space-between;">
           <div>
-            <div class="feature-icon"><i class="fa-solid fa-arrows-to-dot"></i></div>
-            <h3 class="feature-title">3. Triagem Rápida & E-mail</h3>
+            <div class="feature-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <h3 class="feature-title">Match com Inteligência Artificial</h3>
             <p class="feature-desc" style="line-height: 1.6;">
-              Transparência em tempo real. Sempre que a empresa movimentar o seu currículo nas fases do pipeline de seleção (Kanban), você receberá um e-mail de notificação automático. Chega de silêncios do RH.
+              Nossa IA calcula o alinhamento semântico do seu currículo com os requisitos da vaga, mostrando seu Match Score.
             </p>
           </div>
         </div>
@@ -1738,7 +1923,7 @@
     </div>
 
     <!-- SEÇÃO: NOSSA HISTÓRIA (IG EXPERIMENT ORIGIN) -->
-    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; padding: 50px; box-sizing: border-box; background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-large); display: flex; flex-direction: column; gap: 40px; position: relative; overflow: hidden;">
+    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; padding: 50px; box-sizing: border-box; background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-large); display: flex; flex-direction: column; gap: 40px; position: relative; overflow: hidden; flex-shrink: 0;">
       
       <div style="display: flex; gap: 48px; flex-wrap: wrap; align-items: center;">
         <div style="flex: 1.2; min-width: 280px;">
@@ -1782,7 +1967,7 @@
     </div>
 
     <!-- SEÇÃO: EQUIPE -->
-    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; text-align: center;">
+    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; text-align: center; flex-shrink: 0;">
       <h2 style="font-size: 30px; font-weight: 800; color: #FFFFFF; margin-bottom: 12px; font-family: 'Plus Jakarta Sans', sans-serif;">Quem está por trás do projeto</h2>
       <p style="color: var(--text-muted); font-size: 15px; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">Fundadores do Vagas.me focados em construir uma ferramenta técnica moderna, acessível e focada em qualidade de vida local.</p>
       
@@ -1812,7 +1997,7 @@
     </div>
 
     <!-- SEÇÃO: BANNER CTA FINAL -->
-    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; padding: 60px 40px; box-sizing: border-box; background: linear-gradient(135deg, var(--primary) 0%, #731BD4 100%); border-radius: var(--radius-large); text-align: center; box-shadow: 0 10px 30px rgba(139, 38, 253, 0.4); position: relative; overflow: hidden;">
+    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; padding: 60px 40px; box-sizing: border-box; background: linear-gradient(135deg, var(--primary) 0%, #731BD4 100%); border-radius: var(--radius-large); text-align: center; box-shadow: 0 10px 30px rgba(139, 38, 253, 0.4); position: relative; overflow: hidden; flex-shrink: 0;">
       <div style="position: absolute; width: 300px; height: 300px; background-color: rgba(255,255,255,0.05); border-radius: 50%; top: -150px; left: -150px; pointer-events: none;"></div>
       <div style="position: absolute; width: 200px; height: 200px; background-color: rgba(255,255,255,0.03); border-radius: 50%; bottom: -100px; right: -100px; pointer-events: none;"></div>
       
@@ -1829,8 +2014,6 @@
           Publicar Oportunidades
         </button>
       </div>
-    </div>
-
   </div>
 
   <!-- SCREEN 2: AUTHENTICATION (LOGIN / REGISTER) -->
