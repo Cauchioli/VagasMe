@@ -1628,6 +1628,7 @@
 
   <!-- SCREEN 1: LANDING PAGE -->
   <div id="landing-screen" class="screen-view active">
+    <!-- Header -->
     <div style="width: 100%; max-width: 1000px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 80px;">
       <div style="display: flex; align-items: center; gap: 10px;">
         <div class="logo-symbol">V</div>
@@ -1636,120 +1637,200 @@
       <button class="btn-secondary" style="padding: 10px 24px; font-size: 14px;" onclick="goToAuth('login', 'candidato')">Fazer Login</button>
     </div>
 
-    <div class="hero-container">
-      <h1 class="hero-title">O seu trabalho <span>perto de você</span>.</h1>
-      <p class="hero-subtitle">Esqueça os feeds confusos. Encontre vagas de emprego CLT na sua rua, bairro ou região através de um mapa interativo simples e direto.</p>
-      
+    <!-- Hero Section -->
+    <div class="hero-container" style="margin-bottom: 80px;">
+      <h1 class="hero-title" style="font-size: 56px; line-height: 1.1; margin-bottom: 24px;">Trabalhar perto de casa não deveria ser sorte. <br><span>Deveria ser a regra</span>.</h1>
+      <p class="hero-subtitle" style="font-size: 18px; max-width: 720px; margin: 0 auto 36px auto; line-height: 1.6;">
+        Encontre oportunidades de emprego CLT dispostas diretamente no mapa de Itapetininga. Esqueça feeds poluídos e processos de contratação às escuras. O seu trabalho perto de você.
+      </p>
       <div class="cta-row">
-        <button class="btn-primary" onclick="goToAuth('cadastro', 'candidato')">
+        <button class="btn-primary" style="padding: 16px 36px; font-size: 16px;" onclick="goToAuth('cadastro', 'candidato')">
           <i class="fa-solid fa-map-pin"></i> Procurar Vagas Próximas
         </button>
-        <button class="btn-secondary" onclick="goToAuth('cadastro', 'recrutador')">
+        <button class="btn-secondary" style="padding: 16px 36px; font-size: 16px; background-color: rgba(255,255,255,0.02);" onclick="goToAuth('cadastro', 'recrutador')">
           Quero Contratar (CNPJ)
         </button>
       </div>
     </div>
 
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon"><i class="fa-solid fa-location-crosshairs"></i></div>
-        <h3 class="feature-title">Geolocalização de Vagas</h3>
-        <p class="feature-desc">Visualize as oportunidades dispostas em um mapa interativo. Veja a distância física e o tempo de transporte até o trabalho.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><i class="fa-solid fa-file-pdf"></i></div>
-        <h3 class="feature-title">Gerador de Currículo Grátis</h3>
-        <p class="feature-desc">Crie um currículo estruturado no padrão do mercado em PDF. Exporte ou imprima instantaneamente de forma gratuita.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-        <h3 class="feature-title">Match com Inteligência Artificial</h3>
-        <p class="feature-desc">Nossa IA calcula o alinhamento semântico do seu currículo com os requisitos da vaga, mostrando seu Match Score.</p>
-      </div>
-    </div>
-
-    <!-- SEÇÃO: NOSSA HISTÓRIA E PROPÓSITO -->
-    <div style="width: 100%; max-width: 1000px; margin-top: 80px; padding: 40px; box-sizing: border-box; background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-large); display: flex; flex-direction: column; gap: 32px;">
+    <!-- SEÇÃO: O PROBLEMA VS A SOLUÇÃO (CRÍTICA DE MERCADO) -->
+    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;">
       
-      <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: center;">
-        <div style="flex: 1.2; min-width: 280px;">
-          <h2 style="font-size: 24px; font-weight: 800; color: #FFFFFF; margin-bottom: 16px; font-family: 'Plus Jakarta Sans', sans-serif;">📍 Como tudo surgiu: <span style="color: var(--primary);">Nossa História</span></h2>
-          <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 14px;">
-            A ideia do Vagas.me nasceu de forma totalmente orgânica. O cofundador <strong>Giovane Momberg</strong> percebeu que muitos moradores de Itapetininga queriam trabalhar perto de casa, mas não encontravam as vagas disponíveis na rua ou bairro vizinho.
+      <!-- O Problema -->
+      <div style="background-color: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255,255,255,0.05); border-radius: var(--radius-large); padding: 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -20px; right: -20px; font-size: 120px; color: rgba(255,255,255,0.01); font-weight: 900; pointer-events: none;">!</div>
+        <div>
+          <h3 style="font-size: 20px; font-weight: 800; color: #FFFFFF; margin-bottom: 18px; display: flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-circle-exclamation" style="color: var(--accent-patrocinado);"></i> O Mercado Tradicional
+          </h3>
+          <p style="color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 16px;">
+            Plataformas gigantes de vagas tratam você como estatística. Você se candidata a dezenas de vagas sem saber a localização exata, descobre que são longe demais nas entrevistas e perde até 3 horas de trânsito em ônibus lotados todos os dias.
           </p>
-          <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 14px;">
-            Através de um perfil de Instagram focado em organizar oportunidades locais por destaques de bairros, o feedback da comunidade foi esmagador. Muitos trabalhadores não sabiam que existiam ótimas vagas comerciais a poucos metros de suas residências, e acabavam aceitando empregos distantes, perdendo horas no transporte público.
-          </p>
-          <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">
-            O sucesso da ação no WhatsApp e Instagram (atraindo mais de 1.000 pessoas em poucos dias) motivou o desenvolvimento desta plataforma completa com mapa interativo inteligente.
+          <p style="color: var(--text-muted); font-size: 14px; line-height: 1.7;">
+            Além disso, os portais tradicionais são repletos de burocracias, formulários longos de cadastro e zero retorno das empresas.
           </p>
         </div>
-        <div style="flex: 0.8; min-width: 240px; background-color: rgba(255,255,255,0.02); border: 1px dashed var(--border-color); border-radius: 12px; padding: 24px; text-align: center;">
-          <i class="fa-solid fa-map-location-dot" style="font-size: 48px; color: var(--primary); margin-bottom: 16px;"></i>
-          <h4 style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin-bottom: 8px;">Diferencial Geolocalizado</h4>
-          <p style="color: var(--text-muted); font-size: 12px; line-height: 1.5;">
-            Em vez de feeds burocráticos e listas confusas, o Vagas.me foca na proximidade física. Encontre emprego no seu quarteirão de forma direta.
-          </p>
+        <div style="margin-top: 32px; font-size: 12px; font-weight: 700; color: var(--text-muted);">
+          Dificuldade de locomoção e processos sem resposta.
         </div>
       </div>
 
-      <hr style="border: none; border-top: 1px solid var(--border-color);">
-
-      <!-- SEÇÃO: PROPÓSITO E CONTROLES DE CNPJ -->
-      <div>
-        <h2 style="font-size: 24px; font-weight: 800; color: #FFFFFF; margin-bottom: 24px; font-family: 'Plus Jakarta Sans', sans-serif; text-align: center;">💼 Soluções para Empresas e Candidatos</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
-          
-          <div style="background-color: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: var(--radius-large); padding: 24px;">
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-              <div style="width: 36px; height: 36px; border-radius: 8px; background-color: rgba(139, 38, 253, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="fa-solid fa-user-tie"></i></div>
-              <h4 style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin: 0;">Para Candidatos (PF)</h4>
-            </div>
-            <ul style="color: var(--text-muted); font-size: 13px; line-height: 1.6; padding-left: 18px; margin: 0; display: flex; flex-direction: column; gap: 8px;">
-              <li>Perfis pessoais customizados com foto e formação.</li>
-              <li>Histórico de cursos com opção de destaque para chamar a atenção dos recrutadores.</li>
-              <li>Notificações automáticas por e-mail sobre o andamento das candidaturas.</li>
-            </ul>
-          </div>
-
-          <div style="background-color: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: var(--radius-large); padding: 24px;">
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-              <div style="width: 36px; height: 36px; border-radius: 8px; background-color: rgba(255, 159, 10, 0.1); color: var(--accent-patrocinado); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="fa-solid fa-briefcase"></i></div>
-              <h4 style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin: 0;">Para Recrutadores (CNPJ)</h4>
-            </div>
-            <ul style="color: var(--text-muted); font-size: 13px; line-height: 1.6; padding-left: 18px; margin: 0; display: flex; flex-direction: column; gap: 8px;">
-              <li>Painel Kanban automatizado para gerenciar a triagem (CRM de candidatos).</li>
-              <li>Filtros e triagem inteligente auxiliados por Inteligência Artificial.</li>
-              <li>Acesso a banco de talentos local com currículos atualizados em tempo real.</li>
-            </ul>
-          </div>
-
+      <!-- A Solução (Vagas.me) -->
+      <div style="background: linear-gradient(135deg, rgba(139, 38, 253, 0.1) 0%, rgba(139, 38, 253, 0.02) 100%); border: 1px solid var(--primary); border-radius: var(--radius-large); padding: 40px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -20px; right: -20px; font-size: 120px; color: rgba(139, 38, 253, 0.05); font-weight: 900; pointer-events: none;">✓</div>
+        <div>
+          <h3 style="font-size: 20px; font-weight: 800; color: #FFFFFF; margin-bottom: 18px; display: flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-circle-check" style="color: var(--accent-emerald);"></i> O Modelo Geolocalizado
+          </h3>
+          <p style="color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 16px;">
+            O Vagas.me inverte a lógica de contratação. O foco é a <strong>proximidade física</strong>. Você abre o mapa, visualiza oportunidades reais próximas da sua casa em Itapetininga e envia seu perfil diretamente.
+          </p>
+          <p style="color: var(--text-muted); font-size: 14px; line-height: 1.7;">
+            Transparência total: saiba a distância antes de se candidatar. Além de receber alertas automáticos no seu e-mail sempre que as empresas avançarem seu status na triagem Kanban.
+          </p>
         </div>
-      </div>
-
-      <hr style="border: none; border-top: 1px solid var(--border-color);">
-
-      <!-- SEÇÃO: EQUIPE -->
-      <div>
-        <h2 style="font-size: 24px; font-weight: 800; color: #FFFFFF; margin-bottom: 24px; font-family: 'Plus Jakarta Sans', sans-serif; text-align: center;">👥 Fundadores do Projeto</h2>
-        <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
-          
-          <div style="text-align: center; width: 160px;">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; margin-bottom: 12px;" alt="Giovane Momberg">
-            <h4 style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin: 0 0 4px 0;">Giovane Momberg</h4>
-            <div style="font-size: 12px; color: var(--text-muted);">Cofundador & Operações</div>
-          </div>
-
-          <div style="text-align: center; width: 160px;">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; margin-bottom: 12px;" alt="Leo Cauchioli">
-            <h4 style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin: 0 0 4px 0;">Leo Cauchioli</h4>
-            <div style="font-size: 12px; color: var(--text-muted);">Cofundador & Produto</div>
-          </div>
-
+        <div style="margin-top: 32px; font-size: 12px; font-weight: 700; color: var(--primary);">
+          Foco em qualidade de vida e proximidade.
         </div>
       </div>
 
     </div>
+
+    <!-- SEÇÃO: COMO FUNCIONA O APLICATIVO (FUNCIONALIDADES) -->
+    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px;">
+      <h2 style="font-size: 32px; font-weight: 800; color: #FFFFFF; text-align: center; margin-bottom: 48px; font-family: 'Plus Jakarta Sans', sans-serif;">
+        Como funciona o <span style="color: var(--primary);">Vagas.me</span>
+      </h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+        
+        <div class="feature-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="feature-icon"><i class="fa-solid fa-map-location-dot"></i></div>
+            <h3 class="feature-title">1. Mapa e Feed de Vagas</h3>
+            <p class="feature-desc" style="line-height: 1.6;">
+              Navegue de forma fluida. Alterne entre o mapa interativo de Itapetininga para ver a proximidade física e a lista expandida tradicional de feed para comparar cargos e pretensões salariais.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="feature-icon"><i class="fa-solid fa-circle-user"></i></div>
+            <h3 class="feature-title">2. Perfil & Cursos em Destaque</h3>
+            <p class="feature-desc" style="line-height: 1.6;">
+              Monte seu perfil profissional completo com foto, escolaridade e cursos técnicos realizados. Marque seus cursos principais com estrela para colocá-los no topo visual da triagem do recrutador.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="feature-icon"><i class="fa-solid fa-arrows-to-dot"></i></div>
+            <h3 class="feature-title">3. Triagem Rápida & E-mail</h3>
+            <p class="feature-desc" style="line-height: 1.6;">
+              Transparência em tempo real. Sempre que a empresa movimentar o seu currículo nas fases do pipeline de seleção (Kanban), você receberá um e-mail de notificação automático. Chega de silêncios do RH.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SEÇÃO: NOSSA HISTÓRIA (IG EXPERIMENT ORIGIN) -->
+    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; padding: 50px; box-sizing: border-box; background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-large); display: flex; flex-direction: column; gap: 40px; position: relative; overflow: hidden;">
+      
+      <div style="display: flex; gap: 48px; flex-wrap: wrap; align-items: center;">
+        <div style="flex: 1.2; min-width: 280px;">
+          <div style="font-size: 11px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px;">Como tudo começou</div>
+          <h2 style="font-size: 32px; font-weight: 800; color: #FFFFFF; margin-bottom: 20px; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -1px;">De uma dor no Instagram para um ecossistema real</h2>
+          <p style="color: var(--text-muted); font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
+            A ideia do Vagas.me surgiu de forma totalmente comunitária. O cofundador <strong>Giovane Momberg</strong> mantinha o perfil de Instagram `@vagas.me` publicando listagens locais. Ele organizou as oportunidades em destaques separados por bairros da cidade.
+          </p>
+          <p style="color: var(--text-muted); font-size: 15px; line-height: 1.7; margin-bottom: 16px;">
+            O retorno das pessoas foi esmagador: muitos relataram que sequer sabiam que existiam ótimos comércios e empresas contratando a poucas ruas de suas casas. A comunidade de Itapetininga cresceu rapidamente no WhatsApp e Instagram (alcançando mais de 1.000 profissionais em poucos dias).
+          </p>
+          <p style="color: var(--text-muted); font-size: 15px; line-height: 1.7;">
+            Percebendo que a proximidade física é a chave para o bem-estar e redução de custos com deslocamento, desenvolvemos a plataforma para automatizar essa conexão em um mapa inteligente.
+          </p>
+        </div>
+        
+        <div style="flex: 0.8; min-width: 260px; background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%); border: 1px dashed var(--border-color); border-radius: var(--radius-large); padding: 32px; display: flex; flex-direction: column; gap: 20px;">
+          <div style="text-align: center;">
+            <i class="fa-brands fa-instagram" style="font-size: 40px; color: #E1306C; margin-bottom: 12px;"></i>
+            <h4 style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin-bottom: 6px;">@vagas.me no Instagram</h4>
+            <div style="font-size: 12px; color: var(--text-muted);">Validação de interesse com dados de Itapetininga</div>
+          </div>
+          <hr style="border: none; border-top: 1px solid var(--border-color);">
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+            <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted);">
+              <i class="fa-solid fa-arrow-right-long" style="color: var(--primary);"></i>
+              <span>Vagas categorizadas por bairro</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted);">
+              <i class="fa-solid fa-arrow-right-long" style="color: var(--primary);"></i>
+              <span>Mais de 1.000 pessoas conectadas</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted);">
+              <i class="fa-solid fa-arrow-right-long" style="color: var(--primary);"></i>
+              <span>100% focado no mercado local</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SEÇÃO: EQUIPE -->
+    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; text-align: center;">
+      <h2 style="font-size: 30px; font-weight: 800; color: #FFFFFF; margin-bottom: 12px; font-family: 'Plus Jakarta Sans', sans-serif;">Quem está por trás do projeto</h2>
+      <p style="color: var(--text-muted); font-size: 15px; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.5;">Fundadores do Vagas.me focados em construir uma ferramenta técnica moderna, acessível e focada em qualidade de vida local.</p>
+      
+      <div style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;">
+        
+        <!-- Giovane -->
+        <div style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-large); padding: 32px; width: 280px; text-align: center; transition: var(--transition-smooth);" class="founder-card">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop" style="width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; margin-bottom: 16px;" alt="Giovane Momberg">
+          <h4 style="font-size: 18px; font-weight: 800; color: #FFFFFF; margin-bottom: 4px;">Giovane Momberg</h4>
+          <div style="font-size: 12px; color: var(--primary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Cofundador & Operações</div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+            Responsável pelo relacionamento comercial com as empresas de Itapetininga e gestão operacional da base do WhatsApp e Instagram.
+          </p>
+        </div>
+
+        <!-- Leo -->
+        <div style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-large); padding: 32px; width: 280px; text-align: center; transition: var(--transition-smooth);" class="founder-card">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop" style="width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; margin-bottom: 16px;" alt="Leo Cauchioli">
+          <h4 style="font-size: 18px; font-weight: 800; color: #FFFFFF; margin-bottom: 4px;">Leo Cauchioli</h4>
+          <div style="font-size: 12px; color: var(--primary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Cofundador & Produto</div>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+            Responsável pela infraestrutura do sistema, design das telas (UI/UX), conexões de banco de dados na nuvem e motores de triagem.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SEÇÃO: BANNER CTA FINAL -->
+    <div style="width: 100%; max-width: 1000px; margin-bottom: 80px; padding: 60px 40px; box-sizing: border-box; background: linear-gradient(135deg, var(--primary) 0%, #731BD4 100%); border-radius: var(--radius-large); text-align: center; box-shadow: 0 10px 30px rgba(139, 38, 253, 0.4); position: relative; overflow: hidden;">
+      <div style="position: absolute; width: 300px; height: 300px; background-color: rgba(255,255,255,0.05); border-radius: 50%; top: -150px; left: -150px; pointer-events: none;"></div>
+      <div style="position: absolute; width: 200px; height: 200px; background-color: rgba(255,255,255,0.03); border-radius: 50%; bottom: -100px; right: -100px; pointer-events: none;"></div>
+      
+      <h2 style="font-size: 36px; font-weight: 800; color: #FFFFFF; margin-bottom: 16px; font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -1px;">Pronto para transformar sua rotina?</h2>
+      <p style="color: rgba(255,255,255,0.85); font-size: 16px; max-width: 600px; margin: 0 auto 36px auto; line-height: 1.6;">
+        Encontre oportunidades ideais CLT a poucos minutos de distância ou publique as vagas de sua empresa diretamente na maior rede geolocalizada da região.
+      </p>
+      
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn-primary" style="background-color: #FFFFFF; color: var(--primary); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);" onclick="goToAuth('cadastro', 'candidato')">
+          Criar Perfil de Candidato
+        </button>
+        <button class="btn-secondary" style="border-color: rgba(255,255,255,0.4); color: #FFFFFF; background-color: rgba(255,255,255,0.08);" onclick="goToAuth('cadastro', 'recrutador')">
+          Publicar Oportunidades
+        </button>
+      </div>
+    </div>
+
   </div>
 
   <!-- SCREEN 2: AUTHENTICATION (LOGIN / REGISTER) -->
