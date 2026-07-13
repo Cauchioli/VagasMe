@@ -27,3 +27,8 @@ Thumbs.db
 # app/crm_database.json
 # app/instagram_cache.json
 # app/ideas_database.json
+
+# Memórias e Agentes Pessoais (Leo)
+_memoria/
+saidas/
+.agents/
