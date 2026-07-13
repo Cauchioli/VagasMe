@@ -1578,6 +1578,217 @@
       color: #FFFFFF;
     }
 
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      /* Global elements */
+      .screen-view {
+        height: auto !important;
+        min-height: calc(100vh - 60px);
+        overflow-y: auto;
+      }
+
+      /* Header responsive behavior (Single Row horizontal scroll) */
+      header {
+        height: 60px !important;
+        padding: 0 12px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+      }
+      header .logo-container {
+        display: flex !important;
+        align-items: center !important;
+      }
+      header .logo-container .logo-vagas {
+        display: none !important; /* Hide "Vagas.me" text to save precious space */
+      }
+      header nav {
+        display: flex !important;
+        gap: 6px !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        flex-grow: 1 !important;
+        max-width: 60% !important;
+      }
+      header nav::-webkit-scrollbar {
+        display: none !important;
+      }
+      header .nav-btn {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+        gap: 4px !important;
+      }
+      header .header-actions {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+      }
+      header .header-actions #plus-badge-btn {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+      }
+      header .header-actions .profile-switch {
+        display: none !important; /* Hide profile text */
+      }
+      header .header-actions .logout-btn {
+        padding: 8px !important;
+        font-size: 0 !important; /* Hides text "Sair" */
+        background-color: rgba(255,255,255,0.03) !important;
+        border-radius: 50% !important;
+        width: 32px !important;
+        height: 32px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      header .header-actions .logout-btn i {
+        font-size: 14px !important;
+        margin: 0 !important;
+      }
+      
+      /* Landing Screen Mobile adjustments */
+      #landing-screen {
+        padding: 30px 12px !important;
+      }
+      .landing-section {
+        min-height: auto !important;
+        padding: 30px 0 !important;
+        margin-bottom: 24px !important;
+      }
+      .hero-title {
+        font-size: 28px !important;
+        line-height: 1.2 !important;
+      }
+      .hero-subtitle {
+        font-size: 14px !important;
+        margin-bottom: 24px !important;
+      }
+      .cta-row {
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 12px !important;
+      }
+      .cta-row button {
+        width: 100% !important;
+        padding: 14px 20px !important;
+        font-size: 14px !important;
+        justify-content: center !important;
+      }
+      .landing-section div[style*="display: flex; gap: 48px"] {
+        flex-direction: column !important;
+        gap: 24px !important;
+      }
+      .landing-section div[style*="display: flex; gap: 40px"] {
+        flex-direction: column !important;
+        gap: 24px !important;
+      }
+      .landing-section div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+      }
+      .landing-section div[style*="display: flex; gap: 8px; flex: 1;"] {
+        flex-direction: column !important;
+        gap: 16px !important;
+      }
+      .landing-section div[style*="height: 340px"], 
+      .landing-section div[style*="height: 320px"] {
+        height: auto !important;
+        min-height: 280px;
+      }
+
+      /* Candidate Map and Sidebar Toggle on Mobile */
+      #candidato-screen {
+        flex-direction: column !important;
+        height: calc(100vh - 60px) !important;
+        overflow: hidden !important;
+      }
+      .sidebar {
+        width: 100% !important;
+        min-width: 100% !important;
+        height: auto !important;
+        border-right: none !important;
+        border-bottom: 1px solid var(--border-color) !important;
+        padding: 12px !important;
+        flex-shrink: 0 !important;
+      }
+      
+      /* Always hide sidebar redundant lists/banners on mobile */
+      .sidebar #job-cards-list,
+      .sidebar .results-header,
+      .sidebar .banner-ad {
+        display: none !important;
+      }
+      
+      .map-container {
+        width: 100% !important;
+        height: 100% !important;
+        flex-grow: 1 !important;
+        position: relative !important;
+        overflow: hidden !important;
+      }
+      
+      #feed-list-container {
+        padding: 12px !important;
+      }
+      #feed-grid-list {
+        grid-template-columns: 1fr !important; /* Single column on mobile feed */
+        gap: 16px !important;
+      }
+      
+      .drawer {
+        width: 100% !important;
+        right: -100% !important;
+        height: 100% !important;
+        z-index: 3000 !important;
+      }
+      .drawer.open {
+        right: 0 !important;
+      }
+      .drawer-body {
+        padding: 16px !important;
+      }
+      .drawer-meta-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+      }
+      
+      /* Resume Form and Profile Mobile adjustments */
+      #curriculo-view.active {
+        flex-direction: column !important;
+        padding: 12px !important;
+        gap: 16px !important;
+        height: auto !important;
+        overflow-y: visible !important;
+      }
+      .resume-form, .resume-preview-panel {
+        max-height: none !important;
+        width: 100% !important;
+        padding: 16px !important;
+      }
+      
+      #perfil-view {
+        padding: 12px !important;
+        gap: 16px !important;
+      }
+      #perfil-view .resume-form {
+        max-width: 100% !important;
+        padding: 16px !important;
+      }
+      
+      .row-inputs {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      
+      .auth-card {
+        padding: 24px 16px !important;
+        max-width: 92% !important;
+      }
+    }
+
     /* Print settings */
     @media print {
       body * {
@@ -4274,6 +4485,7 @@
       const feedEl = document.getElementById('feed-list-container');
       const mapBtn = document.getElementById('view-mode-map-btn');
       const feedBtn = document.getElementById('view-mode-feed-btn');
+      const candScreen = document.getElementById('candidato-screen');
 
       if (mode === 'map') {
         mapEl.style.display = 'block';
@@ -4282,6 +4494,7 @@
         mapBtn.style.color = '#FFFFFF';
         feedBtn.style.background = 'none';
         feedBtn.style.color = 'var(--text-muted)';
+        if (candScreen) candScreen.classList.remove('show-feed-mobile');
         setTimeout(() => { if (state.map) state.map.invalidateSize(); }, 50);
       } else {
         mapEl.style.display = 'none';
@@ -4290,6 +4503,7 @@
         feedBtn.style.color = '#FFFFFF';
         mapBtn.style.background = 'none';
         mapBtn.style.color = 'var(--text-muted)';
+        if (candScreen) candScreen.classList.add('show-feed-mobile');
         renderFeedList();
       }
     }
