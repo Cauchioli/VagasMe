@@ -47,6 +47,8 @@ CREATE TABLE public.candidatos (
     skills TEXT[] DEFAULT '{}'::TEXT[],
     experiences JSONB DEFAULT '[]'::JSONB,
     education JSONB DEFAULT '[]'::JSONB,
+    photo TEXT,
+    courses JSONB DEFAULT '[]'::JSONB,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 

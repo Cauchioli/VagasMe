@@ -1602,6 +1602,9 @@
       <button class="nav-btn" id="btn-tab-curriculo" onclick="switchView('curriculo')">
         <i class="fa-solid fa-file-invoice"></i> Gerar Currículo
       </button>
+      <button class="nav-btn" id="btn-tab-perfil" onclick="switchView('perfil')">
+        <i class="fa-solid fa-circle-user"></i> Meu Perfil
+      </button>
       <button class="nav-btn" id="btn-tab-recrutador" onclick="switchView('recrutador')">
         <i class="fa-solid fa-briefcase"></i> Painel da Empresa
       </button>
@@ -1664,6 +1667,89 @@
         <p class="feature-desc">Nossa IA calcula o alinhamento semântico do seu currículo com os requisitos da vaga, mostrando seu Match Score.</p>
       </div>
     </div>
+
+    <!-- SEÇÃO: NOSSA HISTÓRIA E PROPÓSITO -->
+    <div style="width: 100%; max-width: 1000px; margin-top: 80px; padding: 40px; box-sizing: border-box; background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-large); display: flex; flex-direction: column; gap: 32px;">
+      
+      <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: center;">
+        <div style="flex: 1.2; min-width: 280px;">
+          <h2 style="font-size: 24px; font-weight: 800; color: #FFFFFF; margin-bottom: 16px; font-family: 'Plus Jakarta Sans', sans-serif;">📍 Como tudo surgiu: <span style="color: var(--primary);">Nossa História</span></h2>
+          <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 14px;">
+            A ideia do Vagas.me nasceu de forma totalmente orgânica. O cofundador <strong>Giovane Momberg</strong> percebeu que muitos moradores de Itapetininga queriam trabalhar perto de casa, mas não encontravam as vagas disponíveis na rua ou bairro vizinho.
+          </p>
+          <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 14px;">
+            Através de um perfil de Instagram focado em organizar oportunidades locais por destaques de bairros, o feedback da comunidade foi esmagador. Muitos trabalhadores não sabiam que existiam ótimas vagas comerciais a poucos metros de suas residências, e acabavam aceitando empregos distantes, perdendo horas no transporte público.
+          </p>
+          <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">
+            O sucesso da ação no WhatsApp e Instagram (atraindo mais de 1.000 pessoas em poucos dias) motivou o desenvolvimento desta plataforma completa com mapa interativo inteligente.
+          </p>
+        </div>
+        <div style="flex: 0.8; min-width: 240px; background-color: rgba(255,255,255,0.02); border: 1px dashed var(--border-color); border-radius: 12px; padding: 24px; text-align: center;">
+          <i class="fa-solid fa-map-location-dot" style="font-size: 48px; color: var(--primary); margin-bottom: 16px;"></i>
+          <h4 style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin-bottom: 8px;">Diferencial Geolocalizado</h4>
+          <p style="color: var(--text-muted); font-size: 12px; line-height: 1.5;">
+            Em vez de feeds burocráticos e listas confusas, o Vagas.me foca na proximidade física. Encontre emprego no seu quarteirão de forma direta.
+          </p>
+        </div>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid var(--border-color);">
+
+      <!-- SEÇÃO: PROPÓSITO E CONTROLES DE CNPJ -->
+      <div>
+        <h2 style="font-size: 24px; font-weight: 800; color: #FFFFFF; margin-bottom: 24px; font-family: 'Plus Jakarta Sans', sans-serif; text-align: center;">💼 Soluções para Empresas e Candidatos</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+          
+          <div style="background-color: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: var(--radius-large); padding: 24px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+              <div style="width: 36px; height: 36px; border-radius: 8px; background-color: rgba(139, 38, 253, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="fa-solid fa-user-tie"></i></div>
+              <h4 style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin: 0;">Para Candidatos (PF)</h4>
+            </div>
+            <ul style="color: var(--text-muted); font-size: 13px; line-height: 1.6; padding-left: 18px; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+              <li>Perfis pessoais customizados com foto e formação.</li>
+              <li>Histórico de cursos com opção de destaque para chamar a atenção dos recrutadores.</li>
+              <li>Notificações automáticas por e-mail sobre o andamento das candidaturas.</li>
+            </ul>
+          </div>
+
+          <div style="background-color: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: var(--radius-large); padding: 24px;">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+              <div style="width: 36px; height: 36px; border-radius: 8px; background-color: rgba(255, 159, 10, 0.1); color: var(--accent-patrocinado); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="fa-solid fa-briefcase"></i></div>
+              <h4 style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin: 0;">Para Recrutadores (CNPJ)</h4>
+            </div>
+            <ul style="color: var(--text-muted); font-size: 13px; line-height: 1.6; padding-left: 18px; margin: 0; display: flex; flex-direction: column; gap: 8px;">
+              <li>Painel Kanban automatizado para gerenciar a triagem (CRM de candidatos).</li>
+              <li>Filtros e triagem inteligente auxiliados por Inteligência Artificial.</li>
+              <li>Acesso a banco de talentos local com currículos atualizados em tempo real.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid var(--border-color);">
+
+      <!-- SEÇÃO: EQUIPE -->
+      <div>
+        <h2 style="font-size: 24px; font-weight: 800; color: #FFFFFF; margin-bottom: 24px; font-family: 'Plus Jakarta Sans', sans-serif; text-align: center;">👥 Fundadores do Projeto</h2>
+        <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
+          
+          <div style="text-align: center; width: 160px;">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; margin-bottom: 12px;" alt="Giovane Momberg">
+            <h4 style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin: 0 0 4px 0;">Giovane Momberg</h4>
+            <div style="font-size: 12px; color: var(--text-muted);">Cofundador & Operações</div>
+          </div>
+
+          <div style="text-align: center; width: 160px;">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; margin-bottom: 12px;" alt="Leo Cauchioli">
+            <h4 style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin: 0 0 4px 0;">Leo Cauchioli</h4>
+            <div style="font-size: 12px; color: var(--text-muted);">Cofundador & Produto</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- SCREEN 2: AUTHENTICATION (LOGIN / REGISTER) -->
@@ -1695,6 +1781,24 @@
         </button>
       </form>
 
+      <!-- Divisor de Login Social -->
+      <div style="display: flex; align-items: center; text-align: center; margin: 16px 0; color: var(--text-muted); font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">
+        <hr style="flex: 1; border: none; border-top: 1px solid var(--border-color); margin-right: 10px;">
+        <span>OU ENTRAR COM</span>
+        <hr style="flex: 1; border: none; border-top: 1px solid var(--border-color); margin-left: 10px;">
+      </div>
+
+      <!-- Google Sign In Button -->
+      <button class="btn-secondary" style="width: 100%; justify-content: center; height: 42px; border-radius: var(--radius-large); font-size: 13px; font-weight: 700; gap: 8px; margin-bottom: 12px; display: flex; align-items: center;" onclick="handleGoogleSignIn(event)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+        </svg>
+        Entrar com o Google
+      </button>
+
       <div class="auth-toggle-link" id="auth-toggle-container">
         Já tem uma conta? <a href="#" onclick="toggleAuthMode(event, 'login')">Fazer Login</a>
       </div>
@@ -1713,6 +1817,16 @@
     <input type="password" style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
 
     <div class="sidebar">
+      <!-- Toggle Visualização: Mapa vs Feed Lista -->
+      <div style="display: flex; background-color: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px; padding: 4px; margin-bottom: 16px;">
+        <button id="view-mode-map-btn" style="flex: 1; border: none; padding: 8px; font-size: 11px; font-weight: 700; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; background-color: var(--primary); color: #FFFFFF;" onclick="switchCandidateViewMode('map')">
+          <i class="fa-solid fa-map-location-dot"></i> Mapa
+        </button>
+        <button id="view-mode-feed-btn" style="flex: 1; border: none; padding: 8px; font-size: 11px; font-weight: 700; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; background: none; color: var(--text-muted);" onclick="switchCandidateViewMode('feed')">
+          <i class="fa-solid fa-list-ul"></i> Feed (Lista)
+        </button>
+      </div>
+
       <div class="search-wrapper">
         <div class="search-container">
           <i class="fa-solid fa-magnifying-glass search-icon"></i>
@@ -1758,6 +1872,16 @@
     <!-- Map Container -->
     <div class="map-container">
       <div id="map"></div>
+      
+      <!-- Feed List Container (Oculto por padrão) -->
+      <div id="feed-list-container" style="display: none; width: 100%; height: 100%; overflow-y: auto; padding: 24px; box-sizing: border-box; background-color: var(--bg-card); z-index: 1000;">
+        <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 20px; color: #FFFFFF; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-list-ul" style="color: var(--primary);"></i> Feed de Vagas CLT em Itapetininga
+        </h2>
+        <div id="feed-grid-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+          <!-- Renderizado dinamicamente -->
+        </div>
+      </div>
       
       <!-- Side Drawer Detail View -->
       <div class="drawer" id="job-drawer">
@@ -1933,6 +2057,96 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- SCREEN: MY PROFILE VIEW -->
+  <div id="perfil-screen" class="screen-view">
+    <div id="perfil-view" class="view-content active" style="width: 100%; display: flex; gap: 24px; padding: 24px; box-sizing: border-box; flex-wrap: wrap;">
+      
+      <!-- Left Profile Details Column -->
+      <div class="resume-form" style="flex: 1; min-width: 320px; max-width: 480px;">
+        <h3 class="form-section-title"><i class="fa-solid fa-circle-user"></i> Informações do Perfil</h3>
+        
+        <!-- Profile Image Slot -->
+        <div class="form-group" style="text-align: center; margin-bottom: 24px;">
+          <div style="position: relative; display: inline-block;">
+            <img id="perf-avatar-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); background-color: #1a1a1a;" alt="Avatar">
+            <button type="button" class="favorite-star" style="position: absolute; bottom: 0; right: 0; background-color: var(--primary); color: #FFFFFF; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2px solid var(--bg-card); cursor: pointer;" onclick="document.getElementById('perf-photo-file').click()">
+              <i class="fa-solid fa-camera"></i>
+            </button>
+            <input type="file" id="perf-photo-file" accept="image/*" style="display: none;" onchange="handleProfilePhotoUpload(event)">
+          </div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Upload de imagem até 1.5MB</div>
+        </div>
+
+        <div class="form-group">
+          <label for="perf-name">Nome Completo</label>
+          <input type="text" id="perf-name" placeholder="Ex: João da Silva">
+        </div>
+        <div class="row-inputs">
+          <div class="form-group">
+            <label for="perf-email">E-mail</label>
+            <input type="email" id="perf-email" readonly style="opacity: 0.6; cursor: not-allowed; background-color: rgba(255,255,255,0.02);">
+          </div>
+          <div class="form-group">
+            <label for="perf-phone">Telefone / WhatsApp</label>
+            <input type="text" id="perf-phone" placeholder="Ex: (15) 99876-5432">
+          </div>
+        </div>
+        <div class="row-inputs">
+          <div class="form-group">
+            <label for="perf-address">Endereço / Bairro (Itapetininga - SP)</label>
+            <input type="text" id="perf-address" placeholder="Ex: Vila Aparecida, Itapetininga - SP">
+          </div>
+          <div class="form-group">
+            <label for="perf-linkedin">LinkedIn (opcional)</label>
+            <input type="text" id="perf-linkedin" placeholder="Ex: linkedin.com/in/joao">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="perf-objective">Objetivo Profissional</label>
+          <textarea id="perf-objective" rows="2" placeholder="Ex: Atuar em atendimento ao cliente ou caixa..."></textarea>
+        </div>
+        
+        <button class="apply-btn" style="width: 100%; margin-top: 16px;" onclick="saveCandidateProfile()">
+          <i class="fa-solid fa-floppy-disk"></i> Salvar Alterações
+        </button>
+      </div>
+
+      <!-- Right Education & Courses Column -->
+      <div class="resume-form" style="flex: 1.2; min-width: 320px;">
+        <h3 class="form-section-title"><i class="fa-solid fa-graduation-cap"></i> Cursos e Certificações</h3>
+        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Adicione seus cursos e selecione a estrela para destacá-los em seu perfil no topo da triagem do recrutador.</div>
+        
+        <div id="perf-courses-list" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
+          <!-- Rendered Dynamically -->
+        </div>
+        
+        <div style="display: flex; gap: 8px; margin-bottom: 24px;">
+          <input type="text" id="new-course-name" placeholder="Nome do Curso (Ex: Curso de Vendas Premium)" style="flex: 2;">
+          <input type="text" id="new-course-school" placeholder="Instituição (Ex: G4 Educação)" style="flex: 1.5;">
+          <button class="saber-mais-btn" onclick="addCourseToProfile()" style="height: 38px; display: flex; align-items: center; gap: 6px; white-space: nowrap;"><i class="fa-solid fa-plus"></i> Adicionar</button>
+        </div>
+
+        <h3 class="form-section-title"><i class="fa-solid fa-briefcase"></i> Experiência Profissional</h3>
+        <div id="perf-experiences-list" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
+          <!-- Rendered Dynamically -->
+        </div>
+        <div style="display: flex; gap: 8px; margin-bottom: 24px;">
+          <input type="text" id="new-exp-company" placeholder="Empresa (Ex: Supermercado Cofesa)" style="flex: 1.5;">
+          <input type="text" id="new-exp-role" placeholder="Cargo (Ex: Operador de Caixa)" style="flex: 1.5;">
+          <input type="text" id="new-exp-period" placeholder="Período (Ex: 2024 - 2025)" style="flex: 1;">
+          <button class="saber-mais-btn" onclick="addExperienceToProfile()" style="height: 38px; display: flex; align-items: center; gap: 6px; white-space: nowrap;"><i class="fa-solid fa-plus"></i> Adicionar</button>
+        </div>
+
+        <h3 class="form-section-title"><i class="fa-solid fa-star"></i> Competências / Skills</h3>
+        <div class="form-group">
+          <label>Competências (separe por vírgula)</label>
+          <input type="text" id="perf-skills" placeholder="Ex: Atendimento ao Cliente, Caixa, Informática Básica">
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -2275,6 +2489,7 @@
       document.getElementById('auth-screen').classList.remove('active');
       document.getElementById('candidato-screen').classList.remove('active');
       document.getElementById('curriculo-screen').classList.remove('active');
+      document.getElementById('perfil-screen').classList.remove('active');
       document.getElementById('recrutador-screen').classList.remove('active');
     }
 
@@ -2287,19 +2502,27 @@
         document.getElementById('profile-active-name').textContent = 'Admin';
         document.getElementById('btn-tab-candidato').style.display = 'flex';
         document.getElementById('btn-tab-curriculo').style.display = 'flex';
+        document.getElementById('btn-tab-perfil').style.display = 'flex';
         document.getElementById('btn-tab-recrutador').style.display = 'flex';
         switchView('candidato');
       } else if (state.user.profileType === 'recrutador') {
         document.getElementById('profile-active-name').textContent = 'Recrutador (CNPJ)';
         document.getElementById('btn-tab-candidato').style.display = 'none';
         document.getElementById('btn-tab-curriculo').style.display = 'none';
+        document.getElementById('btn-tab-perfil').style.display = 'none';
         document.getElementById('btn-tab-recrutador').style.display = 'flex';
         switchView('recrutador');
       } else {
         document.getElementById('profile-active-name').textContent = 'Candidato (PF)';
         document.getElementById('btn-tab-candidato').style.display = 'flex';
         document.getElementById('btn-tab-curriculo').style.display = 'flex';
+        document.getElementById('btn-tab-perfil').style.display = 'flex';
         document.getElementById('btn-tab-recrutador').style.display = 'none';
+        // Se houver perfil no localStorage, carrega no state
+        const storedProfile = localStorage.getItem('vagas_candidate_profile');
+        if (storedProfile) {
+          try { state.currentCandidate = JSON.parse(storedProfile); } catch(e) {}
+        }
         switchView('candidato');
       }
     }
@@ -2460,6 +2683,8 @@
         fetchCandidates();
       } else if (viewName === 'curriculo') {
         updateResumePreview();
+      } else if (viewName === 'perfil') {
+        renderProfileTab();
       }
     }
 
@@ -3513,6 +3738,9 @@
         }
       }
 
+      // Notificação por e-mail do candidato no avanço do Kanban
+      triggerKanbanEmailNotification(draggedCandId, draggedJobId, stage);
+
       fetchCandidates();
       
       draggedCandId = null;
@@ -3716,6 +3944,459 @@
       renderJobCards();
       renderMapMarkers();
       closeDrawer();
+    }
+
+    // --- IMPLEMENTAÇÃO DE RECURSOS ADICIONAIS (JULHO 13) ---
+
+    // Toggle Visualização: Mapa vs Feed Lista
+    function switchCandidateViewMode(mode) {
+      const mapEl = document.getElementById('map');
+      const feedEl = document.getElementById('feed-list-container');
+      const mapBtn = document.getElementById('view-mode-map-btn');
+      const feedBtn = document.getElementById('view-mode-feed-btn');
+
+      if (mode === 'map') {
+        mapEl.style.display = 'block';
+        feedEl.style.display = 'none';
+        mapBtn.style.backgroundColor = 'var(--primary)';
+        mapBtn.style.color = '#FFFFFF';
+        feedBtn.style.background = 'none';
+        feedBtn.style.color = 'var(--text-muted)';
+        setTimeout(() => { if (state.map) state.map.invalidateSize(); }, 50);
+      } else {
+        mapEl.style.display = 'none';
+        feedEl.style.display = 'block';
+        feedBtn.style.backgroundColor = 'var(--primary)';
+        feedBtn.style.color = '#FFFFFF';
+        mapBtn.style.background = 'none';
+        mapBtn.style.color = 'var(--text-muted)';
+        renderFeedList();
+      }
+    }
+
+    function renderFeedList() {
+      const grid = document.getElementById('feed-grid-list');
+      grid.innerHTML = '';
+      
+      const filteredJobs = getFilteredJobs();
+      if (filteredJobs.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Nenhuma vaga encontrada para os filtros atuais.</div>`;
+        return;
+      }
+
+      filteredJobs.forEach(job => {
+        const div = document.createElement('div');
+        div.className = 'feature-card';
+        div.style.textAlign = 'left';
+        div.style.padding = '20px';
+        div.style.display = 'flex';
+        div.style.flexDirection = 'column';
+        div.style.justifyContent = 'space-between';
+        
+        const tagsHtml = getVagasArray(job).map(v => `<span class="tag-vaga" style="font-size: 10px; padding: 2px 8px; margin: 2px;">${v}</span>`).join('');
+        
+        div.innerHTML = `
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: start;">
+              <h3 style="font-size: 16px; font-weight: 800; color: #FFFFFF; margin-bottom: 4px;">${job.empresa}</h3>
+              ${job.patrocinado ? `<span class="badge-patrocinado" style="font-size: 9px; padding: 2px 6px; background-color: var(--accent-patrocinado); color: #000000; border-radius: 4px; font-weight: 700;">Patrocinada</span>` : ''}
+            </div>
+            <div style="font-size: 11px; color: var(--primary); margin-bottom: 8px; font-weight: 700;">${job.ramo}</div>
+            <div style="display: flex; flex-wrap: wrap; margin-bottom: 12px;">${tagsHtml}</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
+              <i class="fa-solid fa-map-marker-alt"></i> ${job.endereco}
+            </div>
+            <div style="font-size: 12px; font-weight: 700; color: #FFFFFF; margin-bottom: 12px;">
+              <i class="fa-solid fa-money-bill-wave"></i> ${job.salarios || 'A combinar'}
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px;">
+              ${job.descricao ? job.descricao.substring(0, 120) + '...' : 'Sem descrição.'}
+            </p>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="saber-mais-btn" onclick="viewJobFromFeed('${job.id}')" style="flex: 1; font-size: 11px; height: 32px; justify-content: center;">
+              <i class="fa-solid fa-eye"></i> Detalhes
+            </button>
+            <button class="favorite-star" onclick="locateJobOnMap('${job.id}')" style="font-size: 11px; height: 32px; width: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; background-color: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: #FFFFFF; cursor: pointer;">
+              <i class="fa-solid fa-location-crosshairs"></i>
+            </button>
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    function viewJobFromFeed(jobId) {
+      state.selectedJobId = jobId;
+      const job = state.jobs.find(j => j.id === jobId);
+      if (!job) return;
+      
+      document.getElementById('drawer-company-upper').textContent = job.empresa.toUpperCase();
+      document.getElementById('drawer-image').src = job.imagem || 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500';
+      document.getElementById('drawer-job-title').textContent = getVagasArray(job).join(' / ');
+      document.getElementById('drawer-company-name').textContent = `${job.empresa} (${job.ramo})`;
+      document.getElementById('drawer-contato-info').textContent = job.contato || 'Candidatura direta pelo app';
+      document.getElementById('drawer-description').textContent = job.descricao || 'Sem descrição cadastrada.';
+      document.getElementById('drawer-benefits').textContent = job.beneficios || 'Vale-Transporte e benefícios CLT.';
+      
+      const drawer = document.getElementById('job-drawer');
+      drawer.classList.add('open');
+    }
+
+    function locateJobOnMap(jobId) {
+      closeDrawer();
+      switchCandidateViewMode('map');
+      
+      const job = state.jobs.find(j => j.id === jobId);
+      if (!job || !state.map) return;
+
+      state.map.flyTo([job.latitude, job.longitude], 16, { animate: true, duration: 1.5 });
+      
+      setTimeout(() => {
+        const marker = state.markers[jobId];
+        if (marker) {
+          marker.openPopup();
+          showJobDrawer(job);
+        }
+      }, 1600);
+    }
+
+    // Google Sign-In Integrado
+    async function handleGoogleSignIn(e) {
+      if (e) e.preventDefault();
+      
+      if (!state.supabase) {
+        alert("Supabase não está conectado. Simulando login social com o Google localmente...");
+        state.user = {
+          id: "google-mock-id",
+          email: "leo.google.user@gmail.com",
+          profileType: state.authProfile || 'candidato',
+          nome: "Leo Google User"
+        };
+        localStorage.setItem('vagas_session', JSON.stringify(state.user));
+        showAppInterface();
+        return;
+      }
+
+      try {
+        const { error } = await state.supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: window.location.origin
+          }
+        });
+        if (error) throw error;
+      } catch (err) {
+        console.error("Erro no login social do Google:", err);
+        alert("Falha no login com o Google: " + err.message);
+      }
+    }
+
+    // Cadastro e Upload do Perfil
+    function handleProfilePhotoUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      if (file.size > 1.5 * 1024 * 1024) {
+        alert("O tamanho da foto excede o limite de 1.5MB.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64 = e.target.result;
+        document.getElementById('perf-avatar-img').src = base64;
+        state.currentCandidate.photo = base64;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function renderProfileTab() {
+      const cand = state.currentCandidate;
+      
+      document.getElementById('perf-avatar-img').src = cand.photo || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop";
+      document.getElementById('perf-name').value = cand.name || '';
+      document.getElementById('perf-email').value = state.user ? state.user.email : (cand.email || '');
+      document.getElementById('perf-phone').value = cand.phone || '';
+      document.getElementById('perf-address').value = cand.address || '';
+      document.getElementById('perf-linkedin').value = cand.linkedin || '';
+      document.getElementById('perf-objective').value = cand.objective || '';
+      document.getElementById('perf-skills').value = (cand.skills || []).join(', ');
+      
+      renderProfileCourses();
+      renderProfileExperiences();
+    }
+
+    function renderProfileCourses() {
+      const listEl = document.getElementById('perf-courses-list');
+      listEl.innerHTML = '';
+      
+      const courses = state.currentCandidate.courses || [];
+      if (courses.length === 0) {
+        listEl.innerHTML = `<div style="font-size: 12px; color: var(--text-muted);">Nenhum curso cadastrado.</div>`;
+        return;
+      }
+
+      courses.forEach((c, idx) => {
+        const item = document.createElement('div');
+        item.style = "display: flex; justify-content: space-between; align-items: center; background-color: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px;";
+        item.innerHTML = `
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: #FFFFFF;">${c.name}</div>
+            <div style="font-size: 11px; color: var(--text-muted);">${c.school}</div>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <button class="favorite-star" style="background: none; border: none; color: ${c.featured ? '#FF9F0A' : 'rgba(255,255,255,0.2)'}; cursor: pointer; font-size: 16px;" onclick="toggleCourseFeatured(${idx})">
+              <i class="fa-solid fa-star"></i>
+            </button>
+            <button style="background: none; border: none; color: var(--accent-patrocinado); cursor: pointer; font-size: 14px;" onclick="removeCourseFromProfile(${idx})">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    function addCourseToProfile() {
+      const nameInput = document.getElementById('new-course-name');
+      const schoolInput = document.getElementById('new-course-school');
+      const name = nameInput.value.trim();
+      const school = schoolInput.value.trim();
+
+      if (!name || !school) {
+        alert("Por favor, preencha o nome do curso e a instituição.");
+        return;
+      }
+
+      if (!state.currentCandidate.courses) state.currentCandidate.courses = [];
+      
+      state.currentCandidate.courses.push({ name, school, featured: false });
+      nameInput.value = '';
+      schoolInput.value = '';
+      
+      renderProfileCourses();
+    }
+
+    function removeCourseFromProfile(index) {
+      state.currentCandidate.courses.splice(index, 1);
+      renderProfileCourses();
+    }
+
+    function toggleCourseFeatured(index) {
+      const course = state.currentCandidate.courses[index];
+      course.featured = !course.featured;
+      renderProfileCourses();
+    }
+
+    function renderProfileExperiences() {
+      const listEl = document.getElementById('perf-experiences-list');
+      listEl.innerHTML = '';
+      
+      const exps = state.currentCandidate.experiences || [];
+      if (exps.length === 0) {
+        listEl.innerHTML = `<div style="font-size: 12px; color: var(--text-muted);">Nenhuma experiência cadastrada.</div>`;
+        return;
+      }
+
+      exps.forEach((e, idx) => {
+        const item = document.createElement('div');
+        item.style = "display: flex; justify-content: space-between; align-items: center; background-color: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px;";
+        item.innerHTML = `
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: #FFFFFF;">${e.company}</div>
+            <div style="font-size: 11px; color: var(--text-muted);">${e.role} | ${e.period}</div>
+          </div>
+          <button style="background: none; border: none; color: var(--accent-patrocinado); cursor: pointer; font-size: 14px;" onclick="removeExperienceFromProfile(${idx})">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    function addExperienceToProfile() {
+      const companyInput = document.getElementById('new-exp-company');
+      const roleInput = document.getElementById('new-exp-role');
+      const periodInput = document.getElementById('new-exp-period');
+      
+      const company = companyInput.value.trim();
+      const role = roleInput.value.trim();
+      const period = periodInput.value.trim();
+
+      if (!company || !role || !period) {
+        alert("Preencha empresa, cargo e período da experiência.");
+        return;
+      }
+
+      if (!state.currentCandidate.experiences) state.currentCandidate.experiences = [];
+      state.currentCandidate.experiences.push({ company, role, period, desc: '' });
+      
+      companyInput.value = '';
+      roleInput.value = '';
+      periodInput.value = '';
+      
+      renderProfileExperiences();
+    }
+
+    function removeExperienceFromProfile(index) {
+      state.currentCandidate.experiences.splice(index, 1);
+      renderProfileExperiences();
+    }
+
+    async function saveCandidateProfile() {
+      const name = document.getElementById('perf-name').value.trim();
+      const phone = document.getElementById('perf-phone').value.trim();
+      const address = document.getElementById('perf-address').value.trim();
+      const linkedin = document.getElementById('perf-linkedin').value.trim();
+      const objective = document.getElementById('perf-objective').value.trim();
+      const skillsStr = document.getElementById('perf-skills').value.trim();
+      
+      if (!name) {
+        alert("O campo Nome Completo é obrigatório.");
+        return;
+      }
+
+      const skills = skillsStr ? skillsStr.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+      state.currentCandidate.name = name;
+      state.currentCandidate.phone = phone;
+      state.currentCandidate.address = address;
+      state.currentCandidate.linkedin = linkedin;
+      state.currentCandidate.objective = objective;
+      state.currentCandidate.skills = skills;
+
+      localStorage.setItem('vagas_candidate_profile', JSON.stringify(state.currentCandidate));
+      
+      // Sincroniza com formulário de currículo
+      syncProfileToResumeBuilder();
+
+      if (state.supabase && state.user) {
+        try {
+          const { error } = await state.supabase.from('candidatos').upsert({
+            id: state.user.id,
+            name: name,
+            email: state.user.email,
+            phone: phone,
+            address: address,
+            linkedin: linkedin,
+            objective: objective,
+            skills: skills,
+            experiences: state.currentCandidate.experiences,
+            education: state.currentCandidate.education,
+            photo: state.currentCandidate.photo,
+            courses: state.currentCandidate.courses
+          });
+
+          if (error) throw error;
+          alert("Perfil salvo com sucesso no Supabase Cloud!");
+        } catch(e) {
+          console.error("Erro ao salvar perfil no Supabase:", e);
+          alert("Salvo localmente. Erro ao persistir no Supabase: " + e.message);
+        }
+      } else {
+        alert("Perfil salvo localmente com sucesso!");
+      }
+    }
+
+    function syncProfileToResumeBuilder() {
+      const cand = state.currentCandidate;
+      const resName = document.getElementById('res-name');
+      const resEmail = document.getElementById('res-email');
+      const resPhone = document.getElementById('res-phone');
+      const resAddress = document.getElementById('res-address');
+      const resLinkedin = document.getElementById('res-linkedin');
+      const resObjective = document.getElementById('res-objective');
+      const resSkills = document.getElementById('res-skills');
+
+      if (resName) resName.value = cand.name || '';
+      if (resEmail) resEmail.value = cand.email || '';
+      if (resPhone) resPhone.value = cand.phone || '';
+      if (resAddress) resAddress.value = cand.address || '';
+      if (resLinkedin) resLinkedin.value = cand.linkedin || '';
+      if (resObjective) resObjective.value = cand.objective || '';
+      if (resSkills) resSkills.value = (cand.skills || []).join(', ');
+      
+      rebuildResumeBuilderLists();
+    }
+
+    function rebuildResumeBuilderLists() {
+      const expList = document.getElementById('form-experiences-list');
+      if (expList) {
+        expList.innerHTML = '';
+        (state.currentCandidate.experiences || []).forEach((exp, i) => {
+          addExperienceField(exp.company, exp.role, exp.period, exp.desc);
+        });
+      }
+      const eduList = document.getElementById('form-education-list');
+      if (eduList) {
+        eduList.innerHTML = '';
+        (state.currentCandidate.education || []).forEach((edu, i) => {
+          addEducationField(edu.school, edu.degree, edu.period);
+        });
+      }
+    }
+
+    // Integração de Notificações de E-mail
+    async function triggerKanbanEmailNotification(candidateId, jobId, stage) {
+      let cand = state.candidates.find(c => c.id === candidateId || c.candidate_id === candidateId);
+      
+      if (!cand && state.currentCandidate && (state.currentCandidate.id === candidateId || candidateId === 'cand-default')) {
+        cand = state.currentCandidate;
+      }
+      
+      const job = state.jobs.find(j => j.id === jobId);
+      
+      if (!cand || !job) {
+        console.warn("Incapaz de enviar notificação por email: Dados de candidato ou vaga ausentes.", { candidateId, jobId });
+        return;
+      }
+
+      const emailData = {
+        candidatoEmail: cand.email || cand.email_contato || 'candidato@exemplo.com',
+        candidatoNome: cand.name || cand.nome || 'Candidato',
+        vagaEmpresa: job.empresa,
+        vagaCargo: getVagasArray(job).join(' / '),
+        novoStatus: stage
+      };
+
+      console.log("%c[E-mail Notificação] Iniciando disparo...", "color: #8B26FD; font-weight: bold;", emailData);
+
+      try {
+        const response = await fetch('/api/notificar-candidato', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(emailData)
+        });
+
+        if (response.ok) {
+          const resJson = await response.json();
+          if (resJson.mocked) {
+            console.log(`%c[E-mail Simulado] ${resJson.message}`, "color: #FF9F0A; font-weight: bold;", resJson.payload);
+            showToastNotification(`Notificação simulada enviada para ${emailData.candidatoEmail}`);
+          } else {
+            console.log("%c[E-mail Real] E-mail enviado com sucesso!", "color: #34A853; font-weight: bold;", resJson);
+            showToastNotification(`E-mail real de notificação enviado para ${emailData.candidatoEmail}`);
+          }
+        } else {
+          console.error("Falha ao comunicar com a API de notificação:", await response.text());
+        }
+      } catch (e) {
+        console.error("Erro de conexão com API de e-mail:", e);
+      }
+    }
+
+    function showToastNotification(message) {
+      const toast = document.createElement('div');
+      toast.style = "position: fixed; bottom: 24px; right: 24px; background-color: var(--bg-card); color: #FFFFFF; border-left: 4px solid var(--primary); padding: 12px 24px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 10000; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 10px; transition: opacity 0.5s;";
+      toast.innerHTML = `<i class="fa-solid fa-bell" style="color: var(--primary);"></i> <span>${message}</span>`;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 500);
+      }, 4000);
     }
 
     // Supabase Configuration Management Modal
