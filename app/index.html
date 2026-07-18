@@ -2968,6 +2968,13 @@
         }
       }
 
+      // Fallback final: credenciais do projeto Vagas.me embutidas
+      if (!url || !key) {
+        url = 'https://aedpamfnemsdofbaxueo.supabase.co';
+        key = 'sb_publishable_94iW9NQBM8FD4OKwxwWz3A_9fikcPu9';
+        console.log("Supabase: using built-in project credentials.");
+      }
+
       if (url && key && window.supabase) {
         try {
           // Sanitizar a URL caso o usuário cole com a rota REST
