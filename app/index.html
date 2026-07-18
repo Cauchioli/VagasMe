@@ -2623,9 +2623,23 @@
         <div class="recrutador-title">
           <i class="fa-solid fa-building-user"></i> Painel de Controle de Contratação (CNPJ)
         </div>
-        <button class="publish-job-btn" onclick="openPublishJobModal()">
-          <i class="fa-solid fa-plus"></i> Publicar Nova Vaga
-        </button>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-secondary" style="padding: 10px 18px; font-size: 13px;" onclick="toggleRecrutadorView('mapa')">
+            <i class="fa-solid fa-map-location-dot"></i> Mapa de Vagas
+          </button>
+          <button class="publish-job-btn" onclick="openPublishJobModal()">
+            <i class="fa-solid fa-plus"></i> Publicar Nova Vaga
+          </button>
+        </div>
+      </div>
+
+      <!-- Recruiter Tabs -->
+      <div id="rec-tab-mapa" style="display: none; width: 100%; height: 480px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 24px; position: relative; flex-direction: column;">
+        <div style="background-color: var(--bg-card); padding: 12px 16px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-map-pin" style="color: var(--primary);"></i> Pré-visualização das Vagas no Mapa</div>
+          <button class="saber-mais-btn" onclick="toggleRecrutadorView('kanban')" style="background: none; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px; height: 28px; padding: 0 10px;"><i class="fa-solid fa-table-columns"></i> Fechar Mapa</button>
+        </div>
+        <div id="rec-map" style="width: 100%; flex: 1; height: 420px;"></div>
       </div>
 
       <!-- Kanban ATS Board -->
@@ -2751,8 +2765,17 @@
       </div>
       <div class="row-inputs">
         <div class="form-group">
-          <label>Faixa Salarial</label>
-          <input type="text" id="pub-salario" placeholder="Ex: R$ 1.800 até R$ 2.100">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label style="margin-bottom: 0;">Faixa Salarial</label>
+            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px; color: var(--text-muted); margin-bottom: 0;">
+              <input type="checkbox" id="pub-salario-acombinar" onchange="toggleSalarioACombinar()" style="accent-color: var(--primary);">
+              A combinar
+            </label>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <span style="background-color: var(--bg-input); border: 1px solid var(--border-color); border-right: none; padding: 0 12px; height: 46px; display: flex; align-items: center; border-radius: var(--radius-pill) 0 0 var(--radius-pill); font-weight: 700; color: var(--text-muted); font-size: 14px; flex-shrink: 0;">R$</span>
+            <input type="text" id="pub-salario" placeholder="1.800 até 2.100" style="border-radius: 0 var(--radius-pill) var(--radius-pill) 0 !important; border-left: none !important;" oninput="formatSalarioInput(this)">
+          </div>
         </div>
         <div class="form-group">
           <label>Turno</label>
@@ -4422,7 +4445,9 @@
       const empresa = document.getElementById('pub-empresa').value.trim();
       const ramo = document.getElementById('pub-ramo').value.trim();
       const vagas = document.getElementById('pub-vagas').value.split(',').map(v => v.trim()).filter(v => v);
-      const salario = document.getElementById('pub-salario').value.trim();
+      const aCombinar = document.getElementById('pub-salario-acombinar').checked;
+      const salarioRaw = document.getElementById('pub-salario').value.trim();
+      const salario = aCombinar ? 'A combinar' : (salarioRaw ? 'R$ ' + salarioRaw : '');
       const turno = document.getElementById('pub-turno').value.trim();
       const endereco = document.getElementById('pub-endereco').value.trim();
       const beneficios = document.getElementById('pub-beneficios').value.trim();
@@ -4523,6 +4548,8 @@
       document.getElementById('pub-ramo').value = '';
       document.getElementById('pub-vagas').value = '';
       document.getElementById('pub-salario').value = '';
+      document.getElementById('pub-salario-acombinar').checked = false;
+      document.getElementById('pub-salario').disabled = false;
       document.getElementById('pub-turno').value = '';
       document.getElementById('pub-endereco').value = '';
       document.getElementById('pub-beneficios').value = '';
@@ -5053,6 +5080,97 @@
       await initSupabase();
       fetchJobs();
     }
+
+    // =====================================================
+    // SALARY HELPERS – Recruiter publish modal
+    // =====================================================
+    function toggleSalarioACombinar() {
+      const cb = document.getElementById('pub-salario-acombinar');
+      const input = document.getElementById('pub-salario');
+      if (cb.checked) {
+        input.value = '';
+        input.disabled = true;
+        input.placeholder = 'A combinar';
+        input.style.opacity = '0.4';
+      } else {
+        input.disabled = false;
+        input.placeholder = '1.800 até 2.100';
+        input.style.opacity = '1';
+      }
+    }
+
+    function formatSalarioInput(el) {
+      // Allow only digits, dots, commas and "até" separator – strip R$ if user types it
+      let v = el.value.replace(/R\$\s*/gi, '').replace(/[^0-9.,\s\/até-]/gi, '');
+      el.value = v;
+    }
+
+    // =====================================================
+    // RECRUITER MAP – Preview vagas on the map
+    // =====================================================
+    let recMapInstance = null;
+
+    function toggleRecrutadorView(mode) {
+      const mapTab = document.getElementById('rec-tab-mapa');
+      if (!mapTab) return;
+      if (mode === 'mapa') {
+        mapTab.style.display = 'flex';
+        setTimeout(() => initRecMap(), 150);
+      } else {
+        mapTab.style.display = 'none';
+      }
+    }
+
+    function initRecMap() {
+      if (recMapInstance) {
+        recMapInstance.invalidateSize();
+        renderRecMapMarkers();
+        return;
+      }
+      const mapEl = document.getElementById('rec-map');
+      if (!mapEl) return;
+
+      recMapInstance = L.map('rec-map', { zoomControl: true, attributionControl: false })
+        .setView([-23.5916, -48.0531], 13);
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 20
+      }).addTo(recMapInstance);
+
+      renderRecMapMarkers();
+    }
+
+    function renderRecMapMarkers() {
+      if (!recMapInstance) return;
+      recMapInstance.eachLayer(l => { if (l instanceof L.Marker) recMapInstance.removeLayer(l); });
+
+      const recEmail = state.user?.email?.toLowerCase() || '';
+      // Show all jobs – if recruiter has email, highlight their own; otherwise show all
+      const jobs = state.jobs;
+
+      const purpleIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div style="background-color: #8B26FD; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #FFFFFF; box-shadow: 0 0 10px #8B26FD;"></div>`,
+        iconSize: [14, 14], iconAnchor: [7, 7]
+      });
+
+      jobs.forEach(job => {
+        if (!job.latitude || !job.longitude) return;
+        const marker = L.marker([parseFloat(job.latitude), parseFloat(job.longitude)], { icon: purpleIcon })
+          .addTo(recMapInstance);
+
+        const popup = `
+          <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; color: #FFFFFF; background-color: #15161E; border-radius: 8px; width: 180px; box-sizing: border-box; display: flex; flex-direction: column; gap: 5px; padding: 4px;">
+            <div style="font-weight: 800; font-size: 12px;">${job.empresa}</div>
+            <div style="font-size: 10px; color: #8B26FD; font-weight: 700;">${Array.isArray(job.vagas) ? job.vagas.join(', ') : job.vagas}</div>
+            <div style="font-size: 9px; color: #94A3B8;">${job.endereco}</div>
+            <div style="font-size: 10px; font-weight: 700; color: #FFFFFF;">${job.salarios || 'A combinar'}</div>
+          </div>`;
+        marker.bindPopup(popup, { maxWidth: 200, className: 'landing-map-popup' });
+      });
+    }
+
   </script>
+
 </body>
 </html>
