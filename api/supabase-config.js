@@ -9,9 +9,17 @@ export default function handler(req, res) {
     return;
   }
 
-  // Retornar as chaves injetadas pela integração do Supabase na Vercel
-  res.status(200).json({
-    supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || "",
-    supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || ""
-  });
+  // Lê as variáveis de ambiente da Vercel (configuradas no dashboard),
+  // com fallback para as credenciais do projeto Vagas.me
+  const supabaseUrl =
+    process.env.SUPABASE_URL ||
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    'https://aedpamfnemsdofbaxueo.supabase.co';
+
+  const supabaseKey =
+    process.env.SUPABASE_ANON_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    'sb_publishable_94iW9NQBM8FD4OKwxwWz3A_9fikcPu9';
+
+  res.status(200).json({ supabaseUrl, supabaseKey });
 }
