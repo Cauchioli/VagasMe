@@ -4082,6 +4082,12 @@
     function filterJobs() {
       renderJobCards();
       renderMapMarkers();
+      
+      // Sincroniza a busca com o Feed do Mobile se o candidato estiver na aba "Feed (Lista)"
+      const candScreen = document.getElementById('candidato-screen');
+      if (candScreen && candScreen.classList.contains('show-feed-mobile')) {
+        renderFeedList();
+      }
     }
 
     function triggerSearchClick() {
