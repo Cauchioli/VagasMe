@@ -3577,11 +3577,31 @@
         if (state.supabase) {
           const { data, error } = await state.supabase.from('vagas').select('*');
           if (error) throw error;
+          
+          const localJobs = JSON.parse(localStorage.getItem('vagas_local_jobs') || '[]');
+          
           if (data && data.length > 0) {
-            state.jobs = data;
+            // Unifica as vagas do Supabase Cloud com as vagas locais para não perder criações pendentes de sincronização
+            const dbIds = new Set(data.map(j => j.id));
+            const uniqueLocalJobs = localJobs.filter(lj => !dbIds.has(lj.id));
+            state.jobs = [...data, ...uniqueLocalJobs];
+            
+            // Sincroniza em background vagas locais pendentes com a nuvem
+            if (uniqueLocalJobs.length > 0) {
+              console.log("Tentando sincronizar vagas locais pendentes com o Supabase Cloud...", uniqueLocalJobs);
+              uniqueLocalJobs.forEach(async (job) => {
+                try {
+                  const { error: insErr } = await state.supabase.from('vagas').insert(job);
+                  if (!insErr) {
+                    console.log(`Vaga ${job.id} sincronizada na nuvem com sucesso!`);
+                  }
+                } catch(e) {
+                  console.warn("Erro de sincronização da vaga " + job.id + ":", e);
+                }
+              });
+            }
           } else {
             console.log("Supabase vagas table is empty. Seeding default jobs...");
-            const localJobs = JSON.parse(localStorage.getItem('vagas_local_jobs') || '[]');
             const combined = [...defaultJobs, ...localJobs];
             state.jobs = combined;
             seedSupabaseJobs(combined);
