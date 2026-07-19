@@ -528,11 +528,18 @@
 
     .search-icon {
       position: absolute;
-      left: 18px;
+      left: 10px;
       top: 50%;
       transform: translateY(-50%);
       color: var(--text-muted);
       font-size: 16px;
+      cursor: pointer;
+      padding: 12px;
+      transition: color 0.2s ease;
+      z-index: 5;
+    }
+    .search-icon:hover {
+      color: var(--primary);
     }
 
     .filter-btn {
@@ -2295,8 +2302,8 @@
 
       <div class="search-wrapper">
         <div class="search-container">
-          <i class="fa-solid fa-magnifying-glass search-icon"></i>
-          <input type="text" class="search-input" id="search-vaga-input" autocomplete="off" placeholder="Encontrou sua vaga?" oninput="filterJobs()">
+          <i class="fa-solid fa-magnifying-glass search-icon" onclick="triggerSearchClick()" title="Pesquisar"></i>
+          <input type="text" class="search-input" id="search-vaga-input" autocomplete="off" placeholder="Encontrou sua vaga?" oninput="filterJobs()" onchange="filterJobs()" onkeydown="handleSearchKeyDown(event)">
         </div>
         <button class="filter-btn" onclick="toggleFilterModal()">
           <i class="fa-solid fa-sliders"></i> Filtrar
@@ -2950,6 +2957,15 @@
     async function initSupabase() {
       let url = localStorage.getItem('sb_url');
       let key = localStorage.getItem('sb_key');
+
+      // Limpar chaves antigas obsoletas (de localhost ou outros projetos antigos) para evitar falhas silenciosas
+      if (url && (url.includes('localhost') || url.includes('127.0.0.1') || !url.includes('aedpamfnemsdofbaxueo'))) {
+        console.log("Discarding legacy or localhost Supabase settings from localStorage.");
+        localStorage.removeItem('sb_url');
+        localStorage.removeItem('sb_key');
+        url = null;
+        key = null;
+      }
 
       // Tentar obter chaves automaticamente da API se não estiverem localmente salvas
       if (!url || !key) {
@@ -3811,6 +3827,25 @@
     function filterJobs() {
       renderJobCards();
       renderMapMarkers();
+    }
+
+    function triggerSearchClick() {
+      const input = document.getElementById('search-vaga-input');
+      if (input) {
+        input.blur(); // Oculta o teclado no mobile
+      }
+      filterJobs();
+    }
+
+    function handleSearchKeyDown(event) {
+      if (event.key === 'Enter' || event.keyCode === 13) {
+        event.preventDefault();
+        const input = document.getElementById('search-vaga-input');
+        if (input) {
+          input.blur(); // Oculta o teclado no mobile
+        }
+        filterJobs();
+      }
     }
 
     function filterByTag(tagValue, element) {
