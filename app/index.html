@@ -779,10 +779,12 @@
       box-shadow: 0 0 20px rgba(139, 38, 253, 0.9);
     }
 
-    .custom-marker:hover .marker-pin-patrocinado,
-    .custom-marker.active .marker-pin-patrocinado {
-      transform: rotate(45deg) scale(1.25);
-      box-shadow: 0 0 28px rgba(255, 159, 10, 1);
+    /* Hover scale effect targeted on inner pin designs without shifting container boundaries to avoid flickering */
+    .custom-marker:hover .marker-pin-common.patrocinado,
+    .custom-marker.active .marker-pin-common.patrocinado {
+      transform: scale(1.25);
+      border-color: #FFFFFF;
+      box-shadow: 0 0 24px rgba(255, 159, 10, 1);
     }
 
     .marker-pin-common {
@@ -818,62 +820,54 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .marker-pin-patrocinado {
-      width: 44px;
-      height: 44px;
-      background: linear-gradient(135deg, #FF9F0A 0%, #FF5E00 100%);
-      border: 2px solid #FFFFFF;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 20px rgba(255, 159, 10, 0.6);
-      position: relative;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      transform: rotate(45deg);
+    /* Patrocinados Redondos com Borda Dourada e Coroa */
+    .marker-pin-common.patrocinado {
+      border: 2.5px solid #FF9F0A !important;
+      box-shadow: 0 0 16px rgba(255, 159, 10, 0.7), inset 0 0 8px rgba(255, 159, 10, 0.3) !important;
     }
 
-    .marker-pin-patrocinado::before {
-      content: '';
+    .marker-pin-common.patrocinado::before {
+      border: 1px solid rgba(255, 159, 10, 0.5) !important;
+      animation: pinPulseGold 2.2s infinite ease-out !important;
+    }
+
+    .patroc-crown {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      border: 2px solid rgba(255, 159, 10, 0.5);
-      animation: pinPulseGold 2.2s infinite ease-out;
-      pointer-events: none;
-    }
-
-    .marker-pin-patrocinado .patroc-icon-wrapper {
-      transform: rotate(-45deg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .marker-pin-patrocinado .patroc-icon-wrapper i {
-      font-size: 18px;
-      color: #FFFFFF;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
-
-    .marker-pin-patrocinado .patroc-badge {
-      position: absolute;
-      top: -14px;
+      top: -15px;
       left: 50%;
-      transform: translateX(-50%) rotate(-45deg);
+      transform: translateX(-50%);
+      color: #FF9F0A;
+      font-size: 13px;
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.6));
+      animation: floatCrown 3s infinite ease-in-out;
+      z-index: 10;
+    }
+
+    .patroc-badge-text {
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
       background: #FF9F0A;
       color: #000000;
-      font-size: 8px;
+      font-size: 7px;
       font-weight: 900;
-      padding: 2px 6px;
-      border-radius: 4px;
+      padding: 1px 4px;
+      border-radius: 3px;
       text-transform: uppercase;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
       white-space: nowrap;
-      border: 1px solid #FFFFFF;
+      border: 0.5px solid #FFFFFF;
       z-index: 10;
+    }
+
+    @keyframes floatCrown {
+      0%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      50% {
+        transform: translateX(-50%) translateY(-3px);
+      }
     }
 
     @keyframes pinPulse {
@@ -925,6 +919,69 @@
     .leaflet-popup-content {
       margin: 12px !important;
       line-height: 1.4 !important;
+    }
+
+    /* Custom Tooltip styling for Leaflet (Glassmorphic tooltips on hover) */
+    .custom-hover-tooltip.leaflet-tooltip {
+      background: rgba(15, 16, 22, 0.96) !important;
+      backdrop-filter: blur(8px) !important;
+      -webkit-backdrop-filter: blur(8px) !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 12px !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
+      color: #FFFFFF !important;
+      padding: 10px 14px !important;
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      font-size: 11px !important;
+      z-index: 100000 !important;
+      pointer-events: none !important;
+    }
+    
+    .custom-hover-tooltip.leaflet-tooltip::before {
+      border-top-color: rgba(15, 16, 22, 0.96) !important;
+    }
+
+    .map-hover-tooltip {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 145px;
+    }
+
+    .tooltip-company {
+      font-weight: 800;
+      font-size: 11px;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tooltip-vaga {
+      font-size: 12px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 2px;
+    }
+
+    .tooltip-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 9px;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 5px;
+    }
+
+    .tooltip-info span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tooltip-info i {
+      color: var(--primary);
+      width: 10px;
     }
 
     /* Custom Div Icon for simpler recruiter/landing map pins with neonic glow pulse */
@@ -3179,6 +3236,24 @@
 
       demoJobs.forEach(job => {
         const marker = L.marker(job.coords, { icon: purpleIcon }).addTo(landingMapInstance);
+        
+        // Tooltip de Hover
+        const tooltipContent = `
+          <div class="map-hover-tooltip">
+            <div class="tooltip-company">${job.name}</div>
+            <div class="tooltip-vaga">${job.desc}</div>
+            <div class="tooltip-info">
+              <span><i class="fa-solid fa-money-bill-wave"></i> ${job.salary}</span>
+              <span><i class="fa-solid fa-clock"></i> ${job.shift}</span>
+            </div>
+          </div>
+        `;
+        marker.bindTooltip(tooltipContent, {
+          direction: 'top',
+          offset: [0, -10],
+          className: 'custom-hover-tooltip'
+        });
+
         const popupContent = `
           <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; width: 190px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px;">
             <div style="font-weight: 800; font-size: 13px; color: #FFFFFF;">${job.name}</div>
@@ -3819,11 +3894,10 @@
         let iconHtml = '';
         if (job.patrocinado) {
           iconHtml = `
-            <div class="marker-pin-patrocinado">
-              <span class="patroc-badge">Patrocinado</span>
-              <div class="patroc-icon-wrapper">
-                <i class="fa-solid fa-crown"></i>
-              </div>
+            <div class="marker-pin-common patrocinado">
+              <div class="patroc-crown"><i class="fa-solid fa-crown"></i></div>
+              <span class="patroc-badge-text">Patrocinado</span>
+              <img src="${job.imagem}" alt="Logo">
             </div>`;
         } else {
           iconHtml = `
@@ -3836,12 +3910,30 @@
         const customIcon = L.divIcon({
           className: `custom-marker marker-id-${job.id}`,
           html: iconHtml,
-          iconSize: job.patrocinado ? [44, 44] : [40, 40],
-          iconAnchor: job.patrocinado ? [22, 22] : [20, 20]
+          iconSize: [40, 40],
+          iconAnchor: [20, 20]
         });
 
         const marker = L.marker([job.latitude, job.longitude], { icon: customIcon }).addTo(state.map);
         
+        // Tooltip de Hover Rápido (exibe ao passar o mouse)
+        const tooltipContent = `
+          <div class="map-hover-tooltip">
+            <div class="tooltip-company">${job.empresa}</div>
+            <div class="tooltip-vaga">${getVagasArray(job).join(', ')}</div>
+            <div class="tooltip-info">
+              <span><i class="fa-solid fa-money-bill-wave"></i> ${job.salarios || 'A combinar'}</span>
+              <span><i class="fa-solid fa-clock"></i> ${job.turnos || 'Comercial'}</span>
+            </div>
+          </div>
+        `;
+        marker.bindTooltip(tooltipContent, {
+          direction: 'top',
+          offset: [0, -15],
+          className: 'custom-hover-tooltip'
+        });
+
+        // Popup de Clique Completo
         const popupContent = `
           <div style="font-family: 'Plus Jakarta Sans', sans-serif; width: 190px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px;">
             <div style="font-weight: 800; font-size: 13px; color: #FFFFFF;">${job.empresa}</div>
@@ -5349,11 +5441,30 @@
         const marker = L.marker([parseFloat(job.latitude), parseFloat(job.longitude)], { icon: purpleIcon })
           .addTo(recMapInstance);
 
+        const vacanciesText = Array.isArray(job.vagas) ? job.vagas.join(', ') : job.vagas;
+
+        // Tooltip de Hover
+        const tooltipContent = `
+          <div class="map-hover-tooltip">
+            <div class="tooltip-company">${job.empresa}</div>
+            <div class="tooltip-vaga">${vacanciesText}</div>
+            <div class="tooltip-info">
+              <span><i class="fa-solid fa-money-bill-wave"></i> ${job.salarios || 'A combinar'}</span>
+              <span><i class="fa-solid fa-clock"></i> ${job.turnos || 'Comercial'}</span>
+            </div>
+          </div>
+        `;
+        marker.bindTooltip(tooltipContent, {
+          direction: 'top',
+          offset: [0, -10],
+          className: 'custom-hover-tooltip'
+        });
+
         const popup = `
           <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; width: 180px; box-sizing: border-box; display: flex; flex-direction: column; gap: 5px;">
             <div style="font-weight: 800; font-size: 13px; color: #FFFFFF;">${job.empresa}</div>
             <div style="font-size: 11px; color: var(--primary); font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 4px; display: flex; align-items: center; gap: 4px;">
-              <i class="fa-solid fa-briefcase"></i> ${Array.isArray(job.vagas) ? job.vagas.join(', ') : job.vagas}
+              <i class="fa-solid fa-briefcase"></i> ${vacanciesText}
             </div>
             <div style="font-size: 9px; color: #94A3B8; display: flex; flex-direction: column; gap: 2px;">
               <div><strong>Endereço:</strong> ${job.endereco}</div>
