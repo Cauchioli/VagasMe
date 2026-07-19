@@ -774,70 +774,186 @@
     /* Hover scale effects targeted on inner pin designs without shifting container boundaries to avoid flickering */
     .custom-marker:hover .marker-pin-common,
     .custom-marker.active .marker-pin-common {
-      transform: rotate(-45deg) scale(1.2);
+      transform: scale(1.25);
       border-color: #FFFFFF;
-      box-shadow: 0 6px 15px rgba(139, 38, 253, 0.5);
+      box-shadow: 0 0 20px rgba(139, 38, 253, 0.9);
     }
 
     .custom-marker:hover .marker-pin-patrocinado,
     .custom-marker.active .marker-pin-patrocinado {
-      transform: scale(1.2);
-      box-shadow: 0 6px 18px rgba(255, 159, 10, 0.6);
+      transform: rotate(45deg) scale(1.25);
+      box-shadow: 0 0 28px rgba(255, 159, 10, 1);
     }
 
     .marker-pin-common {
-      width: 32px;
-      height: 32px;
-      background-color: #FFFFFF;
-      border: 3px solid var(--primary);
-      border-radius: 50% 50% 50% 0;
-      transform: rotate(-45deg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .marker-pin-common img {
-      width: 20px;
-      height: 20px;
+      width: 40px;
+      height: 40px;
+      background-color: var(--bg-card);
+      border: 2px solid var(--primary);
       border-radius: 50%;
-      transform: rotate(45deg);
-      object-fit: cover;
-    }
-
-    .marker-pin-patrocinado {
-      width: 46px;
-      height: 46px;
-      background: linear-gradient(135deg, #FF9F0A 0%, #E65C00 100%);
-      border: 2px solid #FFFFFF;
-      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(255, 159, 10, 0.4);
+      box-shadow: 0 0 14px rgba(139, 38, 253, 0.4), inset 0 0 8px rgba(139, 38, 253, 0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
     }
 
-    .marker-pin-patrocinado::after {
-      content: 'V';
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 800;
-      font-size: 24px;
+    .marker-pin-common::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 1px solid rgba(139, 38, 253, 0.4);
+      animation: pinPulse 2s infinite ease-out;
+      pointer-events: none;
+    }
+
+    .marker-pin-common img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .marker-pin-patrocinado {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #FF9F0A 0%, #FF5E00 100%);
+      border: 2px solid #FFFFFF;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px rgba(255, 159, 10, 0.6);
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: rotate(45deg);
+    }
+
+    .marker-pin-patrocinado::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 159, 10, 0.5);
+      animation: pinPulseGold 2.2s infinite ease-out;
+      pointer-events: none;
+    }
+
+    .marker-pin-patrocinado .patroc-icon-wrapper {
+      transform: rotate(-45deg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .marker-pin-patrocinado .patroc-icon-wrapper i {
+      font-size: 18px;
       color: #FFFFFF;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
     .marker-pin-patrocinado .patroc-badge {
       position: absolute;
-      top: -12px;
-      background-color: #FF9F0A;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-45deg);
+      background: #FF9F0A;
       color: #000000;
       font-size: 8px;
-      font-weight: 800;
-      padding: 1px 4px;
-      border-radius: 2px;
+      font-weight: 900;
+      padding: 2px 6px;
+      border-radius: 4px;
       text-transform: uppercase;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      white-space: nowrap;
+      border: 1px solid #FFFFFF;
+      z-index: 10;
+    }
+
+    @keyframes pinPulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(1.6);
+        opacity: 0;
+      }
+    }
+
+    @keyframes pinPulseGold {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(1.7);
+        opacity: 0;
+      }
+    }
+
+    /* Custom Leaflet Popups Overrides */
+    .leaflet-popup-content-wrapper {
+      background: rgba(21, 22, 30, 0.92) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6) !important;
+      color: #FFFFFF !important;
+      padding: 4px !important;
+    }
+
+    .leaflet-popup-tip {
+      background: rgba(21, 22, 30, 0.92) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    .leaflet-popup-close-button {
+      color: var(--text-muted) !important;
+      font-size: 16px !important;
+      top: 10px !important;
+      right: 10px !important;
+    }
+
+    .leaflet-popup-content {
+      margin: 12px !important;
+      line-height: 1.4 !important;
+    }
+
+    /* Custom Div Icon for simpler recruiter/landing map pins with neonic glow pulse */
+    .custom-div-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .custom-div-icon > div {
+      background-color: var(--primary) !important;
+      width: 14px !important;
+      height: 14px !important;
+      border-radius: 50% !important;
+      border: 2.5px solid #FFFFFF !important;
+      box-shadow: 0 0 14px var(--primary), 0 0 24px var(--primary) !important;
+      position: relative;
+    }
+
+    .custom-div-icon > div::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border-radius: 50%;
+      border: 1px solid rgba(139, 38, 253, 0.5);
+      animation: pinPulse 2s infinite ease-out;
     }
 
     /* Side Drawer for Job Details */
@@ -3056,26 +3172,26 @@
 
       const purpleIcon = L.divIcon({
         className: 'custom-div-icon',
-        html: `<div style="background-color: #8B26FD; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #FFFFFF; box-shadow: 0 0 10px #8B26FD;"></div>`,
-        iconSize: [12, 12],
-        iconAnchor: [6, 6]
+        html: `<div></div>`,
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
       });
 
       demoJobs.forEach(job => {
         const marker = L.marker(job.coords, { icon: purpleIcon }).addTo(landingMapInstance);
         const popupContent = `
-          <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; color: #FFFFFF; background-color: #15161E; border-radius: 8px; width: 190px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px;">
-            <div style="font-weight: 800; font-size: 12px; color: #FFFFFF;">${job.name}</div>
-            <div style="font-size: 10px; color: #8B26FD; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+          <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; width: 190px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-weight: 800; font-size: 13px; color: #FFFFFF;">${job.name}</div>
+            <div style="font-size: 11px; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 4px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 4px;">
               <i class="fa-solid fa-briefcase"></i> ${job.desc}
             </div>
-            <div style="font-size: 9px; color: #94A3B8; line-height: 1.4; display: flex; flex-direction: column; gap: 2px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 4px; margin-bottom: 2px;">
+            <div style="font-size: 9px; color: #94A3B8; line-height: 1.4; display: flex; flex-direction: column; gap: 2px; margin-bottom: 2px;">
               <div><strong>Salário:</strong> ${job.salary}</div>
               <div><strong>Turno:</strong> ${job.shift}</div>
               <div><strong>Bairro:</strong> ${job.neighborhood}</div>
               <div><strong>Regime:</strong> CLT Efetivo</div>
             </div>
-            <button class="btn-primary" style="width: 100%; font-size: 9px; padding: 5px; justify-content: center; height: auto;" onclick="document.getElementById('final-cta-banner').scrollIntoView({ behavior: 'smooth' })">
+            <button class="saber-mais-btn" style="width: 100%; height: 28px; font-size: 10px; font-weight: 700; margin-top: 4px; display: flex; align-items: center; justify-content: center; border-radius: 8px;" onclick="document.getElementById('final-cta-banner').scrollIntoView({ behavior: 'smooth' })">
               Candidatar-se
             </button>
           </div>
@@ -3702,7 +3818,13 @@
       filtered.forEach(job => {
         let iconHtml = '';
         if (job.patrocinado) {
-          iconHtml = `<div class="marker-pin-patrocinado"><div class="patroc-badge">Patrocinado</div></div>`;
+          iconHtml = `
+            <div class="marker-pin-patrocinado">
+              <span class="patroc-badge">Patrocinado</span>
+              <div class="patroc-icon-wrapper">
+                <i class="fa-solid fa-crown"></i>
+              </div>
+            </div>`;
         } else {
           iconHtml = `
             <div class="marker-pin-common">
@@ -3714,20 +3836,27 @@
         const customIcon = L.divIcon({
           className: `custom-marker marker-id-${job.id}`,
           html: iconHtml,
-          iconSize: job.patrocinado ? [46, 46] : [32, 32],
-          iconAnchor: job.patrocinado ? [23, 23] : [16, 32]
+          iconSize: job.patrocinado ? [44, 44] : [40, 40],
+          iconAnchor: job.patrocinado ? [22, 22] : [20, 20]
         });
 
         const marker = L.marker([job.latitude, job.longitude], { icon: customIcon }).addTo(state.map);
         
-        marker.bindPopup(`
-          <div style="color: #000; font-family: sans-serif; padding: 4px; max-width: 200px;">
-            <strong style="color: var(--primary); text-transform: uppercase; font-size:12px;">${job.empresa}</strong><br>
-            <span style="font-size:11px; font-weight:600;">${getVagasArray(job).join(', ')}</span><br>
-            <span style="font-size:10px; color:#555;">${job.salarios}</span><br>
-            <button onclick="openJobDetails('${job.id}')" style="background-color:#8B26FD; color:#FFF; border:none; padding:4px 8px; border-radius:4px; font-size:10px; font-weight:700; cursor:pointer; margin-top:6px; width:100%;">Ver detalhes</button>
-          </div>
-        `);
+        const popupContent = `
+          <div style="font-family: 'Plus Jakarta Sans', sans-serif; width: 190px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-weight: 800; font-size: 13px; color: #FFFFFF;">${job.empresa}</div>
+            <div style="font-size: 11px; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 4px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 4px;">
+              <i class="fa-solid fa-briefcase"></i> ${getVagasArray(job).join(', ')}
+            </div>
+            <div style="font-size: 10px; color: #94A3B8; display: flex; flex-direction: column; gap: 2px;">
+              <div><strong>Salário:</strong> ${job.salarios || 'A combinar'}</div>
+              <div><strong>Turno:</strong> ${job.turnos || 'Horário Comercial'}</div>
+            </div>
+            <button class="saber-mais-btn" onclick="openJobDetails('${job.id}')" style="width: 100%; height: 28px; font-size: 10px; font-weight: 700; margin-top: 4px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+              Ver detalhes
+            </button>
+          </div>`;
+        marker.bindPopup(popupContent, { maxWidth: 220, className: 'landing-map-popup' });
 
         marker.on('click', () => {
           openJobDetails(job.id);
@@ -5207,13 +5336,12 @@
       recMapInstance.eachLayer(l => { if (l instanceof L.Marker) recMapInstance.removeLayer(l); });
 
       const recEmail = state.user?.email?.toLowerCase() || '';
-      // Show all jobs – if recruiter has email, highlight their own; otherwise show all
       const jobs = state.jobs;
 
       const purpleIcon = L.divIcon({
         className: 'custom-div-icon',
-        html: `<div style="background-color: #8B26FD; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #FFFFFF; box-shadow: 0 0 10px #8B26FD;"></div>`,
-        iconSize: [14, 14], iconAnchor: [7, 7]
+        html: `<div></div>`,
+        iconSize: [24, 24], iconAnchor: [12, 12]
       });
 
       jobs.forEach(job => {
@@ -5222,11 +5350,15 @@
           .addTo(recMapInstance);
 
         const popup = `
-          <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; color: #FFFFFF; background-color: #15161E; border-radius: 8px; width: 180px; box-sizing: border-box; display: flex; flex-direction: column; gap: 5px; padding: 4px;">
-            <div style="font-weight: 800; font-size: 12px;">${job.empresa}</div>
-            <div style="font-size: 10px; color: #8B26FD; font-weight: 700;">${Array.isArray(job.vagas) ? job.vagas.join(', ') : job.vagas}</div>
-            <div style="font-size: 9px; color: #94A3B8;">${job.endereco}</div>
-            <div style="font-size: 10px; font-weight: 700; color: #FFFFFF;">${job.salarios || 'A combinar'}</div>
+          <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; width: 180px; box-sizing: border-box; display: flex; flex-direction: column; gap: 5px;">
+            <div style="font-weight: 800; font-size: 13px; color: #FFFFFF;">${job.empresa}</div>
+            <div style="font-size: 11px; color: var(--primary); font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 4px; display: flex; align-items: center; gap: 4px;">
+              <i class="fa-solid fa-briefcase"></i> ${Array.isArray(job.vagas) ? job.vagas.join(', ') : job.vagas}
+            </div>
+            <div style="font-size: 9px; color: #94A3B8; display: flex; flex-direction: column; gap: 2px;">
+              <div><strong>Endereço:</strong> ${job.endereco}</div>
+              <div><strong>Salário:</strong> ${job.salarios || 'A combinar'}</div>
+            </div>
           </div>`;
         marker.bindPopup(popup, { maxWidth: 200, className: 'landing-map-popup' });
       });
